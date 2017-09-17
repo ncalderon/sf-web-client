@@ -1,0 +1,13 @@
+{
+    "sfWebClientApp": {
+        "PaymentMethod" : {
+            "null": "",
+            "UNSPECIFIED": "UNSPECIFIED",
+            "CASH": "CASH",
+            "CHECK": "CHECK",
+            "CREDIT_CARD": "CREDIT_CARD",
+            "DEBIT": "DEBIT",
+            "ELECTRONIC_TRANSFER": "ELECTRONIC_TRANSFER"
+        }
+    }
+}

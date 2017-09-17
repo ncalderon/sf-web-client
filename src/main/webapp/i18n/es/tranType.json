@@ -1,0 +1,9 @@
+{
+    "sfWebClientApp": {
+        "TranType" : {
+            "null": "",
+            "EXPENSE": "EXPENSE",
+            "INCOME": "INCOME"
+        }
+    }
+}
