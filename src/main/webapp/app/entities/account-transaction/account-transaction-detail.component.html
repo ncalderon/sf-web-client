@@ -1,0 +1,65 @@
+
+<div *ngIf="accountTransaction">
+    <h2><span jhiTranslate="sfWebClientApp.accountTransaction.detail.title">Account Transaction</span> {{accountTransaction.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="sfWebClientApp.accountTransaction.tranType">Tran Type</span></dt>
+        <dd>
+            <span jhiTranslate="{{'sfWebClientApp.TranType.' + accountTransaction.tranType}}">{{accountTransaction.tranType}}</span>
+        </dd>
+        <dt><span jhiTranslate="sfWebClientApp.accountTransaction.tranNumber">Tran Number</span></dt>
+        <dd>
+            <span>{{accountTransaction.tranNumber}}</span>
+        </dd>
+        <dt><span jhiTranslate="sfWebClientApp.accountTransaction.referenceNumber">Reference Number</span></dt>
+        <dd>
+            <span>{{accountTransaction.referenceNumber}}</span>
+        </dd>
+        <dt><span jhiTranslate="sfWebClientApp.accountTransaction.postDate">Post Date</span></dt>
+        <dd>
+            <span>{{accountTransaction.postDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="sfWebClientApp.accountTransaction.description">Description</span></dt>
+        <dd>
+            <span>{{accountTransaction.description}}</span>
+        </dd>
+        <dt><span jhiTranslate="sfWebClientApp.accountTransaction.amount">Amount</span></dt>
+        <dd>
+            <span>{{accountTransaction.amount}}</span>
+        </dd>
+        <dt><span jhiTranslate="sfWebClientApp.accountTransaction.paymentMethod">Payment Method</span></dt>
+        <dd>
+            <span jhiTranslate="{{'sfWebClientApp.PaymentMethod.' + accountTransaction.paymentMethod}}">{{accountTransaction.paymentMethod}}</span>
+        </dd>
+        <dt><span jhiTranslate="sfWebClientApp.accountTransaction.user">User</span></dt>
+        <dd>
+            {{accountTransaction.user?.login}}
+        </dd>
+        <dt><span jhiTranslate="sfWebClientApp.accountTransaction.bankAccount">Bank Account</span></dt>
+        <dd>
+            <div *ngIf="accountTransaction.bankAccount">
+                <a [routerLink]="['/bank-account', accountTransaction.bankAccount?.id]">{{accountTransaction.bankAccount?.name}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="sfWebClientApp.accountTransaction.tranCategory">Tran Category</span></dt>
+        <dd>
+            <div *ngIf="accountTransaction.tranCategory">
+                <a [routerLink]="['/tran-category', accountTransaction.tranCategory?.id]">{{accountTransaction.tranCategory?.name}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'account-transaction/'+ accountTransaction.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

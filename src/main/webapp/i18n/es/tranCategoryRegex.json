@@ -1,0 +1,25 @@
+{
+    "sfWebClientApp": {
+        "tranCategoryRegex" : {
+            "home": {
+                "title": "Tran Category Regexes",
+                "createLabel": "Crear nuevo Tran Category Regex",
+                "createOrEditLabel": "Crear o editar Tran Category Regex"
+            },
+            "created": "Un nuevo Tran Category Regex ha sido creado con el identificador {{ param }}",
+            "updated": "Un Tran Category Regex ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Tran Category Regex ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Tran Category Regex {{ id }}?"
+            },
+            "detail": {
+                "title": "Tran Category Regex"
+            },
+            "name": "Name",
+            "description": "Description",
+            "regex": "Regex",
+            "tranCategory": "Tran Category",
+            "user": "User"
+        }
+    }
+}

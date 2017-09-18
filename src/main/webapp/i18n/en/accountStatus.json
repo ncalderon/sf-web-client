@@ -1,0 +1,9 @@
+{
+    "sfWebClientApp": {
+        "AccountStatus" : {
+            "null": "",
+            "INACTIVE": "INACTIVE",
+            "ACTIVE": "ACTIVE"
+        }
+    }
+}

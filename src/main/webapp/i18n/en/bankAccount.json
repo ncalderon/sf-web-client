@@ -1,0 +1,29 @@
+{
+    "sfWebClientApp": {
+        "bankAccount" : {
+            "home": {
+                "title": "Bank Accounts",
+                "createLabel": "Create a new Bank Account",
+                "createOrEditLabel": "Create or edit a Bank Account"
+            },
+            "created": "A new Bank Account is created with identifier {{ param }}",
+            "updated": "A Bank Account is updated with identifier {{ param }}",
+            "deleted": "A Bank Account is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Bank Account {{ id }}?"
+            },
+            "detail": {
+                "title": "Bank Account"
+            },
+            "accountStatus": "Account Status",
+            "accountType": "Account Type",
+            "accountNumber": "Account Number",
+            "name": "Name",
+            "description": "Description",
+            "balance": "Balance",
+            "accountTransaction": "Account Transaction",
+            "user": "User",
+            "bank": "Bank"
+        }
+    }
+}

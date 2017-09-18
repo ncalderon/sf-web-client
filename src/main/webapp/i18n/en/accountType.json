@@ -1,0 +1,11 @@
+{
+    "sfWebClientApp": {
+        "AccountType" : {
+            "null": "",
+            "GENERIC": "GENERIC",
+            "CHECKING_ACCOUNT": "CHECKING_ACCOUNT",
+            "SAVING_ACCOUNT": "SAVING_ACCOUNT",
+            "CREDIT_CARD": "CREDIT_CARD"
+        }
+    }
+}
