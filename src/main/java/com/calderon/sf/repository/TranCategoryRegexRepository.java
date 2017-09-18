@@ -1,6 +1,8 @@
 package com.calderon.sf.repository;
 
 import com.calderon.sf.domain.TranCategoryRegex;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
@@ -15,5 +17,9 @@ public interface TranCategoryRegexRepository extends JpaRepository<TranCategoryR
 
     @Query("select tran_category_regex from TranCategoryRegex tran_category_regex where tran_category_regex.user.login = ?#{principal.username}")
     List<TranCategoryRegex> findByUserIsCurrentUser();
+
+    @Query("select tran_category_regex from TranCategoryRegex tran_category_regex where tran_category_regex.user.login = ?#{principal.username}")
+    Page<TranCategoryRegex> findByUserIsCurrentUser(Pageable pageable);
+
 
 }

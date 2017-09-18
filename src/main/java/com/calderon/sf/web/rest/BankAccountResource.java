@@ -93,7 +93,8 @@ public class BankAccountResource {
     @Timed
     public ResponseEntity<List<BankAccount>> getAllBankAccounts(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of BankAccounts");
-        Page<BankAccount> page = bankAccountRepository.findAll(pageable);
+        /*Page<BankAccount> page = bankAccountRepository.findAll(pageable);*/
+        Page<BankAccount> page = bankAccountRepository.findByUserIsCurrentUser(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/bank-accounts");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
