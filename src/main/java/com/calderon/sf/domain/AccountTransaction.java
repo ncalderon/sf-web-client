@@ -20,8 +20,7 @@ import com.calderon.sf.domain.enumeration.PaymentMethod;
 @Entity
 @Table(name = "account_transaction")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class AccountTransaction implements Serializable {
-
+public class AccountTransaction extends AbstractAuditingEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id

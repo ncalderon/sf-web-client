@@ -22,7 +22,7 @@ import com.calderon.sf.domain.enumeration.AccountType;
 @Entity
 @Table(name = "bank_account")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class BankAccount implements Serializable {
+public class BankAccount extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
