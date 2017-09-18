@@ -3,9 +3,9 @@ import {JhiEventManager} from 'ng-jhipster';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {AccountTransaction} from '../account-transaction.model';
-import {LoggerService} from "../../../shared/logger/logger.service";
-import {BankAccount} from "../../bank-account/bank-account.model";
-import {FileUploader} from "ng2-file-upload";
+import {LoggerService} from '../../../shared/logger/logger.service';
+import {BankAccount} from '../../bank-account/bank-account.model';
+import {FileUploader} from 'ng2-file-upload';
 
 @Component({
   selector: 'jhi-upload-account-transaction',
