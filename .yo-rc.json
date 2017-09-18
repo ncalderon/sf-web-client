@@ -37,6 +37,7 @@
     "languages": [
       "en",
       "es"
-    ]
+    ],
+    "herokuAppName": "sf-web-client"
   }
 }
