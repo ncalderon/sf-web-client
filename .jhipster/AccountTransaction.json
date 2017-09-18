@@ -71,10 +71,10 @@
         {
             "fieldName": "paymentMethod",
             "fieldType": "PaymentMethod",
-            "fieldValues": "UNSPECIFIED,CASH,CHECK,CREDIT_CARD,DEBIT,ELECTRONIC_TRANSFER"
+            "fieldValues": "UNSPECIFIED,CASH,CHECK,CREDIT_CARD,DEBIT,ELECTRONIC_TRANSFER,OTHER"
         }
     ],
-    "changelogDate": "20170917034906",
+    "changelogDate": "20170918191347",
     "entityTableName": "account_transaction",
     "dto": "no",
     "pagination": "pagination",

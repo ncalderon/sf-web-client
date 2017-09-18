@@ -42,7 +42,7 @@
             "fieldValidateRulesMaxlength": 512
         }
     ],
-    "changelogDate": "20170917034904",
+    "changelogDate": "20170918191345",
     "entityTableName": "tran_category",
     "dto": "no",
     "pagination": "pagination",

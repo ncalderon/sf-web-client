@@ -15,25 +15,13 @@
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity BankAccount.
+        Added the entity TranCategory.
     -->
-    <changeSet id="20170917034902-1" author="jhipster">
-        <createTable tableName="bank_account">
+    <changeSet id="20170918191345-1" author="jhipster">
+        <createTable tableName="tran_category">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="account_status" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="account_type" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="account_number" type="varchar(64)">
-                <constraints nullable="false" />
-            </column>
-
             <column name="name" type="varchar(64)">
                 <constraints nullable="false" />
             </column>
@@ -42,15 +30,11 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="balance" type="decimal(10,2)">
-                <constraints nullable="true" />
-            </column>
-
             <column name="user_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
-            <column name="bank_id" type="bigint">
+            <column name="tran_category_regex_id" type="bigint">
                 <constraints nullable="false" />
             </column>
 

@@ -93,7 +93,8 @@ public class AccountTransactionResource {
     @Timed
     public ResponseEntity<List<AccountTransaction>> getAllAccountTransactions(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of AccountTransactions");
-        Page<AccountTransaction> page = accountTransactionRepository.findAll(pageable);
+        /*Page<AccountTransaction> page = accountTransactionRepository.findAll(pageable);*/
+        Page<AccountTransaction> page = accountTransactionRepository.findByUserIsCurrentUser(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/account-transactions");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

@@ -93,7 +93,8 @@ public class TranCategoryResource {
     @Timed
     public ResponseEntity<List<TranCategory>> getAllTranCategories(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of TranCategories");
-        Page<TranCategory> page = tranCategoryRepository.findAll(pageable);
+        /*Page<TranCategory> page = tranCategoryRepository.findAll(pageable);*/
+        Page<TranCategory> page = tranCategoryRepository.findByUserIsCurrentUser(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/tran-categories");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

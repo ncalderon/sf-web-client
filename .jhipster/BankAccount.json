@@ -25,7 +25,7 @@
         {
             "fieldName": "accountStatus",
             "fieldType": "AccountStatus",
-            "fieldValues": "INACTIVE,ACTIVE,DISABLED",
+            "fieldValues": "INACTIVE,ACTIVE",
             "fieldValidateRules": [
                 "required"
             ]
@@ -33,7 +33,7 @@
         {
             "fieldName": "accountType",
             "fieldType": "AccountType",
-            "fieldValues": "CHECKING_ACCOUNT,SAVING_ACCOUNT,CREDIT_CARD",
+            "fieldValues": "GENERIC,CHECKING_ACCOUNT,SAVING_ACCOUNT,CREDIT_CARD",
             "fieldValidateRules": [
                 "required"
             ]
@@ -73,7 +73,7 @@
             "fieldType": "BigDecimal"
         }
     ],
-    "changelogDate": "20170917034902",
+    "changelogDate": "20170918191343",
     "entityTableName": "bank_account",
     "dto": "no",
     "pagination": "pagination",

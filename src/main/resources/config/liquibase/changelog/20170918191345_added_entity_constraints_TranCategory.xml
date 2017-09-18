@@ -4,21 +4,21 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
     <!--
-        Added the constraints for entity BankAccount.
+        Added the constraints for entity TranCategory.
     -->
-    <changeSet id="20170917034902-2" author="jhipster">
+    <changeSet id="20170918191345-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="bank_account"
-                                 constraintName="fk_bank_account_user_id"
+                                 baseTableName="tran_category"
+                                 constraintName="fk_tran_category_user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 
-        <addForeignKeyConstraint baseColumnNames="bank_id"
-                                 baseTableName="bank_account"
-                                 constraintName="fk_bank_account_bank_id"
+        <addForeignKeyConstraint baseColumnNames="tran_category_regex_id"
+                                 baseTableName="tran_category"
+                                 constraintName="fk_tran_category_tran_category_regex_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="bank"/>
+                                 referencedTableName="tran_category_regex"/>
 
     </changeSet>
 </databaseChangeLog>

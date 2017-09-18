@@ -17,7 +17,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "tran_category_regex")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class TranCategoryRegex implements Serializable {
+public class TranCategoryRegex extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

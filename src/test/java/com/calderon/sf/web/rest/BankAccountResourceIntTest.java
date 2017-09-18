@@ -44,8 +44,8 @@ public class BankAccountResourceIntTest {
     private static final AccountStatus DEFAULT_ACCOUNT_STATUS = AccountStatus.INACTIVE;
     private static final AccountStatus UPDATED_ACCOUNT_STATUS = AccountStatus.ACTIVE;
 
-    private static final AccountType DEFAULT_ACCOUNT_TYPE = AccountType.CHECKING_ACCOUNT;
-    private static final AccountType UPDATED_ACCOUNT_TYPE = AccountType.SAVING_ACCOUNT;
+    private static final AccountType DEFAULT_ACCOUNT_TYPE = AccountType.GENERIC;
+    private static final AccountType UPDATED_ACCOUNT_TYPE = AccountType.CHECKING_ACCOUNT;
 
     private static final String DEFAULT_ACCOUNT_NUMBER = "AAAAAAAAAA";
     private static final String UPDATED_ACCOUNT_NUMBER = "BBBBBBBBBB";
