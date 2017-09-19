@@ -16,11 +16,17 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
 
@@ -125,5 +131,21 @@ public class AccountTransactionResource {
         log.debug("REST request to delete AccountTransaction : {}", id);
         accountTransactionRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @PostMapping("/account-transactions/upload")
+    @Timed
+    public ResponseEntity<List<AccountTransaction>> getAccountTransactionsFromFile(@RequestParam("file") MultipartFile file) {
+        List<AccountTransaction> list = accountTransactionRepository.findByUserIsCurrentUser();
+        /*HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/account-transactions/upload");*/
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/account-transactions/prueba")
+    @Timed
+    public ResponseEntity<List<AccountTransaction>> getAccountTransactions() {
+        List<AccountTransaction> list = accountTransactionRepository.findByUserIsCurrentUser();
+        /*HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/account-transactions/upload");*/
+        return ResponseEntity.ok(list);
     }
 }

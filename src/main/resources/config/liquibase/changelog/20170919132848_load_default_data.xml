@@ -6,21 +6,23 @@
     <!--
         Added audit columns to entities.
     -->
-    <changeSet id="20170918191348-1" author="nathaniel">
+    <changeSet id="20170919132848-1" author="nathaniel">
         <loadData
             encoding="UTF-8"
             tableName="bank"
-            separator=";"
-            file="config/liquibase/bank.csv">
+            separator=","
+            file="config/liquibase/banks.csv">
             <column name="created_date" type="timestamp"/>
+            <column name="last_modified_date" type="timestamp"/>
         </loadData>
 
         <loadData
             encoding="UTF-8"
-            tableName="bank"
+            tableName="bank_account"
             separator=";"
-            file="config/liquibase/banks.csv">
+            file="config/liquibase/accounts.csv">
             <column name="created_date" type="timestamp"/>
+            <column name="last_modified_date" type="timestamp"/>
         </loadData>
     </changeSet>
 </databaseChangeLog>

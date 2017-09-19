@@ -8,6 +8,7 @@ import { AccountTransactionComponent } from './account-transaction.component';
 import { AccountTransactionDetailComponent } from './account-transaction-detail.component';
 import { AccountTransactionPopupComponent } from './account-transaction-dialog.component';
 import { AccountTransactionDeletePopupComponent } from './account-transaction-delete-dialog.component';
+import {UploadAccountTransactionComponent} from './upload-account-transaction/upload-account-transaction.component';
 
 @Injectable()
 export class AccountTransactionResolvePagingParams implements Resolve<any> {
@@ -40,6 +41,14 @@ export const accountTransactionRoute: Routes = [
     }, {
         path: 'account-transaction/:id',
         component: AccountTransactionDetailComponent,
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'sfWebClientApp.accountTransaction.home.title'
+        },
+        canActivate: [UserRouteAccessService]
+    }, {
+        path: 'account-transaction-upload',
+        component: UploadAccountTransactionComponent,
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'sfWebClientApp.accountTransaction.home.title'

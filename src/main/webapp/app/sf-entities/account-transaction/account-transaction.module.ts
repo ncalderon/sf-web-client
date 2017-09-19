@@ -12,6 +12,7 @@ import {
     AccountTransactionPopupComponent,
     AccountTransactionDeletePopupComponent,
     AccountTransactionDeleteDialogComponent,
+    UploadAccountTransactionComponent,
     accountTransactionRoute,
     accountTransactionPopupRoute,
     AccountTransactionResolvePagingParams,
@@ -38,6 +39,7 @@ const ENTITY_STATES = [
         AccountTransactionDeleteDialogComponent,
         AccountTransactionPopupComponent,
         AccountTransactionDeletePopupComponent,
+        UploadAccountTransactionComponent
     ],
     entryComponents: [
         AccountTransactionComponent,

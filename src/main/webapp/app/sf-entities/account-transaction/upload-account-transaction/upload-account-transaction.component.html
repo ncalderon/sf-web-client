@@ -1,3 +1,12 @@
+<style>
+    .my-drop-zone { border: dotted 3px lightgray; }
+    .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+    .another-file-over-class { border: dotted 3px green; }
+    .windowClass { }
+    /*
+        html, body { height: 100%; }*/
+</style>
+
 <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
     <h2><span>Upload File Transactions</span></h2>
     <hr>
@@ -15,14 +24,14 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <div class="form-group">
-        <label class="form-control-label" jhiTranslate="sfWebBaseApp.accountTransaction.bankAccount"
+        <label class="form-control-label"
                for="field_bankAccount">Bank Account</label>
         <select class="form-control" id="field_bankAccount" name="bankAccount"
                 [(ngModel)]="bankAccount" required>
             <option *ngIf="!editForm.value.bankAccount" [ngValue]="null" selected></option>
             <option
                 [ngValue]="bankAccountOption.id === bankAccount?.id ? bankAccount : bankAccountOption"
-                *ngFor="let bankAccountOption of bankaccounts; trackBy: trackBankAccountById">{{bankAccountOption.name}}
+                *ngFor="let bankAccountOption of bankAccounts; trackBy: trackBankAccountById">{{bankAccountOption.name}}
             </option>
         </select>
     </div>
@@ -103,17 +112,17 @@
     <div class="table-responsive"  *ngIf="accountTransactions">
         <table class="table table-striped">
             <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-                <th jhiSortBy="postDate"><span jhiTranslate="sfWebBaseApp.accountTransaction.postDate">Post Date</span>
+            <tr>
+                <th><span>Post Date</span>
                     <span class="fa fa-sort"></span></th>
-                <th jhiSortBy="tranType"><span jhiTranslate="sfWebBaseApp.accountTransaction.tranType">Tran Type</span>
+                <th><span>Tran Type</span>
                     <span class="fa fa-sort"></span></th>
-                <th jhiSortBy="tranCategory.name"><span jhiTranslate="sfWebBaseApp.accountTransaction.tranCategory">Tran Category</span>
+                <th><span>Tran Category</span>
                     <span class="fa fa-sort"></span></th>
-                <th jhiSortBy="description"><span
-                    jhiTranslate="sfWebBaseApp.accountTransaction.description">Description</span> <span
+                <th><span
+                    >Description</span> <span
                     class="fa fa-sort"></span></th>
-                <th jhiSortBy="amount"><span jhiTranslate="sfWebBaseApp.accountTransaction.amount">Amount</span> <span
+                <th><span>Amount</span> <span
                     class="fa fa-sort"></span></th>
             </tr>
             </thead>
