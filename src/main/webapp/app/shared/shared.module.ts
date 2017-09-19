@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import {
@@ -39,7 +39,9 @@ import {
         AuthServerProvider,
         SocialService,
         UserService,
-        DatePipe
+        DatePipe,
+        LoggerService
+        /*forwardRef(() => LoggerService)*/
     ],
     entryComponents: [JhiLoginModalComponent],
     exports: [
@@ -47,8 +49,7 @@ import {
         JhiSocialComponent,
         JhiLoginModalComponent,
         HasAnyAuthorityDirective,
-        DatePipe,
-        LoggerService
+        DatePipe
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

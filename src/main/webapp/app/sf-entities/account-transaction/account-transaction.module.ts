@@ -17,7 +17,7 @@ import {
     AccountTransactionResolvePagingParams,
 } from './';
 
-import {FileUploader, FileUploadModule} from 'ng2-file-upload';
+import {FileUploadModule} from 'ng2-file-upload';
 
 const ENTITY_STATES = [
     ...accountTransactionRoute,
