@@ -15,7 +15,6 @@
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipValidateRules": "required",
             "relationshipName": "tranCategoryRegex",
             "otherEntityName": "tranCategoryRegex",
             "otherEntityField": "name"

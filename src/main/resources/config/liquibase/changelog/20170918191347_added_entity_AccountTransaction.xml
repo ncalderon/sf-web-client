@@ -26,15 +26,15 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="tran_number" type="varchar(128)">
-                <constraints nullable="false" />
+            <column name="tran_number" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
 
             <column name="reference_number" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
-            <column name="post_date" type="timestamp">
+            <column name="post_date" type="date">
                 <constraints nullable="false" />
             </column>
 
@@ -54,17 +54,16 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="bank_account_id" type="bigint">
+            <column name="finance_account_id" type="bigint">
                 <constraints nullable="false" />
             </column>
 
             <column name="tran_category_id" type="bigint">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="account_transaction" columnName="post_date" columnDataType="datetime"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

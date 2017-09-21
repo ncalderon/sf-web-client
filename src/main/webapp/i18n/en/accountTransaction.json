@@ -23,7 +23,7 @@
             "amount": "Amount",
             "paymentMethod": "Payment Method",
             "user": "User",
-            "bankAccount": "Bank Account",
+            "financeAccount": "Finance Account",
             "tranCategory": "Tran Category"
         }
     }

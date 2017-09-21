@@ -5,18 +5,18 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20170918191343_added_entity_BankAccount.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170918191344_added_entity_Bank.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170918191345_added_entity_TranCategory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170918191346_added_entity_TranCategoryRegex.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170918191347_added_entity_AccountTransaction.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20170921190851_added_entity_FinanceAccount.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="config/liquibase/changelog/20170918191343_added_entity_constraints_BankAccount.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170918191344_added_entity_constraints_Bank.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170918191345_added_entity_constraints_TranCategory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170918191346_added_entity_constraints_TranCategoryRegex.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20170918191347_added_entity_constraints_AccountTransaction.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20170921190851_added_entity_constraints_FinanceAccount.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
-    <include file="config/liquibase/changelog/20170918191348_implemented_audit_to_entities.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20170919132848_load_default_data.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20170921191551_implemented_audit_to_entities.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20170921191551_load_default_data.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

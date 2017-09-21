@@ -33,7 +33,7 @@ describe('TranCategory e2e test', () => {
         tranCategoryDialogPage.close();
     });
 
-   /* it('should create and save TranCategories', () => {
+    it('should create and save TranCategories', () => {
         tranCategoryComponentsPage.clickOnCreateButton();
         tranCategoryDialogPage.setNameInput('name');
         expect(tranCategoryDialogPage.getNameInput()).toMatch('name');
@@ -43,7 +43,7 @@ describe('TranCategory e2e test', () => {
         tranCategoryDialogPage.tranCategoryRegexSelectLastOption();
         tranCategoryDialogPage.save();
         expect(tranCategoryDialogPage.getSaveButton().isPresent()).toBeFalsy();
-    }); */
+    }); 
 
     afterAll(() => {
         navBarPage.autoSignOut();

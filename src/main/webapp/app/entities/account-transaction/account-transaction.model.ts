@@ -26,7 +26,7 @@ export class AccountTransaction implements BaseEntity {
         public amount?: number,
         public paymentMethod?: PaymentMethod,
         public user?: User,
-        public bankAccount?: BaseEntity,
+        public financeAccount?: BaseEntity,
         public tranCategory?: BaseEntity,
     ) {
     }

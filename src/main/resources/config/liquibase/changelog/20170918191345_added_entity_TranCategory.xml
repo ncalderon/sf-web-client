@@ -35,7 +35,7 @@
             </column>
 
             <column name="tran_category_regex_id" type="bigint">
-                <constraints nullable="false" />
+                <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->

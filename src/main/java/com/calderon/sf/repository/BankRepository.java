@@ -15,11 +15,4 @@ import java.util.List;
 @Repository
 public interface BankRepository extends JpaRepository<Bank, Long> {
 
-    @Query("select bank from Bank bank where bank.user.login = ?#{principal.username}")
-    List<Bank> findByUserIsCurrentUser();
-
-    @Query("select bank from Bank bank where bank.user.login = ?#{principal.username}")
-    Page<Bank> findByUserIsCurrentUser(Pageable pageable);
-
-
 }

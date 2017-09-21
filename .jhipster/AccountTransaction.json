@@ -10,13 +10,12 @@
         {
             "relationshipType": "many-to-one",
             "relationshipValidateRules": "required",
-            "relationshipName": "bankAccount",
-            "otherEntityName": "bankAccount",
+            "relationshipName": "financeAccount",
+            "otherEntityName": "financeAccount",
             "otherEntityField": "name"
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipValidateRules": "required",
             "relationshipName": "tranCategory",
             "otherEntityName": "tranCategory",
             "otherEntityField": "name"
@@ -33,14 +32,7 @@
         },
         {
             "fieldName": "tranNumber",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required",
-                "minlength",
-                "maxlength"
-            ],
-            "fieldValidateRulesMinlength": 1,
-            "fieldValidateRulesMaxlength": 128
+            "fieldType": "String"
         },
         {
             "fieldName": "referenceNumber",
@@ -48,7 +40,7 @@
         },
         {
             "fieldName": "postDate",
-            "fieldType": "Instant",
+            "fieldType": "LocalDate",
             "fieldValidateRules": [
                 "required"
             ]

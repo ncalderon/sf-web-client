@@ -14,11 +14,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
 
-        <addForeignKeyConstraint baseColumnNames="bank_account_id"
+        <addForeignKeyConstraint baseColumnNames="finance_account_id"
                                  baseTableName="account_transaction"
-                                 constraintName="fk_account_transaction_bank_account_id"
+                                 constraintName="fk_account_transaction_finance_account_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="bank_account"/>
+                                 referencedTableName="finance_account"/>
 
         <addForeignKeyConstraint baseColumnNames="tran_category_id"
                                  baseTableName="account_transaction"

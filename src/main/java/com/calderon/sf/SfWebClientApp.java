@@ -3,6 +3,7 @@ package com.calderon.sf;
 import com.calderon.sf.config.ApplicationProperties;
 import com.calderon.sf.config.DefaultProfileUtil;
 
+import com.calderon.sf.service.io.StorageProperties;
 import io.github.jhipster.config.JHipsterConstants;
 
 import org.slf4j.Logger;
@@ -24,7 +25,7 @@ import java.util.Collection;
 
 @ComponentScan
 @EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
-@EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
+@EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class, StorageProperties.class})
 @EnableDiscoveryClient
 public class SfWebClientApp {
 

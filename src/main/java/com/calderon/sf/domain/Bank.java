@@ -1,14 +1,11 @@
 package com.calderon.sf.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -33,14 +30,6 @@ public class Bank extends AbstractAuditingEntity implements Serializable {
     @Size(max = 512)
     @Column(name = "description", length = 512)
     private String description;
-
-    @OneToMany(mappedBy = "bank")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<BankAccount> bankAccounts = new HashSet<>();
-
-    @ManyToOne
-    private User user;
 
     // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
     public Long getId() {
@@ -75,44 +64,6 @@ public class Bank extends AbstractAuditingEntity implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Set<BankAccount> getBankAccounts() {
-        return bankAccounts;
-    }
-
-    public Bank bankAccounts(Set<BankAccount> bankAccounts) {
-        this.bankAccounts = bankAccounts;
-        return this;
-    }
-
-    public Bank addBankAccount(BankAccount bankAccount) {
-        this.bankAccounts.add(bankAccount);
-        bankAccount.setBank(this);
-        return this;
-    }
-
-    public Bank removeBankAccount(BankAccount bankAccount) {
-        this.bankAccounts.remove(bankAccount);
-        bankAccount.setBank(null);
-        return this;
-    }
-
-    public void setBankAccounts(Set<BankAccount> bankAccounts) {
-        this.bankAccounts = bankAccounts;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public Bank user(User user) {
-        this.user = user;
-        return this;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
     // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
 

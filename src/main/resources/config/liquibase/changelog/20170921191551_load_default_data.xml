@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added audit columns to entities.
+    -->
+    <changeSet id="20170921191551-2" author="nathaniel">
+        <!--<loadData
+            encoding="UTF-8"
+            tableName="bank"
+            separator=","
+            file="config/liquibase/banks.csv">
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </loadData>
+
+        <loadData
+            encoding="UTF-8"
+            tableName="bank_account"
+            separator=";"
+            file="config/liquibase/accounts.csv">
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </loadData>-->
+    </changeSet>
+</databaseChangeLog>

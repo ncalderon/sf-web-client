@@ -19,7 +19,6 @@
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="name"><span jhiTranslate="sfWebClientApp.bank.name">Name</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="description"><span jhiTranslate="sfWebClientApp.bank.description">Description</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="user.login"><span jhiTranslate="sfWebClientApp.bank.user">User</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
@@ -28,9 +27,6 @@
                 <td><a [routerLink]="['../bank', bank.id ]">{{bank.id}}</a></td>
                 <td>{{bank.name}}</td>
                 <td>{{bank.description}}</td>
-                <td>
-                    {{bank.user?.login}}
-                </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

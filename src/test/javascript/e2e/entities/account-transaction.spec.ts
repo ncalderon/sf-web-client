@@ -40,15 +40,15 @@ describe('AccountTransaction e2e test', () => {
         expect(accountTransactionDialogPage.getTranNumberInput()).toMatch('tranNumber');
         accountTransactionDialogPage.setReferenceNumberInput('referenceNumber');
         expect(accountTransactionDialogPage.getReferenceNumberInput()).toMatch('referenceNumber');
-        accountTransactionDialogPage.setPostDateInput(12310020012301);
-        expect(accountTransactionDialogPage.getPostDateInput()).toMatch('2001-12-31T02:30');
+        accountTransactionDialogPage.setPostDateInput('2000-12-31');
+        expect(accountTransactionDialogPage.getPostDateInput()).toMatch('2000-12-31');
         accountTransactionDialogPage.setDescriptionInput('description');
         expect(accountTransactionDialogPage.getDescriptionInput()).toMatch('description');
         accountTransactionDialogPage.setAmountInput('5');
         expect(accountTransactionDialogPage.getAmountInput()).toMatch('5');
         accountTransactionDialogPage.paymentMethodSelectLastOption();
         accountTransactionDialogPage.userSelectLastOption();
-        accountTransactionDialogPage.bankAccountSelectLastOption();
+        accountTransactionDialogPage.financeAccountSelectLastOption();
         accountTransactionDialogPage.tranCategorySelectLastOption();
         accountTransactionDialogPage.save();
         expect(accountTransactionDialogPage.getSaveButton().isPresent()).toBeFalsy();
@@ -84,7 +84,7 @@ export class AccountTransactionDialogPage {
     amountInput = element(by.css('input#field_amount'));
     paymentMethodSelect = element(by.css('select#field_paymentMethod'));
     userSelect = element(by.css('select#field_user'));
-    bankAccountSelect = element(by.css('select#field_bankAccount'));
+    financeAccountSelect = element(by.css('select#field_financeAccount'));
     tranCategorySelect = element(by.css('select#field_tranCategory'));
 
     getModalTitle() {
@@ -169,20 +169,20 @@ export class AccountTransactionDialogPage {
         return this.userSelect.element(by.css('option:checked')).getText();
     }
 
-    bankAccountSelectLastOption = function () {
-        this.bankAccountSelect.all(by.tagName('option')).last().click();
+    financeAccountSelectLastOption = function () {
+        this.financeAccountSelect.all(by.tagName('option')).last().click();
     }
 
-    bankAccountSelectOption = function (option) {
-        this.bankAccountSelect.sendKeys(option);
+    financeAccountSelectOption = function (option) {
+        this.financeAccountSelect.sendKeys(option);
     }
 
-    getBankAccountSelect = function () {
-        return this.bankAccountSelect;
+    getFinanceAccountSelect = function () {
+        return this.financeAccountSelect;
     }
 
-    getBankAccountSelectedOption = function () {
-        return this.bankAccountSelect.element(by.css('option:checked')).getText();
+    getFinanceAccountSelectedOption = function () {
+        return this.financeAccountSelect.element(by.css('option:checked')).getText();
     }
 
     tranCategorySelectLastOption = function () {

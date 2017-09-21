@@ -1,0 +1,30 @@
+{
+    "sfWebClientApp": {
+        "financeAccount" : {
+            "home": {
+                "title": "Finance Accounts",
+                "createLabel": "Create a new Finance Account",
+                "createOrEditLabel": "Create or edit a Finance Account"
+            },
+            "created": "A new Finance Account is created with identifier {{ param }}",
+            "updated": "A Finance Account is updated with identifier {{ param }}",
+            "deleted": "A Finance Account is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Finance Account {{ id }}?"
+            },
+            "detail": {
+                "title": "Finance Account"
+            },
+            "accountStatus": "Account Status",
+            "accountNumber": "Account Number",
+            "name": "Name",
+            "description": "Description",
+            "balance": "Balance",
+            "isCreditCard": "Is Credit Card",
+            "dueDate": "Due Date",
+            "closingDate": "Closing Date",
+            "accountTransaction": "Account Transaction",
+            "user": "User"
+        }
+    }
+}

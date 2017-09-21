@@ -39,7 +39,6 @@ describe('Bank e2e test', () => {
         expect(bankDialogPage.getNameInput()).toMatch('name');
         bankDialogPage.setDescriptionInput('description');
         expect(bankDialogPage.getDescriptionInput()).toMatch('description');
-        bankDialogPage.userSelectLastOption();
         bankDialogPage.save();
         expect(bankDialogPage.getSaveButton().isPresent()).toBeFalsy();
     }); 
@@ -68,7 +67,6 @@ export class BankDialogPage {
     closeButton = element(by.css('button.close'));
     nameInput = element(by.css('input#field_name'));
     descriptionInput = element(by.css('input#field_description'));
-    userSelect = element(by.css('select#field_user'));
 
     getModalTitle() {
         return this.modalTitle.getAttribute('jhiTranslate');
@@ -88,22 +86,6 @@ export class BankDialogPage {
 
     getDescriptionInput = function () {
         return this.descriptionInput.getAttribute('value');
-    }
-
-    userSelectLastOption = function () {
-        this.userSelect.all(by.tagName('option')).last().click();
-    }
-
-    userSelectOption = function (option) {
-        this.userSelect.sendKeys(option);
-    }
-
-    getUserSelect = function () {
-        return this.userSelect;
-    }
-
-    getUserSelectedOption = function () {
-        return this.userSelect.element(by.css('option:checked')).getText();
     }
 
     save() {
