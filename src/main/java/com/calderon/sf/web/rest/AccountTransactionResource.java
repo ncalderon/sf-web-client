@@ -1,5 +1,7 @@
 package com.calderon.sf.web.rest;
 
+import com.calderon.sf.security.SecurityUtils;
+import com.calderon.sf.service.io.StorageService;
 import com.codahale.metrics.annotation.Timed;
 import com.calderon.sf.domain.AccountTransaction;
 
@@ -10,6 +12,7 @@ import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -27,6 +30,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +45,13 @@ public class AccountTransactionResource {
 
     private static final String ENTITY_NAME = "accountTransaction";
 
+
+    private StorageService storageService;
+
+    @Autowired
+    public void setStorageService (StorageService storageService){
+        this.storageService = storageService;
+    }
     private final AccountTransactionRepository accountTransactionRepository;
 
     public AccountTransactionResource(AccountTransactionRepository accountTransactionRepository) {
@@ -136,16 +147,13 @@ public class AccountTransactionResource {
     @PostMapping("/account-transactions/upload")
     @Timed
     public ResponseEntity<List<AccountTransaction>> getAccountTransactionsFromFile(@RequestParam("file") MultipartFile file) {
+        String curretUserLogin = SecurityUtils.getCurrentUserLogin();
+        storageService.store(file, SecurityUtils.getCurrentUserLogin());
+        Path transactionFile = storageService.load(curretUserLogin);
+
         List<AccountTransaction> list = accountTransactionRepository.findByUserIsCurrentUser();
         /*HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/account-transactions/upload");*/
         return ResponseEntity.ok(list);
     }
 
-    @GetMapping("/account-transactions/prueba")
-    @Timed
-    public ResponseEntity<List<AccountTransaction>> getAccountTransactions() {
-        List<AccountTransaction> list = accountTransactionRepository.findByUserIsCurrentUser();
-        /*HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/account-transactions/upload");*/
-        return ResponseEntity.ok(list);
-    }
 }
