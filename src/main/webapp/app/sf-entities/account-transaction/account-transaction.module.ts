@@ -16,6 +16,7 @@ import {
     accountTransactionPopupRoute,
     AccountTransactionResolvePagingParams,
 } from './';
+import {ButtonsModule} from 'ngx-bootstrap';
 
 const ENTITY_STATES = [
     ...accountTransactionRoute,
@@ -26,7 +27,8 @@ const ENTITY_STATES = [
     imports: [
         SfWebClientSharedModule,
         SfWebClientAdminModule,
-        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
+        RouterModule.forRoot(ENTITY_STATES, { useHash: true }),
+        ButtonsModule.forRoot()
     ],
     declarations: [
         AccountTransactionComponent,

@@ -16,8 +16,10 @@ import {
     JhiSocialComponent,
     SocialService,
     JhiLoginModalComponent,
-    LoggerService
+    LoggerService,
+    DatetimeService
 } from './';
+import {ButtonsModule} from 'ngx-bootstrap';
 
 @NgModule({
     imports: [
@@ -40,7 +42,8 @@ import {
         SocialService,
         UserService,
         DatePipe,
-        LoggerService
+        LoggerService,
+        DatetimeService
         /*forwardRef(() => LoggerService)*/
     ],
     entryComponents: [JhiLoginModalComponent],

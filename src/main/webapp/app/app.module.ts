@@ -27,6 +27,7 @@ import {
     ActiveMenuDirective,
     ErrorComponent
 } from './layouts';
+import {ButtonsModule} from 'ngx-bootstrap';
 
 @NgModule({
     imports: [

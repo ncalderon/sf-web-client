@@ -13,11 +13,17 @@
                    [(ngModel)]="accountTransaction.id" readonly />
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="sfWebClientApp.accountTransaction.tranType" for="field_tranType">Tran Type</label>
+            <div class="btn-group">
+                <label [ngClass]="getTranExpenseClass()" name="tranType" [(ngModel)]="accountTransaction.tranType" btnRadio="EXPENSE">{{'sfWebClientApp.TranType.EXPENSE' | translate}}</label>
+                <label [ngClass]="getTranIncomeClass()" name="tranType" [(ngModel)]="accountTransaction.tranType" btnRadio="INCOME">{{'sfWebClientApp.TranType.INCOME' | translate}}</label>
+            </div>
+            <!--<label class="form-control-label" jhiTranslate="sfWebClientApp.accountTransaction.tranType" for="field_tranType">Tran Type</label>
             <select class="form-control" name="tranType" [(ngModel)]="accountTransaction.tranType" id="field_tranType"  required>
                 <option value="EXPENSE">{{'sfWebClientApp.TranType.EXPENSE' | translate}}</option>
                 <option value="INCOME">{{'sfWebClientApp.TranType.INCOME' | translate}}</option>
-            </select>
+                &lt;!&ndash;<option value="TranType.EXPENSE">{{'sfWebClientApp.TranType.EXPENSE' | translate}}</option>
+                <option value="TranType.INCOME">{{'sfWebClientApp.TranType.INCOME' | translate}}</option>&ndash;&gt;
+            </select>-->
             <div [hidden]="!(editForm.controls.tranType?.dirty && editForm.controls.tranType?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.tranType?.errors?.required" jhiTranslate="entity.validation.required">
@@ -90,7 +96,9 @@
             </select>
         </div>
 
-        <div class="form-group" *jhiHasAnyAuthority="ROLE_ADMIN">
+        <div class="form-group">
+             <!--*jhiHasAnyAuthority="ROLE_ADMIN"-->
+
             <label class="form-control-label" jhiTranslate="sfWebClientApp.accountTransaction.user" for="field_user">User</label>
             <select class="form-control" id="field_user" name="user" [(ngModel)]="accountTransaction.user" >
                 <option [ngValue]="null"></option>

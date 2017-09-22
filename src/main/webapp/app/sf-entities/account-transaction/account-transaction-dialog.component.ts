@@ -13,7 +13,8 @@ import { User, UserService } from '../../shared';
 import { FinanceAccount, FinanceAccountService } from '../finance-account';
 import { TranCategory, TranCategoryService } from '../tran-category';
 import { ResponseWrapper } from '../../shared';
-import {Principal} from "../../shared/auth/principal.service";
+import {Principal} from '../../shared/auth/principal.service';
+import {LoggerService} from '../../shared/logger/logger.service';
 
 @Component({
     selector: 'jhi-account-transaction-dialog',
@@ -22,14 +23,15 @@ import {Principal} from "../../shared/auth/principal.service";
 export class AccountTransactionDialogComponent implements OnInit {
 
     accountTransaction: AccountTransaction;
+    tranTypes: TranType[] = [TranType.EXPENSE, TranType.INCOME];
     isSaving: boolean;
 
     currentUser: User;
     users: User[];
 
-    financeaccounts: FinanceAccount[];
+    financeaccounts: FinanceAccount[] = [];
 
-    trancategories: TranCategory[];
+    trancategories: TranCategory[] = [];
     postDateDp: any;
 
     constructor(
@@ -40,7 +42,8 @@ export class AccountTransactionDialogComponent implements OnInit {
         private financeAccountService: FinanceAccountService,
         private tranCategoryService: TranCategoryService,
         private eventManager: JhiEventManager,
-        private principal: Principal
+        private principal: Principal,
+        private logger: LoggerService
     ) {
     }
 
@@ -50,11 +53,10 @@ export class AccountTransactionDialogComponent implements OnInit {
 
     load() {
         this.isSaving = false;
-        this.userService.query()
-            .subscribe((res: ResponseWrapper) =>
+        this.userService.query().subscribe((res: ResponseWrapper) =>
             {
                 this.users = res.json;
-                }, (res: ResponseWrapper) => this.onError(res.json));
+            }, (res: ResponseWrapper) => this.onError(res.json));
         this.financeAccountService.query()
             .subscribe((res: ResponseWrapper) => {
                 this.financeaccounts = res.json;
@@ -64,18 +66,16 @@ export class AccountTransactionDialogComponent implements OnInit {
             .subscribe((res: ResponseWrapper) =>
             {
                 this.trancategories = res.json;
-                this.accountTransaction.tranCategory = this.trancategories.length > 0? this.trancategories[0]:this.accountTransaction.tranCategory;
+               this.accountTransaction.tranCategory = this.trancategories.length > 0? this.trancategories[0]:this.accountTransaction.tranCategory;
             }, (res: ResponseWrapper) => this.onError(res.json));
 
         this.loadDefaults();
 
     }
 
-    loadDefaults(){
-        this.principal.identity().then((user) => {
-            this.currentUser = user;
-        });
-        this.accountTransaction.tranType = TranType.EXPENSE;
+    loadDefaults() {
+
+        /*this.accountTransaction.tranType = TranType.EXPENSE;*/
     }
 
     clear() {
@@ -84,7 +84,7 @@ export class AccountTransactionDialogComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        this.accountTransaction.user = this.currentUser;
+        /*this.accountTransaction.user = this.currentUser;*/
         if (this.accountTransaction.id !== undefined) {
             this.subscribeToSaveResponse(
                 this.accountTransactionService.update(this.accountTransaction));
@@ -124,6 +124,22 @@ export class AccountTransactionDialogComponent implements OnInit {
     trackTranCategoryById(index: number, item: TranCategory) {
         return item.id;
     }
+
+    getTranIncomeClass() {
+        return {
+                'btn': true,
+                'btn-secondary': this.accountTransaction.tranType == <TranType><any>'EXPENSE',
+                'btn-success': this.accountTransaction.tranType == <TranType><any>'INCOME'
+            };
+    }
+
+    getTranExpenseClass() {
+        return {
+            'btn': true,
+            'btn-danger': this.accountTransaction.tranType == <TranType><any>'EXPENSE',
+            'btn-secondary': this.accountTransaction.tranType == <TranType><any>'INCOME'
+        };
+    }
 }
 
 @Component({
@@ -154,4 +170,5 @@ export class AccountTransactionPopupComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.routeSub.unsubscribe();
     }
+
 }

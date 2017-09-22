@@ -23,6 +23,7 @@ export * from './model/base-entity';
 export * from './social/social.service';
 export * from './social/social.component';
 export * from './logger/logger.service';
+export * from './datetime/datetime.service';
 
 export * from './shared-libs.module';
 export * from './shared-common.module';
