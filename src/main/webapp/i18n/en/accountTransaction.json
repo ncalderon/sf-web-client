@@ -2,29 +2,29 @@
     "sfWebClientApp": {
         "accountTransaction" : {
             "home": {
-                "title": "Account Transactions",
-                "createLabel": "Create a new Account Transaction",
-                "createOrEditLabel": "Create or edit a Account Transaction"
+                "title": "Transactions",
+                "createLabel": "Create a new Transaction",
+                "createOrEditLabel": "Create or edit a Transaction"
             },
-            "created": "A new Account Transaction is created with identifier {{ param }}",
-            "updated": "A Account Transaction is updated with identifier {{ param }}",
-            "deleted": "A Account Transaction is deleted with identifier {{ param }}",
+            "created": "A new Transaction is created with identifier {{ param }}",
+            "updated": "A Transaction is updated with identifier {{ param }}",
+            "deleted": "A Transaction is deleted with identifier {{ param }}",
             "delete": {
-                "question": "Are you sure you want to delete Account Transaction {{ id }}?"
+                "question": "Are you sure you want to delete Transaction {{ id }}?"
             },
             "detail": {
-                "title": "Account Transaction"
+                "title": "Transaction"
             },
-            "tranType": "Tran Type",
-            "tranNumber": "Tran Number",
+            "tranType": "Type",
+            "tranNumber": "Number",
             "referenceNumber": "Reference Number",
             "postDate": "Post Date",
             "description": "Description",
             "amount": "Amount",
             "paymentMethod": "Payment Method",
             "user": "User",
-            "financeAccount": "Finance Account",
-            "tranCategory": "Tran Category"
+            "financeAccount": "Account",
+            "tranCategory": "Category"
         }
     }
 }
