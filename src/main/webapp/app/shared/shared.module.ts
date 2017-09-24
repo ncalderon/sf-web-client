@@ -19,7 +19,6 @@ import {
     LoggerService,
     DatetimeService
 } from './';
-import {ButtonsModule} from 'ngx-bootstrap';
 
 @NgModule({
     imports: [

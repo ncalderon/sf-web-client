@@ -34,6 +34,8 @@ export class AccountTransactionDialogComponent implements OnInit {
     trancategories: TranCategory[] = [];
     postDateDp: any;
 
+    isDetailsCollapsed: boolean = true;
+
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
@@ -123,6 +125,13 @@ export class AccountTransactionDialogComponent implements OnInit {
 
     trackTranCategoryById(index: number, item: TranCategory) {
         return item.id;
+    }
+
+    getDetailsCollapseClass() {
+        return {
+            'form-row': !this.isDetailsCollapsed,
+            'collapse': this.isDetailsCollapsed
+        };
     }
 
     getTranIncomeClass() {

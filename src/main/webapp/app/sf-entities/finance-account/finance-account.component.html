@@ -16,33 +16,33 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="accountStatus"><span jhiTranslate="sfWebClientApp.financeAccount.accountStatus">Account Status</span> <span class="fa fa-sort"></span></th>
+            <!--<th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="accountStatus"><span jhiTranslate="sfWebClientApp.financeAccount.accountStatus">Account Status</span> <span class="fa fa-sort"></span></th>-->
             <th jhiSortBy="accountNumber"><span jhiTranslate="sfWebClientApp.financeAccount.accountNumber">Account Number</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="name"><span jhiTranslate="sfWebClientApp.financeAccount.name">Name</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="description"><span jhiTranslate="sfWebClientApp.financeAccount.description">Description</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="balance"><span jhiTranslate="sfWebClientApp.financeAccount.balance">Balance</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="isCreditCard"><span jhiTranslate="sfWebClientApp.financeAccount.isCreditCard">Is Credit Card</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="dueDate"><span jhiTranslate="sfWebClientApp.financeAccount.dueDate">Due Date</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="closingDate"><span jhiTranslate="sfWebClientApp.financeAccount.closingDate">Closing Date</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="user.login"><span jhiTranslate="sfWebClientApp.financeAccount.user">User</span> <span class="fa fa-sort"></span></th>
+            <!--<th jhiSortBy="description"><span jhiTranslate="sfWebClientApp.financeAccount.description">Description</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="balance"><span jhiTranslate="sfWebClientApp.financeAccount.balance">Balance</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="isCreditCard"><span jhiTranslate="sfWebClientApp.financeAccount.isCreditCard">Is Credit Card</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="dueDate"><span jhiTranslate="sfWebClientApp.financeAccount.dueDate">Due Date</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="closingDate"><span jhiTranslate="sfWebClientApp.financeAccount.closingDate">Closing Date</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="user.login"><span jhiTranslate="sfWebClientApp.financeAccount.user">User</span> <span class="fa fa-sort"></span></th>-->
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let financeAccount of financeAccounts ;trackBy: trackId">
-                <td><a [routerLink]="['../finance-account', financeAccount.id ]">{{financeAccount.id}}</a></td>
-                <td jhiTranslate="{{'sfWebClientApp.AccountStatus.' + financeAccount.accountStatus}}">{{financeAccount.accountStatus}}</td>
+                <!--<td><a [routerLink]="['../finance-account', financeAccount.id ]">{{financeAccount.id}}</a></td>-->
+                <!--<td jhiTranslate="{{'sfWebClientApp.AccountStatus.' + financeAccount.accountStatus}}">{{financeAccount.accountStatus}}</td>-->
                 <td>{{financeAccount.accountNumber}}</td>
                 <td>{{financeAccount.name}}</td>
-                <td>{{financeAccount.description}}</td>
-                <td>{{financeAccount.balance}}</td>
-                <td>{{financeAccount.isCreditCard}}</td>
-                <td>{{financeAccount.dueDate | date:'mediumDate'}}</td>
-                <td>{{financeAccount.closingDate | date:'mediumDate'}}</td>
-                <td>
+                <!--<td>{{financeAccount.description}}</td>-->
+                <!--<td>{{financeAccount.balance}}</td>-->
+                <!--<td>{{financeAccount.isCreditCard}}</td>-->
+                <!--<td>{{financeAccount.dueDate | date:'mediumDate'}}</td>-->
+                <!--<td>{{financeAccount.closingDate | date:'mediumDate'}}</td>-->
+                <!--<td>
                     {{financeAccount.user?.login}}
-                </td>
+                </td>-->
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

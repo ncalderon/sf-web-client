@@ -16,7 +16,7 @@ import {
     accountTransactionPopupRoute,
     AccountTransactionResolvePagingParams,
 } from './';
-import {ButtonsModule} from 'ngx-bootstrap';
+import {ButtonsModule, CollapseModule} from 'ngx-bootstrap';
 
 const ENTITY_STATES = [
     ...accountTransactionRoute,
@@ -36,7 +36,7 @@ const ENTITY_STATES = [
         AccountTransactionDialogComponent,
         AccountTransactionDeleteDialogComponent,
         AccountTransactionPopupComponent,
-        AccountTransactionDeletePopupComponent,
+        AccountTransactionDeletePopupComponent
     ],
     entryComponents: [
         AccountTransactionComponent,

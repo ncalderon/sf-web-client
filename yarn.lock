@@ -5332,6 +5332,10 @@ ngc-webpack@3.1.1:
     source-map "^0.5.6"
     ts-node "^3.2.0"
 
+ngx-bootstrap@^1.9.3:
+  version "1.9.3"
+  resolved "https://registry.yarnpkg.com/ngx-bootstrap/-/ngx-bootstrap-1.9.3.tgz#28e75d14fb1beaee609383d7694de4eb3ba03b26"
+
 ngx-cookie@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ngx-cookie/-/ngx-cookie-1.0.0.tgz#004fc653febd849b4dd3ee2c63c4cf171f464da9"
