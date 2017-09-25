@@ -16,19 +16,19 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <!--<th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="description"><span jhiTranslate="sfWebClientApp.tranCategory.description">Description</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="user.login"><span jhiTranslate="sfWebClientApp.tranCategory.user">User</span> <span class="fa fa-sort"></span></th>-->
+            <!--<th jhiSortBy="tranCategoryRegex.name"><span jhiTranslate="sfWebClientApp.tranCategory.tranCategoryRegex">Tran Category Regex</span> <span class="fa fa-sort"></span></th>-->
             <th jhiSortBy="name"><span jhiTranslate="sfWebClientApp.tranCategory.name">Name</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="description"><span jhiTranslate="sfWebClientApp.tranCategory.description">Description</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="user.login"><span jhiTranslate="sfWebClientApp.tranCategory.user">User</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="tranCategoryRegex.name"><span jhiTranslate="sfWebClientApp.tranCategory.tranCategoryRegex">Tran Category Regex</span> <span class="fa fa-sort"></span></th>
+
             <th></th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let tranCategory of tranCategories ;trackBy: trackId">
-                <td><a [routerLink]="['../tran-category', tranCategory.id ]">{{tranCategory.id}}</a></td>
-                <td>{{tranCategory.name}}</td>
-                <td>{{tranCategory.description}}</td>
+                <!--<td><a [routerLink]="['../tran-category', tranCategory.id ]">{{tranCategory.id}}</a></td>-->
+                <!--<td>{{tranCategory.description}}</td>
                 <td>
                     {{tranCategory.user?.login}}
                 </td>
@@ -36,7 +36,8 @@
                     <div *ngIf="tranCategory.tranCategoryRegex">
                         <a [routerLink]="['../tran-category-regex', tranCategory.tranCategoryRegex?.id ]" >{{tranCategory.tranCategoryRegex?.name}}</a>
                     </div>
-                </td>
+                </td>-->
+                <td><a [routerLink]="['../tran-category', tranCategory.id ]">{{tranCategory.name}}</a></td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

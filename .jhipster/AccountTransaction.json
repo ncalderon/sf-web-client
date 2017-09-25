@@ -51,7 +51,7 @@
             "fieldValidateRules": [
                 "maxlength"
             ],
-            "fieldValidateRulesMaxlength": 512
+            "fieldValidateRulesMaxlength": 256
         },
         {
             "fieldName": "amount",

@@ -27,8 +27,8 @@ public class Bank extends AbstractAuditingEntity implements Serializable {
     @Column(name = "name", length = 64, nullable = false)
     private String name;
 
-    @Size(max = 512)
-    @Column(name = "description", length = 512)
+    @Size(max = 256)
+    @Column(name = "description", length = 256)
     private String description;
 
     // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove

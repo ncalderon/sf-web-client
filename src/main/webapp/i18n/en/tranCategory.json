@@ -2,24 +2,24 @@
     "sfWebClientApp": {
         "tranCategory" : {
             "home": {
-                "title": "Tran Categories",
-                "createLabel": "Create a new Tran Category",
-                "createOrEditLabel": "Create or edit a Tran Category"
+                "title": "Categories",
+                "createLabel": "Create a new Category",
+                "createOrEditLabel": "Create or edit a Category"
             },
-            "created": "A new Tran Category is created with identifier {{ param }}",
-            "updated": "A Tran Category is updated with identifier {{ param }}",
-            "deleted": "A Tran Category is deleted with identifier {{ param }}",
+            "created": "A new Category is created with identifier {{ param }}",
+            "updated": "A Category is updated with identifier {{ param }}",
+            "deleted": "A Category is deleted with identifier {{ param }}",
             "delete": {
-                "question": "Are you sure you want to delete Tran Category {{ id }}?"
+                "question": "Are you sure you want to delete Category {{ id }}?"
             },
             "detail": {
-                "title": "Tran Category"
+                "title": "Category"
             },
             "name": "Name",
             "description": "Description",
             "transaction": "Transaction",
             "user": "User",
-            "tranCategoryRegex": "Tran Category Regex"
+            "tranCategoryRegex": "Category Regex"
         }
     }
 }

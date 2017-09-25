@@ -1,6 +1,6 @@
 
 <div *ngIf="tranCategory">
-    <h2><span jhiTranslate="sfWebClientApp.tranCategory.detail.title">Tran Category</span> {{tranCategory.id}}</h2>
+    <h2><span jhiTranslate="sfWebClientApp.tranCategory.detail.title">Tran Category</span> {{tranCategory.name}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
@@ -12,16 +12,16 @@
         <dd>
             <span>{{tranCategory.description}}</span>
         </dd>
-        <dt><span jhiTranslate="sfWebClientApp.tranCategory.user">User</span></dt>
+        <!--<dt><span jhiTranslate="sfWebClientApp.tranCategory.user">User</span></dt>
         <dd>
             {{tranCategory.user?.login}}
-        </dd>
-        <dt><span jhiTranslate="sfWebClientApp.tranCategory.tranCategoryRegex">Tran Category Regex</span></dt>
+        </dd>-->
+        <!--<dt><span jhiTranslate="sfWebClientApp.tranCategory.tranCategoryRegex">Tran Category Regex</span></dt>
         <dd>
             <div *ngIf="tranCategory.tranCategoryRegex">
                 <a [routerLink]="['/tran-category-regex', tranCategory.tranCategoryRegex?.id]">{{tranCategory.tranCategoryRegex?.name}}</a>
             </div>
-        </dd>
+        </dd>-->
     </dl>
 
     <button type="submit"

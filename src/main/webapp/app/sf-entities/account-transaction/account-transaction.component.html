@@ -46,8 +46,8 @@
                     </div>
                 </td>
                 <td jhiTranslate="{{'sfWebClientApp.TranType.' + accountTransaction.tranType}}">{{accountTransaction.tranType}}</td>
-                <td>{{accountTransaction.description}}</td>
-                <td>{{accountTransaction.amount}}</td>
+                <td><a [routerLink]="['../account-transaction', accountTransaction.id ]">{{accountTransaction.description}}</a></td>
+                <td>{{accountTransaction.amount | currency:'USD':true:'2.2-2'}}</td>
                 <!--<td><a [routerLink]="['../account-transaction', accountTransaction.id ]">{{accountTransaction.id}}</a></td>-->
                 <!--<td>{{accountTransaction.tranNumber}}</td>
                 <td>{{accountTransaction.referenceNumber}}</td>-->

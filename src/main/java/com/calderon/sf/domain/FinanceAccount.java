@@ -44,8 +44,8 @@ public class FinanceAccount extends AbstractAuditingEntity implements Serializab
     @Column(name = "name", length = 64, nullable = false)
     private String name;
 
-    @Size(max = 512)
-    @Column(name = "description", length = 512)
+    @Size(max = 256)
+    @Column(name = "description", length = 256)
     private String description;
 
     @Column(name = "balance", precision=10, scale=2)
