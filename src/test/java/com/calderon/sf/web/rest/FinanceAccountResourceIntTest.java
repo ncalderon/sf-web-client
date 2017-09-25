@@ -182,24 +182,6 @@ public class FinanceAccountResourceIntTest {
 
     @Test
     @Transactional
-    public void checkAccountNumberIsRequired() throws Exception {
-        int databaseSizeBeforeTest = financeAccountRepository.findAll().size();
-        // set the field null
-        financeAccount.setAccountNumber(null);
-
-        // Create the FinanceAccount, which fails.
-
-        restFinanceAccountMockMvc.perform(post("/api/finance-accounts")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(financeAccount)))
-            .andExpect(status().isBadRequest());
-
-        List<FinanceAccount> financeAccountList = financeAccountRepository.findAll();
-        assertThat(financeAccountList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void checkNameIsRequired() throws Exception {
         int databaseSizeBeforeTest = financeAccountRepository.findAll().size();
         // set the field null

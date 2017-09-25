@@ -43,8 +43,8 @@ public class AccountTransaction extends AbstractAuditingEntity implements Serial
     @Column(name = "post_date", nullable = false)
     private LocalDate postDate;
 
-    @Size(max = 512)
-    @Column(name = "description", length = 512)
+    @Size(max = 256, min = 2)
+    @Column(name = "description", length = 256, nullable = false)
     private String description;
 
     @NotNull

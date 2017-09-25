@@ -35,8 +35,8 @@ public class FinanceAccount extends AbstractAuditingEntity implements Serializab
     private AccountStatus accountStatus;
 
     @NotNull
-    @Size(min = 4, max = 64)
-    @Column(name = "account_number", length = 64, nullable = false)
+    @Size(max = 32)
+    @Column(name = "account_number", length = 32, nullable = true)
     private String accountNumber;
 
     @NotNull

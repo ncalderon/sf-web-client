@@ -26,8 +26,8 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="account_number" type="varchar(64)">
-                <constraints nullable="false" />
+            <column name="account_number" type="varchar(32)">
+                <constraints nullable="true" />
             </column>
 
             <column name="name" type="varchar(64)">
@@ -60,7 +60,7 @@
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        
+
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->
 </databaseChangeLog>

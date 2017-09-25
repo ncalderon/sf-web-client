@@ -34,7 +34,7 @@
                 <!--<td><a [routerLink]="['../finance-account', financeAccount.id ]">{{financeAccount.id}}</a></td>-->
                 <!--<td jhiTranslate="{{'sfWebClientApp.AccountStatus.' + financeAccount.accountStatus}}">{{financeAccount.accountStatus}}</td>-->
                 <td>{{financeAccount.accountNumber}}</td>
-                <td>{{financeAccount.name}}</td>
+                <td><a [routerLink]="['../finance-account', financeAccount.id ]">{{financeAccount.name}}</a></td>
                 <!--<td>{{financeAccount.description}}</td>-->
                 <!--<td>{{financeAccount.balance}}</td>-->
                 <!--<td>{{financeAccount.isCreditCard}}</td>-->

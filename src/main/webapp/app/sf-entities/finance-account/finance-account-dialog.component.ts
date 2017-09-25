@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { FinanceAccount } from './finance-account.model';
+import {AccountStatus, FinanceAccount} from './finance-account.model';
 import { FinanceAccountPopupService } from './finance-account-popup.service';
 import { FinanceAccountService } from './finance-account.service';
 import { User, UserService } from '../../shared';
@@ -24,6 +24,7 @@ export class FinanceAccountDialogComponent implements OnInit {
     users: User[];
     dueDateDp: any;
     closingDateDp: any;
+    isDetailsCollapsed: boolean = true;
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -76,6 +77,29 @@ export class FinanceAccountDialogComponent implements OnInit {
 
     trackUserById(index: number, item: User) {
         return item.id;
+    }
+
+    getInactiveStatusClass() {
+        return {
+            'btn': true,
+            'btn-secondary': this.financeAccount.accountStatus == <AccountStatus><any>'ACTIVE',
+            'btn-danger': this.financeAccount.accountStatus == <AccountStatus><any>'INACTIVE'
+        };
+    }
+
+    getActiveStatusClass() {
+        return {
+            'btn': true,
+            'btn-secondary': this.financeAccount.accountStatus == <AccountStatus><any>'INACTIVE',
+            'btn-success': this.financeAccount.accountStatus == <AccountStatus><any>'ACTIVE'
+        };
+    }
+
+    getDetailsCollapseClass() {
+        return {
+            'form-row': !this.isDetailsCollapsed,
+            'collapse': this.isDetailsCollapsed
+        };
     }
 }
 

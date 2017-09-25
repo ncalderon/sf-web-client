@@ -27,8 +27,7 @@ const ENTITY_STATES = [
     imports: [
         SfWebClientSharedModule,
         SfWebClientAdminModule,
-        RouterModule.forRoot(ENTITY_STATES, { useHash: true }),
-        ButtonsModule.forRoot()
+        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
     ],
     declarations: [
         AccountTransactionComponent,

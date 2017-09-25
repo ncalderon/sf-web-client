@@ -1,20 +1,38 @@
 import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { FinanceAccount } from './finance-account.model';
+import {AccountStatus, FinanceAccount} from './finance-account.model';
 import { FinanceAccountService } from './finance-account.service';
+import {LoggerService} from "../../shared/logger/logger.service";
+import {DatetimeService} from "../../shared/datetime/datetime.service";
+import {User} from "../../shared/user/user.model";
+import {Principal} from "../../shared/auth/principal.service";
 
 @Injectable()
 export class FinanceAccountPopupService {
     private ngbModalRef: NgbModalRef;
+    private currentUser: User;
 
     constructor(
         private modalService: NgbModal,
         private router: Router,
-        private financeAccountService: FinanceAccountService
-
+        private financeAccountService: FinanceAccountService,
+        private principal: Principal,
+        private logger: LoggerService,
+        private dateTimeService: DatetimeService
     ) {
         this.ngbModalRef = null;
+    }
+
+    newAccount() {
+        const account: FinanceAccount = new FinanceAccount();
+        account.accountStatus = <AccountStatus><any>'ACTIVE';
+        this.principal.identity().then((user) => {
+            this.currentUser = user;
+            account.user = user;
+        });
+        account.isCreditCard = false;
+        return account;
     }
 
     open(component: Component, id?: number | any): Promise<NgbModalRef> {
@@ -46,7 +64,7 @@ export class FinanceAccountPopupService {
             } else {
                 // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError
                 setTimeout(() => {
-                    this.ngbModalRef = this.financeAccountModalRef(component, new FinanceAccount());
+                    this.ngbModalRef = this.financeAccountModalRef(component, this.newAccount());
                     resolve(this.ngbModalRef);
                 }, 0);
             }

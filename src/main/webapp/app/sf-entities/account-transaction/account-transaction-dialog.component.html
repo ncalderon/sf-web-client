@@ -7,11 +7,11 @@
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" [hidden]="!accountTransaction.id">
+        <!--<div class="form-group" [hidden]="!accountTransaction.id">
             <label for="id" jhiTranslate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"
                    [(ngModel)]="accountTransaction.id" readonly />
-        </div>
+        </div>-->
         <div class="form-row">
             <div class="form-group col-md-3">
                 <div class="btn-group">
@@ -60,11 +60,19 @@
             <div class="form-group col-md-6">
                 <label class="form-control-label" jhiTranslate="sfWebClientApp.accountTransaction.description" for="field_description">Description</label>
                 <input type="text" class="form-control" name="description" id="field_description"
-                       [(ngModel)]="accountTransaction.description" maxlength="512" />
+                       [(ngModel)]="accountTransaction.description" required minlength="2" maxlength="512" placeholder="Gasoline" />
                 <div [hidden]="!(editForm.controls.description?.dirty && editForm.controls.description?.invalid)">
                     <small class="form-text text-danger"
-                           [hidden]="!editForm.controls.description?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 512 }">
-                        This field cannot be longer than 512 characters.
+                           [hidden]="!editForm.controls.description?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                    <small class="form-text text-danger"
+                           [hidden]="!editForm.controls.description?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 3 }">
+                        This field is required to be at least 3 characters.
+                    </small>
+                    <small class="form-text text-danger"
+                           [hidden]="!editForm.controls.description?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 256 }">
+                        This field cannot be longer than 256 characters.
                     </small>
                 </div>
             </div>

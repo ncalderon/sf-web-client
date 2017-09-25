@@ -23,7 +23,6 @@ import {LoggerService} from '../../shared/logger/logger.service';
 export class AccountTransactionDialogComponent implements OnInit {
 
     accountTransaction: AccountTransaction;
-    tranTypes: TranType[] = [TranType.EXPENSE, TranType.INCOME];
     isSaving: boolean;
 
     currentUser: User;
