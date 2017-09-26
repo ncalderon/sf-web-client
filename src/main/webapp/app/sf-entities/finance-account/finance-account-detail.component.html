@@ -22,7 +22,7 @@
         </dd>
         <dt><span jhiTranslate="sfWebClientApp.financeAccount.balance">Balance</span></dt>
         <dd>
-            <span>{{financeAccount.balance}}</span>
+            <span>{{financeAccount.balance | currency:'USD':true:'2.2-2'}}</span>
         </dd>
         <dt><span jhiTranslate="sfWebClientApp.financeAccount.isCreditCard">Is Credit Card</span></dt>
         <dd>

@@ -148,7 +148,7 @@ public class AccountTransactionResource {
     @Timed
     public ResponseEntity<List<AccountTransaction>> getAccountTransactionsFromFile(@RequestParam("file") MultipartFile file) {
         String curretUserLogin = SecurityUtils.getCurrentUserLogin();
-        storageService.store(file, SecurityUtils.getCurrentUserLogin());
+        storageService.store(file, SecurityUtils.getCurrentUserLogin() + ".csv");
         Path transactionFile = storageService.load(curretUserLogin);
 
         List<AccountTransaction> list = accountTransactionRepository.findByUserIsCurrentUser();

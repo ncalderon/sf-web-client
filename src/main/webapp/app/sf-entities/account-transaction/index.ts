@@ -5,4 +5,5 @@ export * from './account-transaction-dialog.component';
 export * from './account-transaction-delete-dialog.component';
 export * from './account-transaction-detail.component';
 export * from './account-transaction.component';
+export * from './transaction-upload/transaction-upload.component';
 export * from './account-transaction.route';

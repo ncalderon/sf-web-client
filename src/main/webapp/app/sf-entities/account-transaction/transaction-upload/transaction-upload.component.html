@@ -1,0 +1,115 @@
+<style>
+    .my-drop-zone { border: dotted 3px lightgray; }
+    .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+    .another-file-over-class { border: dotted 3px green; }
+    .windowClass { }
+    /*
+        html, body { height: 100%; }*/
+</style>
+
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+    <h2><span>Upload File Transactions</span></h2>
+    <hr>
+    <button type="button"
+            (click)="goBack()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+    <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+        <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+    </button>
+    <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+        <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+    </button>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <div class="form-group">
+        <label class="form-control-label"
+               for="field_account">Account</label>
+        <select class="form-control" id="field_account" name="account"
+                [(ngModel)]="account" required>
+            <option *ngIf="!editForm.value.account" [ngValue]="null" selected></option>
+            <option
+                [ngValue]="accountOption.id === account?.id ? account : accountOption"
+                *ngFor="let accountOption of accounts; trackBy: trackAccountById">{{accountOption.name}}
+            </option>
+        </select>
+    </div>
+    <div [hidden]="!(editForm.controls.account?.dirty && editForm.controls.account?.invalid)">
+        <small class="form-text text-danger"
+               [hidden]="!editForm.controls.account?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+        </small>
+    </div>
+    <div class="form-group">
+        <input type="file" ng2FileSelect [uploader]="uploader" required />
+        <div class="row">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-success btn-s"
+                        (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                    <span class="glyphicon glyphicon-upload"></span> Upload all
+                </button>
+                <button type="button" class="btn btn-warning btn-s"
+                        (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                    <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+                </button>
+                <button type="button" class="btn btn-danger btn-s"
+                        (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                    <span class="glyphicon glyphicon-trash"></span> Remove all
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            Queue progress:
+            <div class="col-md-12">
+                <div class="progress" style="">
+                    <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-responsive"  *ngIf="transactions">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><span>Post Date</span>
+                    <span class="fa fa-sort"></span></th>
+                <th><span>Tran Type</span>
+                    <span class="fa fa-sort"></span></th>
+                <th><span>Tran Category</span>
+                    <span class="fa fa-sort"></span></th>
+                <th><span
+                >Description</span> <span
+                    class="fa fa-sort"></span></th>
+                <th><span>Amount</span> <span
+                    class="fa fa-sort"></span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let accountTransaction of accountTransactions ;trackBy: trackId">
+                <td>{{accountTransaction.postDate | date:'medium'}}</td>
+                <td jhiTranslate="{{'sfWebBaseApp.TranType.' + accountTransaction.tranType}}">
+                    {{accountTransaction.tranType}}
+                </td>
+                <td>
+                    <div *ngIf="accountTransaction.tranCategory">
+                        <a [routerLink]="['../tran-category', accountTransaction.tranCategory?.id ]">{{accountTransaction.tranCategory?.name}}</a>
+                    </div>
+                </td>
+                <td>{{accountTransaction.description}}</td>
+                <td>{{accountTransaction.amount}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="accountTransactions && accountTransactions.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page"
+                            (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</form>

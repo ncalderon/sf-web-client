@@ -1,10 +1,17 @@
 <div>
     <h2>
         <span jhiTranslate="sfWebClientApp.accountTransaction.home.title">Account Transactions</span>
+
         <button class="btn btn-primary float-right jh-create-entity create-account-transaction" [routerLink]="['/', { outlets: { popup: ['account-transaction-new'] } }]">
             <span class="fa fa-plus"></span>
             <span  jhiTranslate="sfWebClientApp.accountTransaction.home.createLabel">
             Create new Account Transaction
+            </span>
+        </button>
+        <button class="btn btn-success float-right jh-upload-entity upload-account-transaction" [routerLink]="['../account-transaction/upload']">
+            <span class="fa"></span>
+            <span >
+            Upload Transactions
             </span>
         </button>
     </h2>

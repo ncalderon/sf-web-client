@@ -5344,6 +5344,10 @@ ngx-infinite-scroll@0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/ngx-infinite-scroll/-/ngx-infinite-scroll-0.5.1.tgz#dd9452c602ff7c3222f0ca168481aa14140286b7"
 
+ngx-uploader@^3.3.11:
+  version "3.3.11"
+  resolved "https://registry.yarnpkg.com/ngx-uploader/-/ngx-uploader-3.3.11.tgz#18538377ca060eeb88ffdc20abb71f31af9478f2"
+
 no-case@^2.2.0:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/no-case/-/no-case-2.3.2.tgz#60b813396be39b3f1288a4c1ed5d1e7d28b464ac"

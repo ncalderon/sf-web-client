@@ -12,11 +12,12 @@ import {
     AccountTransactionPopupComponent,
     AccountTransactionDeletePopupComponent,
     AccountTransactionDeleteDialogComponent,
+    TransactionUploadComponent,
     accountTransactionRoute,
     accountTransactionPopupRoute,
-    AccountTransactionResolvePagingParams,
+    AccountTransactionResolvePagingParams
 } from './';
-import {ButtonsModule, CollapseModule} from 'ngx-bootstrap';
+import {FileUploadModule} from 'ng2-file-upload';
 
 const ENTITY_STATES = [
     ...accountTransactionRoute,
@@ -27,7 +28,8 @@ const ENTITY_STATES = [
     imports: [
         SfWebClientSharedModule,
         SfWebClientAdminModule,
-        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
+        RouterModule.forRoot(ENTITY_STATES, { useHash: true, enableTracing: true }),
+        FileUploadModule
     ],
     declarations: [
         AccountTransactionComponent,
@@ -35,7 +37,8 @@ const ENTITY_STATES = [
         AccountTransactionDialogComponent,
         AccountTransactionDeleteDialogComponent,
         AccountTransactionPopupComponent,
-        AccountTransactionDeletePopupComponent
+        AccountTransactionDeletePopupComponent,
+        TransactionUploadComponent
     ],
     entryComponents: [
         AccountTransactionComponent,
@@ -43,6 +46,7 @@ const ENTITY_STATES = [
         AccountTransactionPopupComponent,
         AccountTransactionDeleteDialogComponent,
         AccountTransactionDeletePopupComponent,
+        TransactionUploadComponent
     ],
     providers: [
         AccountTransactionService,

@@ -1,6 +1,6 @@
 
 <div *ngIf="accountTransaction">
-    <h2><span jhiTranslate="sfWebClientApp.accountTransaction.detail.title">Account Transaction</span> - {{accountTransaction.id}}</h2>
+    <h2><span jhiTranslate="sfWebClientApp.accountTransaction.detail.title">Account Transaction</span> - {{accountTransaction.description}}</h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
@@ -29,7 +29,7 @@
 
         <dt><span jhiTranslate="sfWebClientApp.accountTransaction.amount">Amount</span></dt>
         <dd>
-            <span>{{accountTransaction.amount}}</span>
+            <span>{{accountTransaction.amount | currency:'USD':true:'2.2-2'}}</span>
         </dd>
 
         <dt><span jhiTranslate="sfWebClientApp.accountTransaction.tranType">Tran Type</span></dt>
