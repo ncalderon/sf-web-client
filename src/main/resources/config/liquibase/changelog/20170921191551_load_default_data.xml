@@ -7,7 +7,7 @@
         Added audit columns to entities.
     -->
     <changeSet id="20170921191551-2" author="nathaniel">
-        <!--<loadData
+        <loadData
             encoding="UTF-8"
             tableName="bank"
             separator=","
@@ -18,11 +18,38 @@
 
         <loadData
             encoding="UTF-8"
-            tableName="bank_account"
-            separator=";"
+            tableName="finance_account"
+            separator=","
             file="config/liquibase/accounts.csv">
             <column name="created_date" type="timestamp"/>
             <column name="last_modified_date" type="timestamp"/>
-        </loadData>-->
+        </loadData>
+
+        <loadData
+            encoding="UTF-8"
+            tableName="tran_category_regex"
+            separator=","
+            file="config/liquibase/categories_regex.csv">
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </loadData>
+
+        <loadData
+            encoding="UTF-8"
+            tableName="tran_category"
+            separator=","
+            file="config/liquibase/categories.csv">
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </loadData>
+
+        <loadData
+            encoding="UTF-8"
+            tableName="account_transaction"
+            separator=","
+            file="config/liquibase/transactions.csv">
+            <column name="created_date" type="timestamp"/>
+            <column name="last_modified_date" type="timestamp"/>
+        </loadData>
     </changeSet>
 </databaseChangeLog>

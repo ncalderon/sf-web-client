@@ -1,0 +1,3 @@
+ID,NAME,DESCRIPTION,USER_ID,TRAN_CATEGORY_REGEX_ID,CREATED_BY,LAST_MODIFIED_BY
+1,Entertaiment,Entertaiment,4,1,system,system
+2,Payment,Payment,4,1,system,system
