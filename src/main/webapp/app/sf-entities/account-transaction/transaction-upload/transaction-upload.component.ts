@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {LoggerService} from '../../../shared/logger/logger.service';
 import {Subscription} from 'rxjs/Subscription';
-import {FileUploader} from 'ng2-file-upload';
+import {FileItem, FileUploader, ParsedResponseHeaders} from 'ng2-file-upload';
 import {FinanceAccount} from '../../finance-account/finance-account.model';
 import {AccountTransaction} from '../account-transaction.model';
 import {JhiAlertService, JhiEventManager} from 'ng-jhipster';
@@ -41,6 +41,7 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.isSaving = false;
         this.uploader = new FileUploader({url: 'api/account-transactions/upload', authToken: 'Bearer ' + this.authServerProvider.getToken() });
+        this.uploader.onCompleteItem = this.onCompleteItem;
         this.subscription = this.route.params.subscribe((params) => {
             this.load();
         });
@@ -51,6 +52,15 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
         this.logger.log('***Loading***');
         this.accountService.query()
             .subscribe((res: ResponseWrapper) => { this.accounts = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+    }
+
+
+    onCompleteItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
+        this.transactions = <AccountTransaction[]>JSON.parse(response);
+        return void 0;
+    }
+    upload(){
+        this.uploader.uploadItem(<FileItem>this.uploader.getNotUploadedItems()[0]);
     }
 
     goBack() {

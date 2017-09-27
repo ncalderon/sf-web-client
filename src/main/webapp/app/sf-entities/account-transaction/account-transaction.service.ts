@@ -66,8 +66,7 @@ export class AccountTransactionService {
 
     private convert(accountTransaction: AccountTransaction): AccountTransaction {
         const copy: AccountTransaction = Object.assign({}, accountTransaction);
-        copy.postDate = this.dateUtils
-            .convertLocalDateToServer(accountTransaction.postDate);
+        copy.postDate = this.dateUtils.convertLocalDateToServer(accountTransaction.postDate);
         return copy;
     }
 }
