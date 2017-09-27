@@ -61,13 +61,15 @@ export class AccountTransactionDialogComponent implements OnInit {
         this.financeAccountService.query()
             .subscribe((res: ResponseWrapper) => {
                 this.financeaccounts = res.json;
-                this.accountTransaction.financeAccount = this.financeaccounts.length > 0? this.financeaccounts[0]:this.accountTransaction.financeAccount;
+                if(!this.accountTransaction.id)
+                    this.accountTransaction.financeAccount = this.financeaccounts.length > 0? this.financeaccounts[0]:this.accountTransaction.financeAccount;
             }, (res: ResponseWrapper) => this.onError(res.json));
         this.tranCategoryService.query()
             .subscribe((res: ResponseWrapper) =>
             {
                 this.trancategories = res.json;
-               this.accountTransaction.tranCategory = this.trancategories.length > 0? this.trancategories[0]:this.accountTransaction.tranCategory;
+                if(!this.accountTransaction.id)
+                    this.accountTransaction.tranCategory = this.trancategories.length > 0? this.trancategories[0]:this.accountTransaction.tranCategory;
             }, (res: ResponseWrapper) => this.onError(res.json));
 
         this.loadDefaults();
@@ -76,7 +78,6 @@ export class AccountTransactionDialogComponent implements OnInit {
 
     loadDefaults() {
 
-        /*this.accountTransaction.tranType = TranType.EXPENSE;*/
     }
 
     clear() {
