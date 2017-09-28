@@ -68,6 +68,9 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
         this.uploader.onCompleteItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
             this.onCompleteUpload(item, response, status, headers);
         };
+        this.uploader.onBeforeUploadItem = (fileItem: FileItem) => {
+            this.onBeforeUploadItem(fileItem);
+        };
 
         this.principal.identity().then((user) => {
             this.currentUser = user;
@@ -85,7 +88,13 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
 
     }
 
-    onCompleteUpload(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
+    private onBeforeUploadItem(fileItem: FileItem) {
+        this.logger.info("Before Upload Item");
+        debugger;
+
+    }
+
+    private onCompleteUpload(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
         this.logger.info("******* Response from upload file endpoint *******");
         this.logger.info(JSON.parse(response));
         this.transactions = <AccountTransaction[]>JSON.parse(response);
@@ -100,7 +109,6 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
     }
 
     remove(index: number, item: AccountTransaction) {
-        debugger;
         this.transactions.splice(index,  1);
     }
 
