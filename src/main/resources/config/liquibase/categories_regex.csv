@@ -2,3 +2,4 @@ ID,NAME,DESCRIPTION,REGEX,USER_ID,CREATED_BY,LAST_MODIFIED_BY
 1,Entertaiment Regex,Entertaiment Regex,Entertaiment Regex,4,system,system
 2,Payment Regex,Payment Regex,Payment Regex,4,system,system
 3,Gasoline Regex,Gasoline Regex,Gasoline Regex,4,system,system
+4,Others Regex,Others Regex,Others Regex,4,system,system

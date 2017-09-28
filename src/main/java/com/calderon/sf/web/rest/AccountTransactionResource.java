@@ -78,6 +78,15 @@ public class AccountTransactionResource {
             .body(result);
     }
 
+    @PostMapping("/account-transactions/bulk")
+    @Timed
+    public ResponseEntity<List<AccountTransaction>> createAccountTransactions(@Valid @RequestBody List<AccountTransaction> transactions) throws URISyntaxException {
+        log.debug("REST request to save bulk transactions : {}", transactions);
+        List<AccountTransaction> result = accountTransactionRepository.save(transactions);
+        return ResponseEntity.created(new URI("/api/account-transactions/bulk"))
+            .body(result);
+    }
+
     /**
      * PUT  /account-transactions : Updates an existing accountTransaction.
      *

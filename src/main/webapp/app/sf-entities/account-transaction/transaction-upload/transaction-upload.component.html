@@ -37,7 +37,7 @@
     </div>
 
     <div class="form-group">
-            <input type="file" name="fileInput" ng2FileSelect [uploader]="uploader" required [(ngModel)]="fileInput" />
+            <input type="file" name="fileInput" ng2FileSelect [uploader]="uploader" [(ngModel)]="fileInput" />
             <button type="button" class="btn btn-success btn-s"
                     (click)="upload()" [disabled]="!uploader.getNotUploadedItems().length">
                 <span class="glyphicon glyphicon-upload"></span> Upload file
@@ -52,7 +52,7 @@
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
             <span class="fa fa-ban"></span>&nbsp;<span>Clear</span>
         </button>
-        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving || transactions.length<=0" class="btn btn-primary">
             <span class="fa fa-save"></span>&nbsp;<span>Import</span>
         </button>
     </div>
@@ -74,17 +74,15 @@
                     class="fa fa-sort"></span></th>
                 <th><span>Tran Category</span>
                     <span class="fa fa-sort"></span></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let transaction of transactions ;trackBy: trackId">
+            <tr *ngFor="let transaction of transactions ;let i=index ;trackBy: trackId">
                 <td>{{transaction.postDate | date:'medium'}}</td>
-                <td>
-                    {{transaction.tranType}}
-                </td>
+                <td>{{transaction.tranType}}</td>
                 <td>{{transaction.description}}</td>
                 <td>{{transaction.amount}}</td>
-
                 <!--[value]="category.id === transaction.tranCategory?.id ? transaction.tranCategory : category" -->
                 <!--[value]="category"-->
                 <td>
@@ -101,6 +99,12 @@
                             {{category.name}}
                         </option>
                     </select>
+                </td>
+                <td>
+                    <a href="javascript:void(0);" (click)="remove(i, transaction)" class="btn btn-danger btn-sm">
+                        <span class="fa fa-remove" aria-hidden="true"></span>
+                        <span><strong></strong></span>
+                    </a>
                 </td>
             </tr>
             </tbody>

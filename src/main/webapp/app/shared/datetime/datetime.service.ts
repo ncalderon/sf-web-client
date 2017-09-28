@@ -20,4 +20,12 @@ export class DatetimeService {
         };
     }
 
+    convertToObjDate(date: any): any {
+        return {
+            year: date.getFullYear()
+            , month: date.getMonth()+1
+            , day: date.getDate()
+        };
+    }
+
 }

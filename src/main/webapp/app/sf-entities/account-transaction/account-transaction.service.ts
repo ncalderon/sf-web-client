@@ -5,7 +5,7 @@ import { SERVER_API_URL } from '../../app.constants';
 
 import { JhiDateUtils } from 'ng-jhipster';
 
-import { AccountTransaction } from './account-transaction.model';
+import {AccountTransaction} from './account-transaction.model';
 import { ResponseWrapper, createRequestOption } from '../../shared';
 
 @Injectable()
@@ -18,6 +18,15 @@ export class AccountTransactionService {
     create(accountTransaction: AccountTransaction): Observable<AccountTransaction> {
         const copy = this.convert(accountTransaction);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
+            const jsonResponse = res.json();
+            this.convertItemFromServer(jsonResponse);
+            return jsonResponse;
+        });
+    }
+
+    createBulk(transactions: AccountTransaction[]): Observable<AccountTransaction[]> {
+        const copy = this.convertArray(transactions);
+        return this.http.post(this.resourceUrl + "/bulk", copy).map((res: Response) => {
             const jsonResponse = res.json();
             this.convertItemFromServer(jsonResponse);
             return jsonResponse;
@@ -68,5 +77,13 @@ export class AccountTransactionService {
         const copy: AccountTransaction = Object.assign({}, accountTransaction);
         copy.postDate = this.dateUtils.convertLocalDateToServer(accountTransaction.postDate);
         return copy;
+    }
+
+    private convertArray(accountTransactions: AccountTransaction[]): AccountTransaction[] {
+        const copyTrans: AccountTransaction[] = [];
+        for (let tran of accountTransactions){
+            copyTrans.push(this.convert(tran));
+        }
+        return copyTrans;
     }
 }

@@ -4,7 +4,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {FileItem, FileUploader, ParsedResponseHeaders} from 'ng2-file-upload';
 import {FinanceAccount} from '../../finance-account/finance-account.model';
 import {AccountTransaction} from '../account-transaction.model';
-import {JhiAlertService, JhiEventManager} from 'ng-jhipster';
+import {JhiAlertService, JhiDateUtils, JhiEventManager} from 'ng-jhipster';
 import {FinanceAccountService} from '../../finance-account/finance-account.service';
 import {ActivatedRoute} from '@angular/router';
 import {AuthServerProvider} from '../../../shared/auth/auth-jwt.service';
@@ -13,6 +13,9 @@ import {AccountTransactionService} from '../account-transaction.service';
 import {TranCategoryService} from '../../tran-category/tran-category.service';
 import {TranCategory} from '../../tran-category/tran-category.model';
 import {Observable} from 'rxjs/Observable';
+import {User} from '../../../shared/user/user.model';
+import {Principal} from '../../../shared/auth/principal.service';
+import {DatetimeService} from '../../../shared/datetime/datetime.service';
 
 @Component({
     selector: 'jhi-transaction-upload',
@@ -21,15 +24,20 @@ import {Observable} from 'rxjs/Observable';
 })
 export class TransactionUploadComponent implements OnInit, OnDestroy {
 
+    /*component property*/
     hasBaseDropZoneOver = false;
     isSaving: boolean;
     uploader: FileUploader;
-    account: FinanceAccount;
+
+    /*dropdown data*/
     accounts: FinanceAccount[];
     categories: TranCategory[];
-    transactions: AccountTransaction[] = [];
-    fileInput: any;
 
+    /*model*/
+    transactions: AccountTransaction[] = [];
+    account: FinanceAccount;
+    currentUser: User;
+    fileInput: any;
 
     constructor(
         private logger: LoggerService,
@@ -39,7 +47,9 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
         private transactionService: AccountTransactionService,
         private eventManager: JhiEventManager,
         private route: ActivatedRoute,
-        private authServerProvider: AuthServerProvider
+        private authServerProvider: AuthServerProvider,
+        private principal: Principal,
+        private dateUtils: JhiDateUtils
     ) {
     }
 
@@ -51,13 +61,17 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
     }
 
     load() {
-        this.logger.log('***Loading***');
 
+        this.logger.log('***Loading***');
+        this.isSaving = false;
         this.uploader = new FileUploader({url: 'api/account-transactions/upload', authToken: 'Bearer ' + this.authServerProvider.getToken() });
         this.uploader.onCompleteItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
             this.onCompleteUpload(item, response, status, headers);
         };
-        this.isSaving = false;
+
+        this.principal.identity().then((user) => {
+            this.currentUser = user;
+        });
 
         this.accountService.query()
             .subscribe((res: ResponseWrapper) => {
@@ -83,6 +97,11 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
         this.logger.info("Uploading");
         this.uploader.uploadItem(<FileItem>this.uploader.getNotUploadedItems()[0]);
         /*this.uploader.component = this;*/
+    }
+
+    remove(index: number, item: AccountTransaction) {
+        debugger;
+        this.transactions.splice(index,  1);
     }
 
     trackAccountById(index: number, item: FinanceAccount) {
@@ -111,28 +130,39 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
         this.fileInput = null;
     }
 
-    private subscribeToSaveResponse(result: Observable<AccountTransaction>) {
-        result.subscribe((res: AccountTransaction) =>
+    private onSaveSuccess(result: AccountTransaction[]) {
+        this.eventManager.broadcast({ name: 'accountTransactionListModification', content: 'OK'});
+        this.isSaving = false;
+        this.goBack();
+    }
+
+    private subscribeToSaveResponse(result: Observable<AccountTransaction[]>) {
+        result.subscribe((res: AccountTransaction[]) =>
             this.onSaveSuccess(res), (res: Response) => this.onSaveError());
+    }
+
+    private prepareTransactions(): AccountTransaction[] {
+        const copyTransactions: AccountTransaction[] = [];
+        for (let tran of this.transactions){
+            const copy: AccountTransaction = Object.assign({}, tran);
+            copy.id = null;
+            copy.financeAccount = this.account;
+            copy.user = this.currentUser;
+            let postDate: Date = this.dateUtils.convertLocalDateFromServer(copy.postDate);
+            copy.postDate = {
+                year: postDate.getFullYear(),
+                month: postDate.getMonth() + 1,
+                day: postDate.getDate()
+            };
+            copyTransactions.push(copy);
+        }
+        return copyTransactions;
     }
 
     save() {
         this.isSaving = true;
         this.logger.log('***Saving***');
-        /*this.accountTransaction.user = this.currentUser;*/
-        /*if (this.accountTransaction.id !== undefined) {
-            this.subscribeToSaveResponse(
-                this.accountTransactionService.update(this.accountTransaction));
-        } else {
-            this.subscribeToSaveResponse(
-                this.accountTransactionService.create(this.accountTransaction));
-        }*/
-    }
-
-    private onSaveSuccess(result: AccountTransaction) {
-        //this.eventManager.broadcast({ name: 'accountTransactionListModification', content: 'OK'});
-        this.isSaving = false;
-
+        this.subscribeToSaveResponse(this.transactionService.createBulk(this.prepareTransactions()));
     }
 
     private onSaveError() {
@@ -144,7 +174,6 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-
 
     }
 
