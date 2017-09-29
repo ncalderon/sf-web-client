@@ -45,6 +45,7 @@ public class FileSystemStorageService implements StorageService {
             }
             Files.copy(file.getInputStream(), this.rootLocation.resolve(filename),
                 StandardCopyOption.REPLACE_EXISTING);
+            file.getInputStream().close();
         }
         catch (IOException e) {
             throw new StorageException("Failed to store file " + filename, e);
@@ -91,6 +92,23 @@ public class FileSystemStorageService implements StorageService {
     @Override
     public void deleteAll() {
         FileSystemUtils.deleteRecursively(rootLocation.toFile());
+    }
+
+    @Override
+    public void delete(Path file) {
+        try {
+            Files.delete(file);
+        } catch (IOException e) {
+            throw new StorageFileNotFoundException("Could not delete file: " + file.getFileName(), e);
+        }
+    }
+
+    public void deleteIfExist(Path file) {
+        try {
+            Files.deleteIfExists(file);
+        } catch (IOException e) {
+            throw new StorageFileNotFoundException("Could not delete file: " + file.getFileName(), e);
+        }
     }
 
     @Override

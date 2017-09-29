@@ -1,6 +1,8 @@
 package com.calderon.sf.web.rest;
 
+import com.calderon.sf.domain.Bank;
 import com.calderon.sf.security.SecurityUtils;
+import com.calderon.sf.service.TranFileReaderService;
 import com.calderon.sf.service.io.StorageService;
 import com.codahale.metrics.annotation.Timed;
 import com.calderon.sf.domain.AccountTransaction;
@@ -31,6 +33,7 @@ import java.net.URISyntaxException;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,11 +50,18 @@ public class AccountTransactionResource {
 
 
     private StorageService storageService;
+    private TranFileReaderService tranFileReaderService;
 
     @Autowired
     public void setStorageService (StorageService storageService){
         this.storageService = storageService;
     }
+
+    @Autowired
+    public void setTranFileReaderService(TranFileReaderService tranFileReaderService) {
+        this.tranFileReaderService = tranFileReaderService;
+    }
+
     private final AccountTransactionRepository accountTransactionRepository;
 
     public AccountTransactionResource(AccountTransactionRepository accountTransactionRepository) {
@@ -155,12 +165,13 @@ public class AccountTransactionResource {
 
     @PostMapping("/account-transactions/upload")
     @Timed
-    public ResponseEntity<List<AccountTransaction>> getAccountTransactionsFromFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<List<AccountTransaction>> getAccountTransactionsFromFile(@RequestParam("bank")Bank bank, @RequestParam("file") MultipartFile file) {
         String curretUserLogin = SecurityUtils.getCurrentUserLogin();
-        storageService.store(file, SecurityUtils.getCurrentUserLogin() + ".csv");
-        Path transactionFile = storageService.load(curretUserLogin);
-
-        List<AccountTransaction> list = accountTransactionRepository.findByUserIsCurrentUser();
+        String filename = curretUserLogin + ".csv";
+        storageService.deleteIfExist(Paths.get(filename));
+        storageService.store(file, filename);
+        Path transactionFile = storageService.load(filename);
+        List<AccountTransaction> list = tranFileReaderService.read(bank, transactionFile);
         /*HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/account-transactions/upload");*/
         return ResponseEntity.ok(list);
     }

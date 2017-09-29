@@ -96,6 +96,7 @@
         <springfox.version>2.7.0</springfox.version>
         <validation-api.version>1.1.0.Final</validation-api.version>
         <yarn.version>v0.27.5</yarn.version>
+        <smart-finance.version>1.0</smart-finance.version>
     </properties>
 
     <dependencyManagement>
@@ -111,6 +112,19 @@
     </dependencyManagement>
 
     <dependencies>
+        <!--begin - smart finance dependecies-->
+        <dependency>
+            <groupId>com.calderon.sf</groupId>
+            <artifactId>sf-reader-spec</artifactId>
+            <version>${smart-finance.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.calderon.sf</groupId>
+            <artifactId>bpd-csv-reader</artifactId>
+            <version>${smart-finance.version}</version>
+        </dependency>
+        <!--end - smart finance dependecies-->
+
         <dependency>
             <groupId>io.github.jhipster</groupId>
             <artifactId>jhipster</artifactId>

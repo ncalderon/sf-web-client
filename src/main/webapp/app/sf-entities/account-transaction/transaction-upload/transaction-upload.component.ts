@@ -16,6 +16,8 @@ import {Observable} from 'rxjs/Observable';
 import {User} from '../../../shared/user/user.model';
 import {Principal} from '../../../shared/auth/principal.service';
 import {DatetimeService} from '../../../shared/datetime/datetime.service';
+import {Bank} from '../../bank/bank.model';
+import {BankService} from '../../bank/bank.service';
 
 @Component({
     selector: 'jhi-transaction-upload',
@@ -36,15 +38,19 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
     /*model*/
     transactions: AccountTransaction[] = [];
     account: FinanceAccount;
+    bank: Bank;
+    banks: Bank[] = [];
     currentUser: User;
     fileInput: any;
 
     constructor(
         private logger: LoggerService,
         private alertService: JhiAlertService,
+
         private accountService: FinanceAccountService,
         private tranCategoryService: TranCategoryService,
         private transactionService: AccountTransactionService,
+        private bankService: BankService,
         private eventManager: JhiEventManager,
         private route: ActivatedRoute,
         private authServerProvider: AuthServerProvider,
@@ -68,8 +74,8 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
         this.uploader.onCompleteItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
             this.onCompleteUpload(item, response, status, headers);
         };
-        this.uploader.onBeforeUploadItem = (fileItem: FileItem) => {
-            this.onBeforeUploadItem(fileItem);
+        this.uploader.onBuildItemForm = (fileItem: FileItem, form: any) => {
+            this.onBuildItemForm(fileItem, form);
         };
 
         this.principal.identity().then((user) => {
@@ -79,19 +85,25 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
         this.accountService.query()
             .subscribe((res: ResponseWrapper) => {
                 this.accounts = res.json;
-                this.account = this.accounts.length > 0? this.accounts[0] : this.account;
+                this.account = this.accounts.length > 0 ? this.accounts[0] : this.account;
             }, (res: ResponseWrapper) => this.onError(res.json));
         this.tranCategoryService.query()
             .subscribe((res: ResponseWrapper) => {
                 this.categories = res.json;
             }, (res: ResponseWrapper) => this.onError(res.json));
 
+        this.bankService.query().subscribe((res: ResponseWrapper) => {
+                this.banks = res.json;
+                this.bank = this.banks.length > 0 ? this.banks[0] : this.bank;
+            }, (res: ResponseWrapper) =>
+                this.onError(res.json)
+            );
+
     }
 
-    private onBeforeUploadItem(fileItem: FileItem) {
-        this.logger.info("Before Upload Item");
-        debugger;
-
+    private onBuildItemForm(fileItem: FileItem, form: any): any {
+        this.logger.info("******onBuildItemForm*****");
+        form.append("bank", this.bank.id);
     }
 
     private onCompleteUpload(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
@@ -110,6 +122,10 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
 
     remove(index: number, item: AccountTransaction) {
         this.transactions.splice(index,  1);
+    }
+
+    trackBankById(index: number, item: Bank) {
+        return item.id;
     }
 
     trackAccountById(index: number, item: FinanceAccount) {
