@@ -167,11 +167,8 @@ public class AccountTransactionResource {
     @Timed
     public ResponseEntity<List<AccountTransaction>> getAccountTransactionsFromFile(@RequestParam("bank")Bank bank, @RequestParam("file") MultipartFile file) {
         String curretUserLogin = SecurityUtils.getCurrentUserLogin();
-        String filename = curretUserLogin + ".csv";
-        storageService.deleteIfExist(Paths.get(filename));
-        storageService.store(file, filename);
-        Path transactionFile = storageService.load(filename);
-        List<AccountTransaction> list = tranFileReaderService.read(bank, transactionFile);
+        Path tempFile = storageService.createTemporaryFile(curretUserLogin, ".csv", file);
+        List<AccountTransaction> list = tranFileReaderService.read(bank, tempFile);
         /*HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/account-transactions/upload");*/
         return ResponseEntity.ok(list);
     }

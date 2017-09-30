@@ -24,4 +24,5 @@ public interface StorageService {
     void deleteAll();
     void delete(Path file);
     void deleteIfExist(Path file);
+    Path createTemporaryFile(String prefix, String suffix, MultipartFile file);
 }

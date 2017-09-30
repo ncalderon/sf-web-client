@@ -28,7 +28,7 @@ public class TransactionMapper {
             transaction.setPostDate(tran.getTranPostDate());
             transaction.setReferenceNumber(tran.getTranRefNum());
             transaction.setTranNumber(tran.getTranNum());
-            transaction.setTranType(tran.getType().id() == 1? TranType.EXPENSE:TranType.INCOME);
+            transaction.setTranType(tran.getType().id() == 1? TranType.INCOME:TranType.EXPENSE);
             return transaction;
         }
     }

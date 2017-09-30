@@ -100,10 +100,10 @@
                 <td>{{transaction.postDate | date:'medium'}}</td>
                 <td>{{transaction.tranType}}</td>
                 <td>{{transaction.description}}</td>
-                <td>{{transaction.amount}}</td>
+                <td class="text-right">{{transaction.amount | currency:'USD':true:'2.2-2'}}</td>
                 <!--[value]="category.id === transaction.tranCategory?.id ? transaction.tranCategory : category" -->
                 <!--[value]="category"-->
-                <td>
+                <td class="text-right">
                     <select class="form-control"
                             name="category"
                             [(ngModel)]="transaction.tranCategory"

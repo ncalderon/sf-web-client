@@ -1,11 +1,13 @@
 package com.calderon.sf.service.io;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.FileAttribute;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +53,20 @@ public class FileSystemStorageService implements StorageService {
             throw new StorageException("Failed to store file " + filename, e);
         }
     }
+
+    public Path createTemporaryFile(String prefix, String suffix, MultipartFile file){
+        try {
+            Path temp =  Files.createTempFile(prefix, suffix);
+            File tempFile = temp.toFile();
+            Files.write(temp, file.getBytes());
+            tempFile.deleteOnExit();
+            return temp;
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new StorageException("Failed to create Temp File", e);
+        }
+    }
+
 
     @Override
     public Stream<Path> loadAll() {
