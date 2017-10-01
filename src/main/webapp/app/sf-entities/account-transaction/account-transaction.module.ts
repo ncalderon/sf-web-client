@@ -18,6 +18,7 @@ import {
     AccountTransactionResolvePagingParams
 } from './';
 import {FileUploadModule} from 'ng2-file-upload';
+import {SearchModule} from "../../shared/search/search.module";
 
 const ENTITY_STATES = [
     ...accountTransactionRoute,
@@ -29,7 +30,8 @@ const ENTITY_STATES = [
         SfWebClientSharedModule,
         SfWebClientAdminModule,
         RouterModule.forRoot(ENTITY_STATES, { useHash: true, enableTracing: true }),
-        FileUploadModule
+        FileUploadModule,
+        SearchModule
     ],
     declarations: [
         AccountTransactionComponent,

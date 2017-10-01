@@ -18,6 +18,7 @@ import {Principal} from '../../../shared/auth/principal.service';
 import {DatetimeService} from '../../../shared/datetime/datetime.service';
 import {Bank} from '../../bank/bank.model';
 import {BankService} from '../../bank/bank.service';
+import {Searcher} from "../../../shared/search/searcher";
 
 @Component({
     selector: 'jhi-transaction-upload',
@@ -25,7 +26,7 @@ import {BankService} from '../../bank/bank.service';
     styles: []
 })
 export class TransactionUploadComponent implements OnInit, OnDestroy {
-
+    searcher: Searcher;
     /*component property*/
     hasBaseDropZoneOver = false;
     isSaving: boolean;
@@ -37,6 +38,7 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
 
     /*model*/
     transactions: AccountTransaction[] = [];
+    transactionsObservables: Observable<AccountTransaction[]>= Observable.of([]);
     account: FinanceAccount;
     bank: Bank;
     banks: Bank[] = [];
@@ -70,7 +72,18 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
 
         this.logger.log('***Loading***');
         this.isSaving = false;
-        this.uploader = new FileUploader({url: 'api/account-transactions/upload', authToken: 'Bearer ' + this.authServerProvider.getToken() });
+
+        this.searcher = new Searcher();
+        this.searcher.onSearch = (term: string) => {
+            return this.OnSearch(term.toLocaleLowerCase());
+        }
+        this.uploader = new FileUploader(
+            {
+                url: 'api/account-transactions/upload',
+                authToken: 'Bearer ' + this.authServerProvider.getToken()
+                /*allowedFileType: ['xls'],
+                allowedMimeType: ['text/csv']*/
+            });
         this.uploader.onCompleteItem = (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
             this.onCompleteUpload(item, response, status, headers);
         };
@@ -101,6 +114,17 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
 
     }
 
+    private OnSearch(term: string): Observable<any[]> {
+        this.logger.info("***** OnSearch ******");
+        this.logger.info(term);
+        this.transactionsObservables = Observable.of(this.transactions);
+        if(term.length<=0){
+            return this.transactionsObservables ;
+        }
+        this.transactionsObservables = this.transactionsObservables.map(trans => trans.filter(tran=> (<AccountTransaction>tran).description.toLocaleLowerCase().match(term) || ((<AccountTransaction>tran).amount + "").toLocaleLowerCase().match(term)));
+        return this.transactionsObservables;
+    }
+
     private onBuildItemForm(fileItem: FileItem, form: any): any {
         this.logger.info("******onBuildItemForm*****");
         form.append("bank", this.bank.id);
@@ -110,6 +134,7 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
         this.logger.info("******* Response from upload file endpoint *******");
         this.logger.info(JSON.parse(response));
         this.transactions = <AccountTransaction[]>JSON.parse(response);
+        this.transactionsObservables = Observable.of(this.transactions);
         this.uploader.clearQueue();
         this.fileInput = null;
         return void 0;
@@ -202,3 +227,4 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
     }
 
 }
+

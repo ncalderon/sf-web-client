@@ -1,8 +1,20 @@
 <style>
-    .my-drop-zone { border: dotted 3px lightgray; }
-    .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
-    .another-file-over-class { border: dotted 3px green; }
-    .windowClass { }
+    .my-drop-zone {
+        border: dotted 3px lightgray;
+    }
+
+    .nv-file-over {
+        border: dotted 3px red;
+    }
+
+    /* Default class applied to drop zones on over */
+    .another-file-over-class {
+        border: dotted 3px green;
+    }
+
+    .windowClass {
+    }
+
     /*
         html, body { height: 100%; }*/
 </style>
@@ -55,77 +67,120 @@
         </div>
     </div>
     <div class="form-group">
-            <input type="file" name="fileInput" ng2FileSelect [uploader]="uploader" [(ngModel)]="fileInput" [disabled]="!bank" />
-            <button type="button" class="btn btn-success btn-s"
-                    (click)="upload()" [disabled]="!uploader.getNotUploadedItems().length">
-                <span class="glyphicon glyphicon-upload"></span> Upload file
-            </button>
-            <button type="button" class="btn btn-warning btn-s"
-                    (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
-                <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-            </button>
+        <input type="file" name="fileInput" ng2FileSelect [uploader]="uploader" [(ngModel)]="fileInput"
+               [disabled]="!bank"/>
+        <button type="button" class="btn btn-success btn-s"
+                (click)="upload()" [disabled]="!uploader.getNotUploadedItems().length">
+            <span class="glyphicon glyphicon-upload"></span> Upload file
+        </button>
+        <button type="button" class="btn btn-warning btn-s"
+                (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+            <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+        </button>
     </div>
 
     <div class="form-group">
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
             <span class="fa fa-ban"></span>&nbsp;<span>Clear</span>
         </button>
-        <button type="submit" [disabled]="editForm.form.invalid || isSaving || transactions.length<=0" class="btn btn-primary">
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving || transactions.length<=0"
+                class="btn btn-primary">
             <span class="fa fa-save"></span>&nbsp;<span>Import</span>
         </button>
     </div>
     <div class="row"></div>
     <br/>
-    <!--{{ diagnostic }}-->
-    <div class="table-responsive"  *ngIf="transactions">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th><span>Post Date</span>
-                    <span class="fa fa-sort"></span></th>
-                <th><span>Tran Type</span>
-                    <span class="fa fa-sort"></span></th>
-                <th><span
-                >Description</span> <span
-                    class="fa fa-sort"></span></th>
-                <th><span>Amount</span> <span
-                    class="fa fa-sort"></span></th>
-                <th><span>Tran Category</span>
-                    <span class="fa fa-sort"></span></th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let transaction of transactions ;let i=index ; trackBy: trackId">
-                <td>{{transaction.postDate | date:'medium'}}</td>
-                <td>{{transaction.tranType}}</td>
-                <td>{{transaction.description}}</td>
-                <td class="text-right">{{transaction.amount | currency:'USD':true:'2.2-2'}}</td>
-                <!--[value]="category.id === transaction.tranCategory?.id ? transaction.tranCategory : category" -->
-                <!--[value]="category"-->
-                <td class="text-right">
-                    <select class="form-control"
-                            name="category"
-                            [(ngModel)]="transaction.tranCategory"
-                            #category="ngModel"
-                    >
-                        <option [ngValue]="null"></option>
-                        <option
-                            *ngFor="let category of categories; trackBy: trackTranCategoryById"
-                            [ngValue]="category.id === transaction.tranCategory?.id ? transaction.tranCategory : category"
-                        >
-                            {{category.name}}
-                        </option>
-                    </select>
-                </td>
-                <td>
-                    <a href="javascript:void(0);" (click)="remove(i, transaction)" class="btn btn-danger btn-sm">
-                        <span class="fa fa-remove" aria-hidden="true"></span>
-                        <span><strong></strong></span>
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+
+    <!--<div class="form-group row">
+        <label for="field_search" class="col-sm-1 col-form-label">Search</label>
+        <div class="col-sm-4">
+
+        </div>
+    </div>-->
+    <!--<div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Search</h4>
+            <input
+                id="field_search"
+                class="form-control"
+                type="text"
+                name="field_search"
+                jhiSearch
+                [searcher]="searcher"
+                placeholder="Find by all fields"
+                [disabled]="transactions.length <= 0"
+            />
+        </div>
+    </div>-->
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Transactions</h4>
+            <!--<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>-->
+            <input
+                id="field_search"
+                class="form-control"
+                type="text"
+                name="field_search"
+                jhiSearch
+                [searcher]="searcher"
+                [items]="transactionsObservables"
+                placeholder="Find by all fields"
+                [disabled]="transactions.length <= 0"
+            />
+            <div class="table-responsive" *ngIf="transactions">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th><span>Post Date</span>
+                        </th>
+                        <th><span>Tran Type</span>
+                        </th>
+                        <th><span>Description</span>
+                        </th>
+                        <th><span>Amount</span>
+                        </th>
+                        <th><span>Tran Category</span>
+                        </th>
+
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let transaction of transactionsObservables | async ;let i=index ; trackBy: trackId">
+                        <td>{{transaction.postDate | date:'medium'}}</td>
+                        <td>{{transaction.tranType}}</td>
+                        <td>{{transaction.description}}</td>
+                        <td class="text-right">{{transaction.amount | currency:'USD':true:'2.2-2'}}</td>
+                        <!--[value]="category.id === transaction.tranCategory?.id ? transaction.tranCategory : category" -->
+                        <!--[value]="category"-->
+                        <td class="text-right">
+                            <select class="form-control"
+                                    name="category"
+                                    [(ngModel)]="transaction.tranCategory"
+                                    #category="ngModel"
+                            >
+                                <option [ngValue]="null"></option>
+                                <option
+                                    *ngFor="let category of categories; trackBy: trackTranCategoryById"
+                                    [ngValue]="category.id === transaction.tranCategory?.id ? transaction.tranCategory : category"
+                                >
+                                    {{category.name}}
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0);" (click)="remove(i, transaction)"
+                               class="btn btn-danger btn-sm">
+                                <span class="fa fa-remove" aria-hidden="true"></span>
+                                <span><strong></strong></span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+    <!--{{ diagnostic }}-->
+
 </form>

@@ -14,7 +14,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 })
 export class FinanceAccountComponent implements OnInit, OnDestroy {
 
-currentAccount: any;
+    currentAccount: any;
     financeAccounts: FinanceAccount[];
     error: any;
     success: any;
@@ -28,6 +28,8 @@ currentAccount: any;
     predicate: any;
     previousPage: any;
     reverse: any;
+
+    rowsAccount: RowAccount[] =[];
 
     constructor(
         private financeAccountService: FinanceAccountService,
@@ -47,6 +49,15 @@ currentAccount: any;
             this.reverse = data['pagingParams'].ascending;
             this.predicate = data['pagingParams'].predicate;
         });
+    }
+
+    getAccountClass(account: FinanceAccount) {
+        return {
+            'card': true,
+            'bg-light': account.isCreditCard == false,
+            'text-white': account.isCreditCard === true,
+            'bg-info': account.isCreditCard === true
+        };
     }
 
     loadAll() {
@@ -110,14 +121,37 @@ currentAccount: any;
         return result;
     }
 
+    private refreshRowsModel(){
+        let currentRow;
+        currentRow = new RowAccount();
+        currentRow.accounts = [];
+        for(let i = 0; i < this.financeAccounts.length; i++){
+            currentRow.accounts.push(this.financeAccounts[i]);
+            if ((i+1) % 4 == 0){
+                this.rowsAccount.push(currentRow);
+                currentRow = new RowAccount();
+                currentRow.accounts = [];
+            }
+        }
+        if (currentRow.accounts.length>0)
+            this.rowsAccount.push(currentRow);
+    }
+
     private onSuccess(data, headers) {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         this.queryCount = this.totalItems;
         // this.page = pagingParams.page;
         this.financeAccounts = data;
+        this.refreshRowsModel();
+
     }
+
     private onError(error) {
         this.alertService.error(error.message, null, null);
     }
+}
+
+class RowAccount {
+    accounts: FinanceAccount[];
 }

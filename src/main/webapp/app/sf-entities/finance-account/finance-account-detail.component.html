@@ -1,57 +1,78 @@
 
 <div *ngIf="financeAccount">
-    <h2><span jhiTranslate="sfWebClientApp.financeAccount.detail.title">Account: </span>- {{financeAccount.name}}</h2>
+    <h2><span jhiTranslate="sfWebClientApp.financeAccount.detail.title">Account</span> - {{financeAccount.name}}</h2>
+
+    <div class="text-right">
+        <button type="submit"
+                (click)="previousState()"
+                class="btn btn-info">
+            <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+        </button>
+
+        <button type="button"
+                [routerLink]="['/', { outlets: { popup: 'finance-account/'+ financeAccount.id + '/edit'} }]"
+                replaceUrl="true"
+                class="btn btn-primary">
+            <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+        </button>
+
+        <button type="submit"
+                [routerLink]="['/', { outlets: { popup: 'finance-account/'+ financeAccount.id + '/delete'} }]"
+                replaceUrl="true"
+                class="btn btn-danger">
+            <span class="fa fa-remove"></span>&nbsp;<span jhiTranslate="entity.action.delete">Delete</span>
+        </button>
+    </div>
     <hr>
     <jhi-alert-error></jhi-alert-error>
-    <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="sfWebClientApp.financeAccount.accountStatus">Account Status</span></dt>
-        <dd>
-            <span jhiTranslate="{{'sfWebClientApp.AccountStatus.' + financeAccount.accountStatus}}">{{financeAccount.accountStatus}}</span>
-        </dd>
-        <dt><span jhiTranslate="sfWebClientApp.financeAccount.accountNumber">Account Number</span></dt>
-        <dd>
-            <span>{{financeAccount.accountNumber}}</span>
-        </dd>
-        <dt><span jhiTranslate="sfWebClientApp.financeAccount.name">Name</span></dt>
-        <dd>
-            <span>{{financeAccount.name}}</span>
-        </dd>
-        <dt><span jhiTranslate="sfWebClientApp.financeAccount.description">Description</span></dt>
-        <dd>
-            <span>{{financeAccount.description}}</span>
-        </dd>
-        <dt><span jhiTranslate="sfWebClientApp.financeAccount.balance">Balance</span></dt>
-        <dd>
-            <span>{{financeAccount.balance | currency:'USD':true:'2.2-2'}}</span>
-        </dd>
-        <dt><span jhiTranslate="sfWebClientApp.financeAccount.isCreditCard">Is Credit Card</span></dt>
-        <dd>
-            <span>{{financeAccount.isCreditCard}}</span>
-        </dd>
-        <dt><span jhiTranslate="sfWebClientApp.financeAccount.dueDate">Due Date</span></dt>
-        <dd>
-            <span>{{financeAccount.dueDate | date:'mediumDate'}}</span>
-        </dd>
-        <dt><span jhiTranslate="sfWebClientApp.financeAccount.closingDate">Closing Date</span></dt>
-        <dd>
-            <span>{{financeAccount.closingDate | date:'mediumDate'}}</span>
-        </dd>
-        <!--<dt><span jhiTranslate="sfWebClientApp.financeAccount.user">User</span></dt>
-        <dd>
-            {{financeAccount.user?.login}}
-        </dd>-->
-    </dl>
 
-    <button type="submit"
-            (click)="previousState()"
-            class="btn btn-info">
-        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
-    </button>
+    <div class="row">
+        <div class="col-md-2">
+            <dl>
+                <dt><span jhiTranslate="sfWebClientApp.financeAccount.accountStatus">Account Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'sfWebClientApp.AccountStatus.' + financeAccount.accountStatus}}">{{financeAccount.accountStatus}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfWebClientApp.financeAccount.accountNumber">Account Number</span></dt>
+                <dd>
+                    <span>{{financeAccount.accountNumber}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfWebClientApp.financeAccount.name">Name</span></dt>
+                <dd>
+                    <span>{{financeAccount.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfWebClientApp.financeAccount.description">Description</span></dt>
+                <dd>
+                    <span>{{financeAccount.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfWebClientApp.financeAccount.balance">Balance</span></dt>
+                <dd>
+                    <span>{{financeAccount.balance | currency:'USD':true:'2.2-2'}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfWebClientApp.financeAccount.isCreditCard">Is Credit Card</span></dt>
+                <dd>
+                    <span>{{financeAccount.isCreditCard}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfWebClientApp.financeAccount.dueDate">Due Date</span></dt>
+                <dd>
+                    <span>{{financeAccount.dueDate | date:'mediumDate'}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfWebClientApp.financeAccount.closingDate">Closing Date</span></dt>
+                <dd>
+                    <span>{{financeAccount.closingDate | date:'mediumDate'}}</span>
+                </dd>
+                <!--<dt><span jhiTranslate="sfWebClientApp.financeAccount.user">User</span></dt>
+                <dd>
+                    {{financeAccount.user?.login}}
+                </dd>-->
+            </dl>
+        </div>
+        <div class="col-md-9">
+            <div>
+                <table></table>
+            </div>
+        </div>
 
-    <button type="button"
-            [routerLink]="['/', { outlets: { popup: 'finance-account/'+ financeAccount.id + '/edit'} }]"
-            replaceUrl="true"
-            class="btn btn-primary">
-        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
-    </button>
+    </div>
+
 </div>
