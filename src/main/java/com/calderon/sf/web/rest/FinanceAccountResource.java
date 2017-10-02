@@ -123,9 +123,9 @@ public class FinanceAccountResource {
     //@Transactional
     @GetMapping("/finance-accounts/{id}/account-transactions")
     @Timed
-    public ResponseEntity<List<Transaction>> getAllAccountTransactions(@PathVariable Long id) {
+    public ResponseEntity<List<AccountTransaction>> getAllAccountTransactions(@PathVariable Long id) {
         log.debug("REST request to get Transactions by Account : {}", id);
-        List<Transaction> transactions = accountTransactionRepository.findByUserIsCurrentUserAndFinanceAccount(id);
+        List<AccountTransaction> transactions = accountTransactionRepository.findByUserIsCurrentUserAndFinanceAccount_Id(id);
         /*HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/account-transactions");*/
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }

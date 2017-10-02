@@ -7,10 +7,10 @@
         <!--<p class="lead" jhiTranslate="home.subtitle">This is your homepage</p>-->
 
         <div [ngSwitch]="isAuthenticated()">
-            <div class="alert alert-success" *ngSwitchCase="true">
+            <!--<div class="alert alert-success" *ngSwitchCase="true">
                 <span *ngIf="account" jhiTranslate="home.logged.message"
                     translateValues="{username: '{{account.login}}'}"> You are logged in as user "{{account.login}}". </span>
-            </div>
+            </div>-->
 
             <div class="alert alert-warning" *ngSwitchCase="false">
                 <span jhiTranslate="global.messages.info.authenticated.prefix">If you want to </span>
@@ -26,3 +26,4 @@
     </div>
 </div>
 <jhi-line-chart *ngIf="isAuthenticated()"></jhi-line-chart>
+<jhi-bar-chart *ngIf="isAuthenticated()"></jhi-bar-chart>

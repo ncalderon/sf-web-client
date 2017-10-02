@@ -1,12 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {AccountTransactionService} from "../../../sf-entities/account-transaction/account-transaction.service";
-import {LoggerService} from "../../logger/logger.service";
-import {Principal} from "../../auth/principal.service";
-import {FinanceAccountService} from "../../../sf-entities/finance-account/finance-account.service";
-import {ResponseWrapper} from "../../model/response-wrapper.model";
-import {FinanceAccount} from "../../../sf-entities/finance-account/finance-account.model";
-import {JhiAlertService} from "ng-jhipster";
-import {AccountTransaction} from "../../../sf-entities/account-transaction/account-transaction.model";
+import {AccountTransactionService} from '../../../sf-entities/account-transaction/account-transaction.service';
+import {LoggerService} from '../../logger/logger.service';
+import {Principal} from '../../auth/principal.service';
+import {FinanceAccountService} from '../../../sf-entities/finance-account/finance-account.service';
+import {ResponseWrapper} from '../../model/response-wrapper.model';
+import {FinanceAccount} from '../../../sf-entities/finance-account/finance-account.model';
+import {JhiAlertService} from 'ng-jhipster';
+import {AccountTransaction} from '../../../sf-entities/account-transaction/account-transaction.model';
+import {TranChartData} from '../tran-chart-data';
+import {DecimalPipe} from '@angular/common';
 
 @Component({
     selector: 'jhi-line-chart',
@@ -18,7 +20,47 @@ export class LineChartComponent implements OnInit {
     currentUser: any;
     accounts: FinanceAccount[];
     account: FinanceAccount;
+    chartData: TranChartData;
 
+    // lineChart
+    lineChartData: Array<any> = [
+        {data: [], label: 'EXPENSES'},
+        {data: [], label: 'INCOMES'}
+    ];
+    /*= [
+        {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
+        {data: [28, 48, 40, 19, 86, 27, '90'], label: 'Series B'}
+    ];*/
+    lineChartLabels: Array<any> = [];
+    /*= ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];*/
+    lineChartOptions: any = {
+        responsive: true,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    // Include a dollar sign in the ticks
+                    callback: (value: any, index: any, values: any) => {
+                        return this.formatTick(value, index, values);
+                    }
+                }
+            }]
+        }
+    };
+    lineChartLegend = true;
+    lineChartType = 'line';
+    barChartType = 'bar';
+
+
+    /*scales: {
+        yAxes: [{
+            ticks: {
+                // Include a dollar sign in the ticks
+                callback: (value: any, index: any, values: any) => {
+                    this.formatTick(value, index, values);
+                }
+            }
+        }]
+    }*/
 
     constructor(
         private tranService: AccountTransactionService,
@@ -29,11 +71,11 @@ export class LineChartComponent implements OnInit {
     ) {
     }
 
-    private load(){
+    private load() {
         this.accountService.query()
             .subscribe((res: ResponseWrapper) => {
                 this.accounts = res.json;
-                this.account = this.accounts.length > 0? this.accounts[0]: null;
+                this.account = this.accounts.length > 0 ? this.accounts[0] : null;
                 this.loadTransaction(this.account)
             }, (res: ResponseWrapper) => this.onError(res.json));
     }
@@ -42,6 +84,7 @@ export class LineChartComponent implements OnInit {
         this.accountService.findTransactions(account.id)
             .subscribe((transactions: AccountTransaction[]) => {
                 this.account.accountTransactions = transactions;
+                this.refreshChart(transactions);
             });
 
     }
@@ -53,57 +96,16 @@ export class LineChartComponent implements OnInit {
         this.load();
     }
 
-    // lineChart
-    public lineChartData: Array<any> = [
-        {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-        {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'},
-        {data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C'}
-    ];
-    public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-    public lineChartOptions: any = {
-        responsive: true
-    };
-    public lineChartColors: Array<any> = [
-        { // grey
-            backgroundColor: 'rgba(148,159,177,0.2)',
-            borderColor: 'rgba(148,159,177,1)',
-            pointBackgroundColor: 'rgba(148,159,177,1)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-        },
-        { // dark grey
-            backgroundColor: 'rgba(77,83,96,0.2)',
-            borderColor: 'rgba(77,83,96,1)',
-            pointBackgroundColor: 'rgba(77,83,96,1)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgba(77,83,96,1)'
-        },
-        { // grey
-            backgroundColor: 'rgba(148,159,177,0.2)',
-            borderColor: 'rgba(148,159,177,1)',
-            pointBackgroundColor: 'rgba(148,159,177,1)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-        }
-    ];
-    public lineChartLegend: boolean = true;
-    public lineChartType: string = 'line';
+    refreshChart(transactions: AccountTransaction[]) {
+        const currentYear = new Date().getFullYear();
+        this.chartData = new TranChartData(transactions);
+        this.lineChartLabels = this.chartData.getChartLabels(currentYear);
+        this.lineChartData = this.chartData.getChartData(currentYear);
+    }
 
-    public randomize(): void {
-        let _lineChartData: Array<any> = new Array(this.lineChartData.length);
-        for (let i = 0; i < this.lineChartData.length; i++) {
-            _lineChartData[i] = {
-                data: new Array(this.lineChartData[i].data.length),
-                label: this.lineChartData[i].label
-            };
-            for (let j = 0; j < this.lineChartData[i].data.length; j++) {
-                _lineChartData[i].data[j] = Math.floor((Math.random() * 100) + 1);
-            }
-        }
-        this.lineChartData = _lineChartData;
+    formatTick(value: any, index: any, values: any): any {
+        this.logger.info('*****Format Tick*****');
+        return new DecimalPipe('USD').transform(value, '2.2-2');;
     }
 
     // events

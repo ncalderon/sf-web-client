@@ -121,7 +121,12 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
         if(term.length<=0){
             return this.transactionsObservables ;
         }
-        this.transactionsObservables = this.transactionsObservables.map(trans => trans.filter(tran=> (<AccountTransaction>tran).description.toLocaleLowerCase().match(term) || ((<AccountTransaction>tran).amount + "").toLocaleLowerCase().match(term)));
+        this.transactionsObservables = this.transactionsObservables.map(trans =>
+            trans.filter(tran =>
+                (<AccountTransaction>tran).description.toLocaleLowerCase().match(term) ||
+                ((<AccountTransaction>tran).amount + "").toLocaleLowerCase().match(term)
+            )
+        );
         return this.transactionsObservables;
     }
 
