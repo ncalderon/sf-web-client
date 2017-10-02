@@ -1,6 +1,7 @@
 package com.calderon.sf.repository;
 
 import com.calderon.sf.domain.AccountTransaction;
+import com.calderon.sf.domain.projections.Transaction;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -20,6 +21,9 @@ public interface AccountTransactionRepository extends JpaRepository<AccountTrans
 
     @Query("select account_transaction from AccountTransaction account_transaction where account_transaction.user.login = ?#{principal.username}")
     Page<AccountTransaction> findByUserIsCurrentUser(Pageable pageable);
+
+    @Query("select account_transaction from AccountTransaction account_transaction where account_transaction.user.login = ?#{principal.username} and account_transaction.financeAccount = ?#{financeAccount}")
+    List<Transaction> findByUserIsCurrentUserAndFinanceAccount(Long financeAccount);
 
 
 }

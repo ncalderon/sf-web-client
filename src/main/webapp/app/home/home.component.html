@@ -3,8 +3,8 @@
         <!--<span class="hipster img-fluid rounded"></span>-->
     </div>
     <div class="col-md-9">
-        <h1 class="display-4" jhiTranslate="home.title">Welcome!</h1>
-        <p class="lead" jhiTranslate="home.subtitle">This is your homepage</p>
+        <!--<h1 class="display-4" jhiTranslate="home.title">Welcome!</h1>-->
+        <!--<p class="lead" jhiTranslate="home.subtitle">This is your homepage</p>-->
 
         <div [ngSwitch]="isAuthenticated()">
             <div class="alert alert-success" *ngSwitchCase="true">
@@ -25,13 +25,4 @@
 
     </div>
 </div>
-<div class="row">
-    <div class="col-md-3">
-
-    </div>
-
-    <div class="col-md-9">
-
-    </div>
-
-</div>
+<jhi-line-chart *ngIf="isAuthenticated()"></jhi-line-chart>

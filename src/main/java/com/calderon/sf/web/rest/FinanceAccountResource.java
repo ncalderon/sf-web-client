@@ -1,5 +1,8 @@
 package com.calderon.sf.web.rest;
 
+import com.calderon.sf.domain.AccountTransaction;
+import com.calderon.sf.domain.projections.Transaction;
+import com.calderon.sf.repository.AccountTransactionRepository;
 import com.codahale.metrics.annotation.Timed;
 import com.calderon.sf.domain.FinanceAccount;
 
@@ -8,6 +11,7 @@ import com.calderon.sf.web.rest.util.HeaderUtil;
 import com.calderon.sf.web.rest.util.PaginationUtil;
 import io.swagger.annotations.ApiParam;
 import io.github.jhipster.web.util.ResponseUtil;
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -15,12 +19,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,9 +42,11 @@ public class FinanceAccountResource {
     private static final String ENTITY_NAME = "financeAccount";
 
     private final FinanceAccountRepository financeAccountRepository;
+    private final AccountTransactionRepository accountTransactionRepository;
 
-    public FinanceAccountResource(FinanceAccountRepository financeAccountRepository) {
+    public FinanceAccountResource(FinanceAccountRepository financeAccountRepository, AccountTransactionRepository accountTransactionRepository) {
         this.financeAccountRepository = financeAccountRepository;
+        this.accountTransactionRepository = accountTransactionRepository;
     }
 
     /**
@@ -110,6 +118,16 @@ public class FinanceAccountResource {
         log.debug("REST request to get FinanceAccount : {}", id);
         FinanceAccount financeAccount = financeAccountRepository.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(financeAccount));
+    }
+
+    //@Transactional
+    @GetMapping("/finance-accounts/{id}/account-transactions")
+    @Timed
+    public ResponseEntity<List<Transaction>> getAllAccountTransactions(@PathVariable Long id) {
+        log.debug("REST request to get Transactions by Account : {}", id);
+        List<Transaction> transactions = accountTransactionRepository.findByUserIsCurrentUserAndFinanceAccount(id);
+        /*HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/account-transactions");*/
+        return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 
     /**

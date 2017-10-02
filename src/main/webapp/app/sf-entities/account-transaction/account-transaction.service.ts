@@ -68,6 +68,12 @@ export class AccountTransactionService {
         return new ResponseWrapper(res.headers, jsonResponse, res.status);
     }
 
+    private convertItemsFromServer(accountTransactions: AccountTransaction[]) {
+        for (let tran of accountTransactions){
+            this.convertItemFromServer(tran);
+        }
+    }
+
     private convertItemFromServer(entity: any) {
         entity.postDate = this.dateUtils
             .convertLocalDateFromServer(entity.postDate);

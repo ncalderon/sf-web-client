@@ -4,11 +4,13 @@ import { RouterModule } from '@angular/router';
 import { SfWebClientSharedModule } from '../shared';
 
 import { HOME_ROUTE, HomeComponent } from './';
+import {SfChartsModule} from '../shared/charts/sf-charts.module';
 
 @NgModule({
     imports: [
         SfWebClientSharedModule,
-        RouterModule.forRoot([ HOME_ROUTE ], { useHash: true })
+        RouterModule.forRoot([ HOME_ROUTE ], { useHash: true }),
+        SfChartsModule
     ],
     declarations: [
         HomeComponent,

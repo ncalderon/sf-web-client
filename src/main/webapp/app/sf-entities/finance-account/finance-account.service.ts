@@ -7,6 +7,7 @@ import { JhiDateUtils } from 'ng-jhipster';
 
 import { FinanceAccount } from './finance-account.model';
 import { ResponseWrapper, createRequestOption } from '../../shared';
+import {AccountTransaction} from "../account-transaction/account-transaction.model";
 
 @Injectable()
 export class FinanceAccountService {
@@ -41,6 +42,14 @@ export class FinanceAccountService {
         });
     }
 
+    findTransactions(id: number): Observable<AccountTransaction[]> {
+        return this.http.get(`${this.resourceUrl}/${id}/account-transactions`).map((res: Response) => {
+            const jsonResponse = res.json();
+            this.convertTransactionsFromServer(jsonResponse);
+            return jsonResponse;
+        });
+    }
+
     query(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
         return this.http.get(this.resourceUrl, options)
@@ -49,6 +58,17 @@ export class FinanceAccountService {
 
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
+    }
+
+    private convertTransactionsFromServer(accountTransactions: AccountTransaction[]) {
+        for (let tran of accountTransactions){
+            this.convertTransactionFromServer(tran);
+        }
+    }
+
+    private convertTransactionFromServer(entity: any) {
+        entity.postDate = this.dateUtils
+            .convertLocalDateFromServer(entity.postDate);
     }
 
     private convertResponse(res: Response): ResponseWrapper {
