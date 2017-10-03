@@ -27,7 +27,7 @@ import {
     ActiveMenuDirective,
     ErrorComponent
 } from './layouts';
-import {ButtonsModule} from 'ngx-bootstrap';
+import {DashboardModule} from './dashboard/dashboard.module';
 
 @NgModule({
     imports: [
@@ -38,6 +38,7 @@ import {ButtonsModule} from 'ngx-bootstrap';
         SfWebClientHomeModule,
         SfWebClientAdminModule,
         SfWebClientAccountModule,
+        DashboardModule,
         /*SfWebClientEntityModule,*/
         // jhipster-needle-angular-add-module JHipster will add new module here
         AppSfWebClientEntityModule

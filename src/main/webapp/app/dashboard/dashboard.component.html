@@ -1,0 +1,26 @@
+<div>
+    <h2><span>Dashboard</span></h2>
+    <jhi-alert></jhi-alert>
+
+    <div class="row" *ngIf="chartLabels.length > 0">
+        <div class="col-md-6">
+            <jhi-line-chart *ngIf="isAuthenticated()" [chartLabels]="chartLabels" [chartData]="chartData"></jhi-line-chart>
+        </div>
+        <div class="col-md-6">
+            <table class="table table-responsive table-condensed table-sm">
+                <tr>
+                    <th *ngFor="let label of chartLabels">{{label}}</th>
+                </tr>
+                <tr *ngFor="let d of chartData">
+                    <td *ngFor="let label of chartLabels; let j=index">{{d && d.data[j] | currency:'USD':true:'2.2-2'}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row justify-content-center" *ngIf="chartLabels.length > 0">
+        <div class="col-md-8">
+            <jhi-bar-chart *ngIf="isAuthenticated()" [chartLabels]="chartLabels" [chartData]="chartData"></jhi-bar-chart>
+        </div>
+    </div>
+</div>

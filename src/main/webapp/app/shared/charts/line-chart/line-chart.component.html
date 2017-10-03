@@ -3,12 +3,24 @@
 
     </div>
 </div>-->
+<div style="display: block">
+    <canvas baseChart width="200" height="50"
+            [datasets]="chartData"
+            [labels]="chartLabels"
+            [options]="chartOptions"
+            [legend]="chartLegend"
+            [chartType]="chartType"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+</div>
 
+
+<!--
 <div class="row">
     <div class="col-md-6">
-        <!--style="display: block;"-->
+        &lt;!&ndash;style="display: block;"&ndash;&gt;
         <div *ngIf="lineChartLabels.length>0">
-            <!--[colors]="lineChartColors"-->
+            &lt;!&ndash;[colors]="lineChartColors"&ndash;&gt;
             <canvas baseChart width="400" height="200"
                     [datasets]="lineChartData"
                     [labels]="lineChartLabels"
@@ -30,3 +42,4 @@
         </table>
     </div>
 </div>
+-->

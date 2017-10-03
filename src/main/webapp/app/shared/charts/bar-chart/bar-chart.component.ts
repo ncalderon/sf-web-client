@@ -1,4 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {DecimalPipe} from '@angular/common';
 
 @Component({
     selector: 'jhi-bar-chart',
@@ -7,11 +8,54 @@ import {Component, OnInit} from '@angular/core';
 })
 export class BarChartComponent implements OnInit {
 
+    @Input()
+    chartLabels: Array<any> = [];
+
+    @Input()
+    // chart
+    chartData: Array<any> = [
+        {data: [], label: 'EXPENSES'},
+        {data: [], label: 'INCOMES'}
+    ];
+
+    chartLegend = true
+    chartType = 'bar';
+    chartOptions: any = {
+        scaleShowVerticalLines: true,
+        responsive: true,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    // Include a dollar sign in the ticks
+                    callback: (value: any, index: any, values: any) => {
+                        return this.formatTick(value, index, values);
+                    }
+                }
+            }]
+        }
+    };
 
     constructor() {
+
     }
 
     ngOnInit() {
+        console.log("****BarChart On Init*****");
+        console.log(this.chartData);
+    }
+
+    formatTick(value: any, index: any, values: any): any {
+        console.log('*****Format Tick*****');
+        return new DecimalPipe('USD').transform(value, '2.2-2');;
+    }
+
+    // events
+    chartClicked(e: any): void {
+        console.log(e);
+    }
+
+    chartHovered(e: any): void {
+        console.log(e);
     }
 
 }

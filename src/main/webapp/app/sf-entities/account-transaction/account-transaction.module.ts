@@ -18,7 +18,7 @@ import {
     AccountTransactionResolvePagingParams
 } from './';
 import {FileUploadModule} from 'ng2-file-upload';
-import {SearchModule} from "../../shared/search/search.module";
+import {SearchModule} from '../../shared/search/search.module';
 
 const ENTITY_STATES = [
     ...accountTransactionRoute,
