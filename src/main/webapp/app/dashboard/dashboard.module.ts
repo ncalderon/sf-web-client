@@ -8,7 +8,7 @@ import {RouterModule} from '@angular/router';
 @NgModule({
     imports: [
         SfWebClientSharedModule,
-        RouterModule.forRoot([ DASHBOARD_ROUTE ], { useHash: true }),
+        /*RouterModule.forRoot([ DASHBOARD_ROUTE ], { useHash: true }),*/
         SfChartsModule
     ],
     declarations: [DashboardComponent],

@@ -7,7 +7,6 @@ import {DecimalPipe} from '@angular/common';
     styles: []
 })
 export class LineChartComponent implements OnInit {
-
     @Input()
     chartLabels: Array<any> = [];
 
@@ -20,8 +19,29 @@ export class LineChartComponent implements OnInit {
 
     chartOptions: any = {
         responsive: true,
+        title: {
+            display: false,
+            text: 'Line Chart'
+        }
+        ,
+        hover: {
+            mode: 'nearest',
+            intersect: true
+        },
         scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: false,
+                    labelString: 'Month'
+                }
+            }],
             yAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: false,
+                    labelString: 'Value'
+                },
                 ticks: {
                     // Include a dollar sign in the ticks
                     callback: (value: any, index: any, values: any) => {
@@ -29,10 +49,32 @@ export class LineChartComponent implements OnInit {
                     }
                 }
             }]
+        },
+        tooltips: {
+            mode: 'index',
+            intersect: false,
+            callbacks: {
+                label: (value: any, data: any) => {
+                    return this.formatTooltip(value, data);
+                }
+            }
         }
+        /*tooltipTemplate: '<%if (label){%><%=label %>: <%}%><%= value + \' %\' %>',
+        // String - Template string for multiple tooltips
+        multiTooltipTemplate: '<%= value + \' %\' %>'*/
     };
     chartLegend = true;
     chartType = 'line';
+    chartColors = [
+        /*{
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)'
+        },
+        {
+            backgroundColor: 'rgb(54, 162, 235)',
+            borderColor: 'rgb(54, 162, 235)'
+        }*/
+    ];
 
     constructor() {
 
@@ -43,15 +85,21 @@ export class LineChartComponent implements OnInit {
     }
 
     formatTick(value: any, index: any, values: any): any {
-        return new DecimalPipe('USD').transform(value, '2.2-2');;
+        return new DecimalPipe('USD').transform(value, '2.2-2');
+        ;
     }
 
-    // events
-    public chartClicked(e: any): void {
+    formatTooltip(value: any, values: any): any {
+        return new DecimalPipe('USD').transform(value.yLabel, '2.2-2');
+        ;
+    }
+
+// events
+    chartClicked(e: any): void {
         console.log(e);
     }
 
-    public chartHovered(e: any): void {
+    chartHovered(e: any): void {
         console.log(e);
     }
 

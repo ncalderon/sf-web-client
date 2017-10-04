@@ -1,9 +1,10 @@
 <div  style="display: block">
-    <canvas baseChart width="200" height="50"
+    <canvas baseChart width="300" height="75" id="bar-chart"
             [datasets]="chartData"
             [labels]="chartLabels"
             [options]="chartOptions"
             [legend]="chartLegend"
+            [colors]="chartColors"
             [chartType]="chartType"
             (chartHover)="chartHovered($event)"
             (chartClick)="chartClicked($event)"></canvas>

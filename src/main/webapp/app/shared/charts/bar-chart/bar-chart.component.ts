@@ -12,7 +12,7 @@ export class BarChartComponent implements OnInit {
     chartLabels: Array<any> = [];
 
     @Input()
-    // chart
+        // chart
     chartData: Array<any> = [
         {data: [], label: 'EXPENSES'},
         {data: [], label: 'INCOMES'}
@@ -21,10 +21,30 @@ export class BarChartComponent implements OnInit {
     chartLegend = true
     chartType = 'bar';
     chartOptions: any = {
+        title: {
+            display: false,
+            text: 'Bar Chart'
+        },
+        hover: {
+            mode: 'nearest',
+            intersect: true
+        },
         scaleShowVerticalLines: true,
         responsive: true,
         scales: {
+            xAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: false,
+                    labelString: 'Month'
+                }
+            }],
             yAxes: [{
+                display: true,
+                scaleLabel: {
+                    display: false,
+                    labelString: 'Value'
+                },
                 ticks: {
                     // Include a dollar sign in the ticks
                     callback: (value: any, index: any, values: any) => {
@@ -32,8 +52,31 @@ export class BarChartComponent implements OnInit {
                     }
                 }
             }]
+        },
+        tooltips: {
+            callbacks: {
+                label: (value: any, data: any) => {
+                    return this.formatTooltip(value, data);
+                }
+            },
+            enabled: true,
+            mode: 'index',
+            intersect: false
         }
     };
+
+    chartColors = [
+        /*{
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            fill: false
+        },
+        {
+            backgroundColor: 'rgb(54, 162, 235)',
+            borderColor: 'rgb(54, 162, 235)',
+            fill: false
+        }*/
+    ];
 
     constructor() {
 
@@ -46,10 +89,15 @@ export class BarChartComponent implements OnInit {
 
     formatTick(value: any, index: any, values: any): any {
         console.log('*****Format Tick*****');
-        return new DecimalPipe('USD').transform(value, '2.2-2');;
+        return new DecimalPipe('USD').transform(value, '2.2-2');
+        ;
     }
 
-    // events
+    formatTooltip(value: any, values: any): any {
+        return new DecimalPipe('USD').transform(value.yLabel, '2.2-2');
+    }
+
+// events
     chartClicked(e: any): void {
         console.log(e);
     }

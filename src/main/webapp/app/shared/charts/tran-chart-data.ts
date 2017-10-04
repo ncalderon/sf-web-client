@@ -8,26 +8,30 @@ export class TranChartData {
 
     getChartData(year: number): Array<any> {
         let arr = [];
-        let expenseDataObj = { data: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1], label: 'EXPENSES'};
-        let incomesDataObj = { data: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1], label: 'INCOMES'};
+        let expenseDataObj = { data: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1], label: 'EXPENSES', backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)'};
+        let incomesDataObj = { data: [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1], label: 'INCOMES'
+            , backgroundColor: 'rgb(54, 162, 235)',
+            borderColor: 'rgb(54, 162, 235)'};
 
         for(const tran of this.transactions){
             if (tran.postDate.getFullYear() !== year) {
                 continue;
             }
 
-            let month = tran.postDate.getMonth();
-            let currentVal = expenseDataObj.data[month];
-            currentVal = currentVal == -1 ? 0 : currentVal;
-            let acc = tran.amount + currentVal;
-            /*let label = new DecimalPipe('USD').transform(acc, '2.2-2');*/
+            const month = tran.postDate.getMonth();
+            let currentValExp = expenseDataObj.data[month];
+            currentValExp = currentValExp === -1 ? 0 : currentValExp;
+            let currentValInc = incomesDataObj.data[month];
+            currentValInc = currentValInc === -1 ? 0 : currentValInc;
             if (<string><any>tran.tranType === 'EXPENSE') {
-                incomesDataObj.data[month] = 0;
-                expenseDataObj.data[month] = acc;
+                currentValExp = tran.amount + currentValExp;
             }else {
-                expenseDataObj.data[month] = 0;
-                incomesDataObj.data[month] = acc;
+                currentValInc = tran.amount + currentValInc;
             }
+            expenseDataObj.data[month] = currentValExp;
+            incomesDataObj.data[month] = currentValInc;
+            /*let label = new DecimalPipe('USD').transform(acc, '2.2-2');*/
         }
 
         expenseDataObj.data = expenseDataObj.data.filter((value) => {
