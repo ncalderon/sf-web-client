@@ -8,6 +8,7 @@ import {Principal} from '../shared/auth/principal.service';
 import {JhiAlertService} from 'ng-jhipster';
 import {AccountTransaction} from '../sf-entities/account-transaction/account-transaction.model';
 import {ResponseWrapper} from '../shared/model/response-wrapper.model';
+import {Arrays} from '../shared/arrays/arrays';
 
 @Component({
     selector: 'jhi-dashboard',
@@ -16,10 +17,17 @@ import {ResponseWrapper} from '../shared/model/response-wrapper.model';
 })
 export class DashboardComponent implements OnInit {
 
+    accChecked: number[] = [];
+
+    rowsAccount: RowAccount[] = [];
+
     currentUser: any;
     accounts: FinanceAccount[];
-    account: FinanceAccount;
-    tranChartData: TranChartData;
+
+    year: number = new Date().getFullYear();
+    tranYears: number[] = [];
+    tranChartData: TranChartData = new TranChartData([]);
+    transactions: AccountTransaction[];
 
     // lineChart
     chartData: Array<any> = [
@@ -32,18 +40,17 @@ export class DashboardComponent implements OnInit {
     ];*/
     chartLabels: Array<any> = [];
 
-    constructor(
-        private tranService: AccountTransactionService,
-        private accountService: FinanceAccountService,
-        private logger: LoggerService,
-        private principal: Principal,
-        private alertService: JhiAlertService
-    ) {
+    constructor(private tranService: AccountTransactionService,
+                private accountService: FinanceAccountService,
+                private logger: LoggerService,
+                private principal: Principal,
+                private alertService: JhiAlertService,
+                private arrays: Arrays) {
     }
 
     ngOnInit() {
-        this.principal.identity().then((account) => {
-            this.currentUser = account;
+        this.principal.identity().then((user) => {
+            this.currentUser = user;
         });
         this.load();
     }
@@ -53,28 +60,42 @@ export class DashboardComponent implements OnInit {
     }
 
     private load() {
+        this.tranYears.push(this.year);
         this.accountService.query()
             .subscribe((res: ResponseWrapper) => {
                 this.accounts = res.json;
-                this.account = this.accounts.length > 0 ? this.accounts[0] : null;
-                this.loadTransaction(this.account)
+                const allAcc = new FinanceAccount();
+                allAcc.id = -1;
+                allAcc.name = 'ALL';
+                this.accounts.unshift(allAcc);
+                this.fillRowsAccount();
+                this.loadTransactions()
             }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
-    private loadTransaction(account: FinanceAccount) {
-        this.accountService.findTransactions(account.id)
-            .subscribe((transactions: AccountTransaction[]) => {
-                this.account.accountTransactions = transactions;
-                this.refreshChart(transactions);
-            });
-
+    fillRowsAccount() {
+        this.rowsAccount = this.arrays.mapToMultiDimensionalArray(this.accounts, 'accounts', 6);
     }
 
-    refreshChart(transactions: AccountTransaction[]) {
-        const currentYear = new Date().getFullYear();
-        this.tranChartData = new TranChartData(transactions);
-        this.chartLabels = this.tranChartData.getChartLabels(currentYear);
-        this.chartData = this.tranChartData.getChartData(currentYear);
+    onRefresh() {
+        this.loadTransactions();
+    }
+
+    private loadTransactions() {
+        const accoundsId = this.accChecked.filter((value) => {
+            return value !== -1;
+        });
+        this.tranService.findTransactionsByAccountsAndYear(accoundsId, this.year)
+            .subscribe((transactions: AccountTransaction[]) => {
+                this.transactions = transactions;
+                this.refreshChart();
+            });
+    }
+
+    refreshChart() {
+        this.tranChartData.transactions = this.transactions;
+        this.chartLabels = this.tranChartData.getChartLabels(this.year);
+        this.chartData = this.tranChartData.getChartData(this.year);
     }
 
     // events
@@ -90,4 +111,21 @@ export class DashboardComponent implements OnInit {
         this.alertService.error(error.message, null, null);
     }
 
+    isChecked(id: number): boolean {
+        return -1 !== this.accChecked.indexOf(id)
+    }
+
+    onChangeAcc(checked: boolean, acc: FinanceAccount) {
+        if (checked) {
+            this.accChecked.push(acc.id);
+        } else {
+            this.accChecked = this.accChecked.filter((value, index, array) => {
+                return value !== acc.id;
+            });
+        }
+    }
+}
+
+class RowAccount {
+    accounts: FinanceAccount[];
 }

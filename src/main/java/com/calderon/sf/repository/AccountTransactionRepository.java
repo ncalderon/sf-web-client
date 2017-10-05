@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
+
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -23,7 +25,15 @@ public interface AccountTransactionRepository extends JpaRepository<AccountTrans
     Page<AccountTransaction> findByUserIsCurrentUser(Pageable pageable);
 
     @Query("select account_transaction from AccountTransaction account_transaction where account_transaction.user.login = ?#{principal.username} and account_transaction.financeAccount.id = ?1")
-    List<AccountTransaction> findByUserIsCurrentUserAndFinanceAccount_Id(Long financeAccountId);
+    List<AccountTransaction> findByUserIsCurrentUserAndFinanceAccount_Id(Long accountId);
 
+    @Query("select account_transaction from AccountTransaction account_transaction where account_transaction.user.login = ?#{principal.username} and account_transaction.financeAccount.id = ?1 and account_transaction.postDate >= ?2 and account_transaction.postDate <= ?3")
+    List<AccountTransaction> findByUserIsCurrentUserAndFinanceAccount_IdAndPostDateGreaterThanEqualAndPostDateLessThanEqual(Long accountId, LocalDate startDate, LocalDate endDate);
+
+    @Query("select account_transaction from AccountTransaction account_transaction where account_transaction.user.login = ?#{principal.username} and account_transaction.financeAccount.id in (?1) and account_transaction.postDate >= ?2 and account_transaction.postDate <= ?3")
+    List<AccountTransaction> findByUserIsCurrentUserAndFinanceAccount_IdIsInAndPostDateGreaterThanEqualAndPostDateLessThanEqual(long[] accountsId, LocalDate startDate, LocalDate endDate);
+
+    @Query("select account_transaction from AccountTransaction account_transaction where account_transaction.user.login = ?#{principal.username} and account_transaction.postDate >= ?1 and account_transaction.postDate <= ?2")
+    List<AccountTransaction> findByUserIsCurrentUserAndPostDateGreaterThanEqualAndPostDateLessThanEqual(LocalDate startDate, LocalDate endDate);
 
 }

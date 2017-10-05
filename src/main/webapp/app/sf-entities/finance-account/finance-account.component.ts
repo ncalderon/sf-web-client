@@ -1,12 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
-import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs/Rx';
+import {JhiAlertService, JhiEventManager, JhiPaginationUtil, JhiParseLinks} from 'ng-jhipster';
 
-import { FinanceAccount } from './finance-account.model';
-import { FinanceAccountService } from './finance-account.service';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
-import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
+import {FinanceAccount} from './finance-account.model';
+import {FinanceAccountService} from './finance-account.service';
+import {ITEMS_PER_PAGE, Principal, ResponseWrapper} from '../../shared';
+import {PaginationConfig} from '../../blocks/config/uib-pagination.config';
+import {Arrays} from '../../shared/arrays/arrays';
 
 @Component({
     selector: 'jhi-finance-account',
@@ -29,19 +30,18 @@ export class FinanceAccountComponent implements OnInit, OnDestroy {
     previousPage: any;
     reverse: any;
 
-    rowsAccount: RowAccount[] =[];
+    rowsAccount: RowAccount[] = [];
 
-    constructor(
-        private financeAccountService: FinanceAccountService,
-        private parseLinks: JhiParseLinks,
-        private alertService: JhiAlertService,
-        private principal: Principal,
-        private activatedRoute: ActivatedRoute,
-        private router: Router,
-        private eventManager: JhiEventManager,
-        private paginationUtil: JhiPaginationUtil,
-        private paginationConfig: PaginationConfig
-    ) {
+    constructor(private financeAccountService: FinanceAccountService,
+                private parseLinks: JhiParseLinks,
+                private alertService: JhiAlertService,
+                private principal: Principal,
+                private activatedRoute: ActivatedRoute,
+                private router: Router,
+                private eventManager: JhiEventManager,
+                private paginationUtil: JhiPaginationUtil,
+                private paginationConfig: PaginationConfig,
+                private arrays: Arrays) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
             this.page = data['pagingParams'].page;
@@ -64,24 +64,28 @@ export class FinanceAccountComponent implements OnInit, OnDestroy {
         this.financeAccountService.query({
             page: this.page - 1,
             size: this.itemsPerPage,
-            sort: this.sort()}).subscribe(
+            sort: this.sort()
+        }).subscribe(
             (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
             (res: ResponseWrapper) => this.onError(res.json)
         );
     }
+
     loadPage(page: number) {
         if (page !== this.previousPage) {
             this.previousPage = page;
             this.transition();
         }
     }
+
     transition() {
-        this.router.navigate(['/finance-account'], {queryParams:
-            {
-                page: this.page,
-                size: this.itemsPerPage,
-                sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-            }
+        this.router.navigate(['/finance-account'], {
+            queryParams:
+                {
+                    page: this.page,
+                    size: this.itemsPerPage,
+                    sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
+                }
         });
         this.loadAll();
     }
@@ -94,6 +98,7 @@ export class FinanceAccountComponent implements OnInit, OnDestroy {
         }]);
         this.loadAll();
     }
+
     ngOnInit() {
         this.loadAll();
         this.principal.identity().then((account) => {
@@ -109,6 +114,7 @@ export class FinanceAccountComponent implements OnInit, OnDestroy {
     trackId(index: number, item: FinanceAccount) {
         return item.id;
     }
+
     registerChangeInFinanceAccounts() {
         this.eventSubscriber = this.eventManager.subscribe('financeAccountListModification', (response) => this.loadAll());
     }
@@ -121,8 +127,9 @@ export class FinanceAccountComponent implements OnInit, OnDestroy {
         return result;
     }
 
-    private refreshRowsModel(){
-        let currentRow;
+    private refreshRowsModel() {
+        this.rowsAccount = this.arrays.mapToMultiDimensionalArray(this.financeAccounts, 'accounts', 4);
+        /*let currentRow;
         currentRow = new RowAccount();
         currentRow.accounts = [];
         for(let i = 0; i < this.financeAccounts.length; i++){
@@ -134,7 +141,7 @@ export class FinanceAccountComponent implements OnInit, OnDestroy {
             }
         }
         if (currentRow.accounts.length>0)
-            this.rowsAccount.push(currentRow);
+            this.rowsAccount.push(currentRow);*/
     }
 
     private onSuccess(data, headers) {

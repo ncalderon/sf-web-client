@@ -2,6 +2,30 @@
     <h2><span>Dashboard</span></h2>
     <jhi-alert></jhi-alert>
 
+    <div class="form-inline">
+        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+            <select class="form-control" id="field_year" name="year" [(ngModel)]="year" >
+                <option [value]="year" *ngFor="let yearOption of tranYears">{{yearOption}}</option>
+            </select>
+        </div>
+        <button (click)="onRefresh()" class="btn btn-primary">
+            Refresh
+        </button>
+    </div>
+    <div class="form-group"
+         *ngFor="let rowAcc of rowsAccount; let idx=index">
+        <div class="form-check form-check-inline"
+             *ngFor="let acc of rowAcc.accounts; let j=index">
+            <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" value="option1"
+                       [checked]="isChecked(acc.id)"
+                       (change)="onChangeAcc($event.target.checked, acc)"
+                />
+                {{acc.name}}
+            </label>
+        </div>
+    </div>
+
     <div class="row" *ngIf="chartLabels.length > 0">
         <div class="col-md-6">
             <jhi-line-chart *ngIf="isAuthenticated()" [chartLabels]="chartLabels" [chartData]="chartData"></jhi-line-chart>

@@ -1,19 +1,18 @@
-import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { SERVER_API_URL } from '../../app.constants';
-
-import { JhiDateUtils } from 'ng-jhipster';
-
+import {Injectable} from '@angular/core';
+import {Http, Response,  URLSearchParams} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
+import {SERVER_API_URL} from '../../app.constants';
 import {AccountTransaction} from './account-transaction.model';
-import { ResponseWrapper, createRequestOption } from '../../shared';
+import {createRequestOption, ResponseWrapper} from '../../shared';
+import {JhiDateUtils} from 'ng-jhipster';
 
 @Injectable()
 export class AccountTransactionService {
 
     private resourceUrl = SERVER_API_URL + 'api/account-transactions';
 
-    constructor(private http: Http, private dateUtils: JhiDateUtils) { }
+    constructor(private http: Http, private dateUtils: JhiDateUtils) {
+    }
 
     create(accountTransaction: AccountTransaction): Observable<AccountTransaction> {
         const copy = this.convert(accountTransaction);
@@ -69,7 +68,7 @@ export class AccountTransactionService {
     }
 
     private convertItemsFromServer(accountTransactions: AccountTransaction[]) {
-        for (let tran of accountTransactions){
+        for (let tran of accountTransactions) {
             this.convertItemFromServer(tran);
         }
     }
@@ -87,9 +86,37 @@ export class AccountTransactionService {
 
     private convertArray(accountTransactions: AccountTransaction[]): AccountTransaction[] {
         const copyTrans: AccountTransaction[] = [];
-        for (let tran of accountTransactions){
+        for (let tran of accountTransactions) {
             copyTrans.push(this.convert(tran));
         }
         return copyTrans;
+    }
+
+    findTransactionsByAccounts(accountsId: number[]): Observable<AccountTransaction[]> {
+        return this.findTransactionsByAccountsAndYear(accountsId, 0);
+    }
+
+    findTransactionsByAccountsAndYear(accountsId: number[], year: number): Observable<AccountTransaction[]> {
+        const options = createRequestOption();
+        const params: URLSearchParams = new URLSearchParams();
+        params.set('accountsId', <any>accountsId);
+        params.set('year', year + '');
+        options.params = params;
+        return this.http.get(`${this.resourceUrl}/findByAccountsIdAndYear`, options).map((res: Response) => {
+            const jsonResponse = res.json();
+            this.convertTransactionsFromServer(jsonResponse);
+            return jsonResponse;
+        });
+    }
+
+    private convertTransactionsFromServer(accountTransactions: AccountTransaction[]) {
+        for (let tran of accountTransactions) {
+            this.convertTransactionFromServer(tran);
+        }
+    }
+
+    private convertTransactionFromServer(entity: any) {
+        entity.postDate = this.dateUtils
+            .convertLocalDateFromServer(entity.postDate);
     }
 }

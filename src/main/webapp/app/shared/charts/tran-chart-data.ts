@@ -2,8 +2,13 @@ import {AccountTransaction, TranType} from '../../sf-entities/account-transactio
 
 export class TranChartData {
 
-    constructor(private transactions: AccountTransaction[]) {
+    constructor(private _transactions: AccountTransaction[]) {
 
+    }
+
+
+    set transactions(value: AccountTransaction[]) {
+        this._transactions = value;
     }
 
     getChartData(year: number): Array<any> {
@@ -14,7 +19,7 @@ export class TranChartData {
             , backgroundColor: 'rgb(54, 162, 235)',
             borderColor: 'rgb(54, 162, 235)'};
 
-        for(const tran of this.transactions){
+        for(const tran of this._transactions){
             if (tran.postDate.getFullYear() !== year) {
                 continue;
             }
@@ -64,7 +69,7 @@ export class TranChartData {
             'Dec' : false
         };
         const chartLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-        for (const tran of this.transactions) {
+        for (const tran of this._transactions) {
             if (tran.postDate.getFullYear() !== year) {
                 continue;
             }

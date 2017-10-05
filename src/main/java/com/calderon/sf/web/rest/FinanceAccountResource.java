@@ -26,6 +26,9 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.MonthDay;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -123,10 +126,21 @@ public class FinanceAccountResource {
     //@Transactional
     @GetMapping("/finance-accounts/{id}/account-transactions")
     @Timed
-    public ResponseEntity<List<AccountTransaction>> getAllAccountTransactions(@PathVariable Long id) {
+    public ResponseEntity<List<AccountTransaction>> getAllAccountTransactions(@PathVariable Long id, @RequestParam int year) {
         log.debug("REST request to get Transactions by Account : {}", id);
-        List<AccountTransaction> transactions = accountTransactionRepository.findByUserIsCurrentUserAndFinanceAccount_Id(id);
-        /*HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/account-transactions");*/
+        List<AccountTransaction> transactions;
+
+        int currentYear = LocalDate.now().getYear();
+        LocalDate startDate = LocalDate.of(year <= 0? currentYear: year, Month.JANUARY, 1);
+        LocalDate endDate = LocalDate.of(year <= 0? currentYear: year, Month.DECEMBER, 31);
+
+        if(year <= 0)
+            transactions = accountTransactionRepository.findByUserIsCurrentUserAndPostDateGreaterThanEqualAndPostDateLessThanEqual
+                (startDate, endDate);
+        else {
+            transactions = accountTransactionRepository.findByUserIsCurrentUserAndFinanceAccount_IdAndPostDateGreaterThanEqualAndPostDateLessThanEqual
+                (id, startDate, endDate);
+        }
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 

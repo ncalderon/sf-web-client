@@ -1,20 +1,23 @@
-import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
-import { SERVER_API_URL } from '../../app.constants';
+import {Injectable} from '@angular/core';
+import {Http, Response} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
+import {SERVER_API_URL} from '../../app.constants';
 
-import { JhiDateUtils } from 'ng-jhipster';
+import {JhiDateUtils} from 'ng-jhipster';
 
-import { FinanceAccount } from './finance-account.model';
-import { ResponseWrapper, createRequestOption } from '../../shared';
+import {FinanceAccount} from './finance-account.model';
+import {createRequestOption, ResponseWrapper} from '../../shared';
 import {AccountTransaction} from "../account-transaction/account-transaction.model";
+import {HttpObserve} from '@angular/common/http/src/client';
+import {HttpParams} from '@angular/common/http';
 
 @Injectable()
 export class FinanceAccountService {
 
     private resourceUrl = SERVER_API_URL + 'api/finance-accounts';
 
-    constructor(private http: Http, private dateUtils: JhiDateUtils) { }
+    constructor(private http: Http, private dateUtils: JhiDateUtils) {
+    }
 
     create(financeAccount: FinanceAccount): Observable<FinanceAccount> {
         const copy = this.convert(financeAccount);
@@ -43,7 +46,13 @@ export class FinanceAccountService {
     }
 
     findTransactions(id: number): Observable<AccountTransaction[]> {
-        return this.http.get(`${this.resourceUrl}/${id}/account-transactions`).map((res: Response) => {
+        return this.findTransactionsByYear(id, 0);
+    }
+
+    findTransactionsByYear(id: number, year: number): Observable<AccountTransaction[]> {
+        return this.http.get(`${this.resourceUrl}/${id}/account-transactions`, {
+            params: new HttpParams().set('year', year + '')
+        }).map((res: Response) => {
             const jsonResponse = res.json();
             this.convertTransactionsFromServer(jsonResponse);
             return jsonResponse;
@@ -61,7 +70,7 @@ export class FinanceAccountService {
     }
 
     private convertTransactionsFromServer(accountTransactions: AccountTransaction[]) {
-        for (let tran of accountTransactions){
+        for (let tran of accountTransactions) {
             this.convertTransactionFromServer(tran);
         }
     }

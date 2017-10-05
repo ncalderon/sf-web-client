@@ -15,6 +15,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -34,6 +35,8 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
@@ -133,6 +136,26 @@ public class AccountTransactionResource {
         Page<AccountTransaction> page = accountTransactionRepository.findByUserIsCurrentUser(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/account-transactions");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/account-transactions/findByAccountsIdAndYear")
+    @Timed
+    public ResponseEntity<List<AccountTransaction>> getAllAccountTransactionsFindByAccountIdAndYear(@RequestParam long[] accountsId, @RequestParam int year) {
+        log.debug("REST request to get a page of AccountTransactions by year and accountsId {}", accountsId);
+
+        List<AccountTransaction> transactions;
+        int currentYear = LocalDate.now().getYear();
+        LocalDate startDate = LocalDate.of(year <= 0? currentYear: year, Month.JANUARY, 1);
+        LocalDate endDate = LocalDate.of(year <= 0? currentYear: year, Month.DECEMBER, 31);
+
+        if (accountsId.length <= 0)
+            transactions = accountTransactionRepository.findByUserIsCurrentUserAndPostDateGreaterThanEqualAndPostDateLessThanEqual
+                (startDate, endDate);
+        else {
+            transactions = accountTransactionRepository.findByUserIsCurrentUserAndFinanceAccount_IdIsInAndPostDateGreaterThanEqualAndPostDateLessThanEqual
+                (accountsId, startDate, endDate);
+        }
+        return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
 
     /**
