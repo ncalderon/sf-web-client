@@ -10,18 +10,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class DefaultUserSetupService {
-    private final Logger log = LoggerFactory.getLogger(DefaultUserSetupService.class);
+public class UserSetupService {
+    private final Logger log = LoggerFactory.getLogger(UserSetupService.class);
 
     private final TranCategoryRepository categoryRepository;
     private final TranCategoryRegexRepository categoryRegexRepository;
     private final FinanceAccountRepository accountRepository;
 
-    public DefaultUserSetupService(TranCategoryRepository categoryRepository, TranCategoryRegexRepository categoryRegexRepository, FinanceAccountRepository accountRepository) {
+    public UserSetupService(TranCategoryRepository categoryRepository, TranCategoryRegexRepository categoryRegexRepository, FinanceAccountRepository accountRepository) {
         this.categoryRepository = categoryRepository;
         this.categoryRegexRepository = categoryRegexRepository;
         this.accountRepository = accountRepository;

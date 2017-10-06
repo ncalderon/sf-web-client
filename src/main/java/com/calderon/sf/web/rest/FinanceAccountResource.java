@@ -123,8 +123,17 @@ public class FinanceAccountResource {
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(financeAccount));
     }
 
+    @GetMapping("/finance-accounts/{id}/transactions")
+    @Timed
+    public ResponseEntity<List<AccountTransaction>> getTransactionsByAccountId(@PathVariable Long id, @ApiParam Pageable pageable) {
+        log.debug("REST request to get Transactions by Account : {}", id);
+        Page<AccountTransaction> page = accountTransactionRepository.findByUserIsCurrentUserAndFinanceAccount_Id(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/finance-accounts/"+id);
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
     //@Transactional
-    @GetMapping("/finance-accounts/{id}/account-transactions")
+    @GetMapping("/finance-accounts/{id}/transactions")
     @Timed
     public ResponseEntity<List<AccountTransaction>> getAllAccountTransactions(@PathVariable Long id, @RequestParam int year) {
         log.debug("REST request to get Transactions by Account : {}", id);

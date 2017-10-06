@@ -1,0 +1,126 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myAccountTransactionLabel" jhiTranslate="sfWebClientApp.accountTransaction.home.createOrEditLabel">Create or edit a Account Transaction</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <div class="btn-group">
+                    <label [ngClass]="getTranExpenseClass()" name="tranType" [(ngModel)]="transaction.tranType" btnRadio="EXPENSE">{{'sfWebClientApp.TranType.EXPENSE' | translate}}</label>
+                    <label [ngClass]="getTranIncomeClass()" name="tranType" [(ngModel)]="transaction.tranType" btnRadio="INCOME">{{'sfWebClientApp.TranType.INCOME' | translate}}</label>
+                </div>
+            </div>
+            <div class="form-group col-md-5">
+                <label class="sr-only" jhiTranslate="sfWebClientApp.accountTransaction.postDate" for="field_postDate">Post Date</label>
+                <div class="input-group">
+                    <input id="field_postDate" type="text" class="form-control" name="postDate" ngbDatepicker  #postDateDp="ngbDatepicker" [(ngModel)]="transaction.postDate"
+                           required/>
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-secondary" (click)="postDateDp.toggle()"><i class="fa fa-calendar"></i></button>
+                </span>
+                </div>
+                <div [hidden]="!(editForm.controls.postDate?.dirty && editForm.controls.postDate?.invalid)">
+                    <small class="form-text text-danger"
+                           [hidden]="!editForm.controls.postDate?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <label class="sr-only" jhiTranslate="sfWebClientApp.accountTransaction.paymentMethod" for="field_paymentMethod">Payment Method</label>
+                <select class="form-control" name="paymentMethod" [(ngModel)]="transaction.paymentMethod" id="field_paymentMethod" >
+                    <option value="UNSPECIFIED">{{'sfWebClientApp.PaymentMethod.UNSPECIFIED' | translate}}</option>
+                    <option value="CASH">{{'sfWebClientApp.PaymentMethod.CASH' | translate}}</option>
+                    <option value="CHECK">{{'sfWebClientApp.PaymentMethod.CHECK' | translate}}</option>
+                    <option value="CREDIT_CARD">{{'sfWebClientApp.PaymentMethod.CREDIT_CARD' | translate}}</option>
+                    <option value="DEBIT">{{'sfWebClientApp.PaymentMethod.DEBIT' | translate}}</option>
+                    <option value="ELECTRONIC_TRANSFER">{{'sfWebClientApp.PaymentMethod.ELECTRONIC_TRANSFER' | translate}}</option>
+                    <option value="OTHER">{{'sfWebClientApp.PaymentMethod.OTHER' | translate}}</option>
+                </select>
+            </div>
+        </div>
+
+        <!--section - description, balance-->
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label class="form-control-label" jhiTranslate="sfWebClientApp.accountTransaction.description" for="field_description">Description</label>
+                <input type="text" class="form-control" name="description" id="field_description"
+                       [(ngModel)]="transaction.description" required minlength="2" maxlength="512" placeholder="Gasoline" />
+                <div [hidden]="!(editForm.controls.description?.dirty && editForm.controls.description?.invalid)">
+                    <small class="form-text text-danger"
+                           [hidden]="!editForm.controls.description?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                    <small class="form-text text-danger"
+                           [hidden]="!editForm.controls.description?.errors?.minlength" jhiTranslate="entity.validation.minlength" translateValues="{ min: 3 }">
+                        This field is required to be at least 3 characters.
+                    </small>
+                    <small class="form-text text-danger"
+                           [hidden]="!editForm.controls.description?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" translateValues="{ max: 256 }">
+                        This field cannot be longer than 256 characters.
+                    </small>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="form-control-label" jhiTranslate="sfWebClientApp.accountTransaction.amount" for="field_amount">Amount</label>
+                <input type="number" class="form-control" name="amount" id="field_amount" placeholder="RD$10,000.00"
+                       [(ngModel)]="transaction.amount" required />
+                <div [hidden]="!(editForm.controls.amount?.dirty && editForm.controls.amount?.invalid)">
+                    <small class="form-text text-danger"
+                           [hidden]="!editForm.controls.amount?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                    <small class="form-text text-danger"
+                           [hidden]="!editForm.controls.amount?.errors?.number" jhiTranslate="entity.validation.number">
+                        This field should be a number.
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <!--section - financeAccount, category-->
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label class="form-control-label" jhiTranslate="sfWebClientApp.accountTransaction.tranCategory" for="field_tranCategory">Tran Category</label>
+                <select class="form-control" id="field_tranCategory" name="tranCategory" [(ngModel)]="transaction.tranCategory" >
+                    <option [ngValue]="null"></option>
+                    <option [ngValue]="tranCategoryOption.id === transaction.tranCategory?.id ? transaction.tranCategory : tranCategoryOption" *ngFor="let tranCategoryOption of categories; trackBy: trackTranCategoryById">{{tranCategoryOption.name}}</option>
+                </select>
+            </div>
+        </div>
+
+        <!--section - transactions number and reference number-->
+        <div id="detailAccordion" data-children=".item">
+            <div class="item">
+                <a data-toggle="collapse" data-parent="#detailAccordion" (click)="isDetailsCollapsed = !isDetailsCollapsed" href="javascript:void(0)" aria-expanded="false" aria-controls="detailAccordionFields">
+                    Details
+                </a>
+                <div id="detailAccordionFields" class="form-row collapse" role="tabpanel" [ngClass]="getDetailsCollapseClass()">
+                    <div class="form-group col-md-6">
+                        <label class="form-control-label" jhiTranslate="sfWebClientApp.accountTransaction.tranNumber" for="field_tranNumber">Tran Number</label>
+                        <input type="text" class="form-control" name="tranNumber" id="field_tranNumber"
+                               [(ngModel)]="transaction.tranNumber"  />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="form-control-label" jhiTranslate="sfWebClientApp.accountTransaction.referenceNumber" for="field_referenceNumber">Reference Number</label>
+                        <input type="text" class="form-control" name="referenceNumber" id="field_referenceNumber"
+                               [(ngModel)]="transaction.referenceNumber"  />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

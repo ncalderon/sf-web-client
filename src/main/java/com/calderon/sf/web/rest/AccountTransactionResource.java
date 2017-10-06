@@ -2,6 +2,7 @@ package com.calderon.sf.web.rest;
 
 import com.calderon.sf.domain.Bank;
 import com.calderon.sf.security.SecurityUtils;
+import com.calderon.sf.service.FinanceService;
 import com.calderon.sf.service.TranFileReaderService;
 import com.calderon.sf.service.io.StorageService;
 import com.codahale.metrics.annotation.Timed;
@@ -54,6 +55,7 @@ public class AccountTransactionResource {
 
     private StorageService storageService;
     private TranFileReaderService tranFileReaderService;
+    private FinanceService financeService;
 
     @Autowired
     public void setStorageService (StorageService storageService){
@@ -63,6 +65,11 @@ public class AccountTransactionResource {
     @Autowired
     public void setTranFileReaderService(TranFileReaderService tranFileReaderService) {
         this.tranFileReaderService = tranFileReaderService;
+    }
+
+    @Autowired
+    public void setFinanceService(FinanceService financeService) {
+        this.financeService = financeService;
     }
 
     private final AccountTransactionRepository accountTransactionRepository;
@@ -85,7 +92,7 @@ public class AccountTransactionResource {
         if (accountTransaction.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new accountTransaction cannot already have an ID")).body(null);
         }
-        AccountTransaction result = accountTransactionRepository.save(accountTransaction);
+        AccountTransaction result = financeService.save(accountTransaction);
         return ResponseEntity.created(new URI("/api/account-transactions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -95,7 +102,10 @@ public class AccountTransactionResource {
     @Timed
     public ResponseEntity<List<AccountTransaction>> createAccountTransactions(@Valid @RequestBody List<AccountTransaction> transactions) throws URISyntaxException {
         log.debug("REST request to save bulk transactions : {}", transactions);
-        List<AccountTransaction> result = accountTransactionRepository.save(transactions);
+        if (transactions.size() <= 0)
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "Empty list", "Transaction list cannot be empty")).body(null);
+
+        List<AccountTransaction> result = financeService.save(transactions);
         return ResponseEntity.created(new URI("/api/account-transactions/bulk"))
             .body(result);
     }
@@ -116,7 +126,7 @@ public class AccountTransactionResource {
         if (accountTransaction.getId() == null) {
             return createAccountTransaction(accountTransaction);
         }
-        AccountTransaction result = accountTransactionRepository.save(accountTransaction);
+        AccountTransaction result = financeService.save(accountTransaction);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, accountTransaction.getId().toString()))
             .body(result);
@@ -182,15 +192,15 @@ public class AccountTransactionResource {
     @Timed
     public ResponseEntity<Void> deleteAccountTransaction(@PathVariable Long id) {
         log.debug("REST request to delete AccountTransaction : {}", id);
-        accountTransactionRepository.delete(id);
+        financeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
     @PostMapping("/account-transactions/upload")
     @Timed
     public ResponseEntity<List<AccountTransaction>> getAccountTransactionsFromFile(@RequestParam("bank")Bank bank, @RequestParam("file") MultipartFile file) {
-        String curretUserLogin = SecurityUtils.getCurrentUserLogin();
-        Path tempFile = storageService.createTemporaryFile(curretUserLogin, ".csv", file);
+        String currentUserLogin = SecurityUtils.getCurrentUserLogin();
+        Path tempFile = storageService.createTemporaryFile(currentUserLogin, ".csv", file);
         List<AccountTransaction> list = tranFileReaderService.read(bank, tempFile);
         /*HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/account-transactions/upload");*/
         return ResponseEntity.ok(list);
