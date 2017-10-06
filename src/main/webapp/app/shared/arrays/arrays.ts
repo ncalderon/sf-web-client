@@ -7,7 +7,7 @@ export class Arrays {
 
     }
 
-    mapToMultiDimensionalArray(arr: Array<any>, property: string, offset: number): Array<any> {
+    mapToDimArray(arr: Array<any>, property: string, offset: number): Array<any> {
         const newArr = [];
         let currentRow = {};
         currentRow[property] = [];

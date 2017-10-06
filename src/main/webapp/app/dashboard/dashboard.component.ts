@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
     tranChartData: TranChartData = new TranChartData([]);
     transactions: AccountTransaction[];
 
-    // lineChart
+    // chart
     chartData: Array<any> = [
         {data: [], label: 'EXPENSES'},
         {data: [], label: 'INCOMES'}
@@ -74,7 +74,7 @@ export class DashboardComponent implements OnInit {
     }
 
     fillRowsAccount() {
-        this.rowsAccount = this.arrays.mapToMultiDimensionalArray(this.accounts, 'accounts', 6);
+        this.rowsAccount = this.arrays.mapToDimArray(this.accounts, 'accounts', 6);
     }
 
     onRefresh() {
@@ -117,11 +117,22 @@ export class DashboardComponent implements OnInit {
 
     onChangeAcc(checked: boolean, acc: FinanceAccount) {
         if (checked) {
-            this.accChecked.push(acc.id);
+
+            if (acc.id === -1) {
+                for (let account of this.accounts) {
+                    this.accChecked.push(account.id);
+                }
+            }else {
+                this.accChecked.push(acc.id);
+            }
         } else {
-            this.accChecked = this.accChecked.filter((value, index, array) => {
-                return value !== acc.id;
-            });
+            if (acc.id === -1) {
+                this.accChecked = [];
+            } else {
+                this.accChecked = this.accChecked.filter((value, index, array) => {
+                    return value !== acc.id;
+                });
+            }
         }
     }
 }

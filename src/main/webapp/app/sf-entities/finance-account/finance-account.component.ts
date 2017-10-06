@@ -128,7 +128,7 @@ export class FinanceAccountComponent implements OnInit, OnDestroy {
     }
 
     private refreshRowsModel() {
-        this.rowsAccount = this.arrays.mapToMultiDimensionalArray(this.financeAccounts, 'accounts', 4);
+        this.rowsAccount = this.arrays.mapToDimArray(this.financeAccounts, 'accounts', 4);
         /*let currentRow;
         currentRow = new RowAccount();
         currentRow.accounts = [];
