@@ -40,6 +40,9 @@ export const financeAccountRoute: Routes = [
     }, {
         path: 'finance-account/:id',
         component: FinanceAccountDetailComponent,
+        resolve: {
+            'pagingParams': FinanceAccountResolvePagingParams
+        },
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'sfWebClientApp.financeAccount.home.title'

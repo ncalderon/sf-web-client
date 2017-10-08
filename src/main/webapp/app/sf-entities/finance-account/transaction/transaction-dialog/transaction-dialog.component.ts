@@ -31,7 +31,9 @@ export class TransactionDialogComponent implements OnInit {
 
     isDetailsCollapsed = true;
 
-    constructor(public activeModal: NgbActiveModal,
+    constructor(
+                private activatedRoute: ActivatedRoute,
+                public activeModal: NgbActiveModal,
                 private alertService: JhiAlertService,
                 private tranService: AccountTransactionService,
                 private accountService: FinanceAccountService,
@@ -41,7 +43,19 @@ export class TransactionDialogComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.load();
+        this.activatedRoute.children.find((value) => {
+            if (value.outlet === 'popup'){
+                value.params.subscribe((params) => {
+                    this.accountId = params['accountId'];
+                    this.load();
+                });
+                return true;
+            }
+        });
+        /*this.activatedRoute.params.subscribe((params) => {
+            this.accountId = params['accountId'];
+            this.load();
+        });*/
     }
 
     load() {
@@ -136,6 +150,7 @@ export class TransactionPopupComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+
         this.routeSub = this.route.params.subscribe((params) => {
             if (params['id']) {
                 this.accountTransactionPopupService

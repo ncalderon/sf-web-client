@@ -1,5 +1,6 @@
 package com.calderon.sf.web.rest;
 
+import com.calderon.sf.service.UserSetupService;
 import com.codahale.metrics.annotation.Timed;
 
 import com.calderon.sf.domain.User;
@@ -15,6 +16,7 @@ import com.calderon.sf.web.rest.util.HeaderUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -34,6 +36,7 @@ public class AccountResource {
 
     private final Logger log = LoggerFactory.getLogger(AccountResource.class);
 
+    private UserSetupService userSetupService;
     private final UserRepository userRepository;
 
     private final UserService userService;
@@ -42,8 +45,13 @@ public class AccountResource {
 
     private static final String CHECK_ERROR_MESSAGE = "Incorrect password";
 
+    @Autowired
+    public void setUserSetupService(UserSetupService userSetupService) {
+        this.userSetupService = userSetupService;
+    }
+
     public AccountResource(UserRepository userRepository, UserService userService,
-            MailService mailService) {
+                           MailService mailService) {
 
         this.userRepository = userRepository;
         this.userService = userService;
@@ -93,7 +101,10 @@ public class AccountResource {
     @Timed
     public ResponseEntity<String> activateAccount(@RequestParam(value = "key") String key) {
         return userService.activateRegistration(key)
-            .map(user -> new ResponseEntity<String>(HttpStatus.OK))
+            .map(user -> {
+                userSetupService.createDefaultsForUser(user);
+                return new ResponseEntity<String>(HttpStatus.OK);
+            })
             .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 

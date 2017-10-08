@@ -15,7 +15,9 @@ import {
     financeAccountRoute,
     financeAccountPopupRoute,
     FinanceAccountResolvePagingParams,
+    SfWebClientTransactionModule
 } from './';
+
 
 const ENTITY_STATES = [
     ...financeAccountRoute,
@@ -26,7 +28,8 @@ const ENTITY_STATES = [
     imports: [
         SfWebClientSharedModule,
         SfWebClientAdminModule,
-        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
+        RouterModule.forRoot(ENTITY_STATES, { useHash: true }),
+        SfWebClientTransactionModule
     ],
     declarations: [
         FinanceAccountComponent,

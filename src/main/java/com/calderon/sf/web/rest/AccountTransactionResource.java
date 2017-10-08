@@ -94,7 +94,8 @@ public class AccountTransactionResource {
         }
         AccountTransaction result = financeService.save(accountTransaction);
         return ResponseEntity.created(new URI("/api/account-transactions/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            /*.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))*/
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getDescription().toString()))
             .body(result);
     }
 

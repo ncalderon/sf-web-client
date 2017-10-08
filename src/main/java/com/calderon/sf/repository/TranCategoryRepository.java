@@ -21,5 +21,6 @@ public interface TranCategoryRepository extends JpaRepository<TranCategory, Long
     @Query("select tran_category from TranCategory tran_category where tran_category.user.login = ?#{principal.username}")
     Page<TranCategory> findByUserIsCurrentUser(Pageable pageable);
 
+    List<TranCategory> save(List<TranCategory> categories);
 
 }

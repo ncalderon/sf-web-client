@@ -50,7 +50,7 @@ export class FinanceAccountService {
     }
 
     findTransactionsByYear(id: number, year: number): Observable<AccountTransaction[]> {
-        return this.http.get(`${this.resourceUrl}/${id}/account-transactions`, {
+        return this.http.get(`${this.resourceUrl}/${id}/transactionsByYear`, {
             params: new HttpParams().set('year', year + '')
         }).map((res: Response) => {
             const jsonResponse = res.json();
@@ -65,9 +65,9 @@ export class FinanceAccountService {
             .map((res: Response) => this.convertResponse(res));
     }
 
-    queryTransactions(req?: any): Observable<ResponseWrapper> {
+    queryTransactions(id: number, req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
+        return this.http.get(`${this.resourceUrl}/${id}/transactions`, options)
             .map((res: Response) => this.convertResponse(res));
     }
 
@@ -92,6 +92,21 @@ export class FinanceAccountService {
             this.convertItemFromServer(jsonResponse[i]);
         }
         return new ResponseWrapper(res.headers, jsonResponse, res.status);
+    }
+
+    private convertTranResponse(res: Response): ResponseWrapper {
+        const jsonResponse = res.json();
+        for (let i = 0; i < jsonResponse.length; i++) {
+            this.convertItemFromServer(jsonResponse[i]);
+        }
+        return new ResponseWrapper(res.headers, jsonResponse, res.status);
+    }
+
+    private convertTranFromServer(entity: any) {
+        entity.postDate = this.dateUtils
+            .convertLocalDateFromServer(entity.postDate);
+        entity.createdDate = this.dateUtils
+            .convertLocalDateFromServer(entity.createdDate);
     }
 
     private convertItemFromServer(entity: any) {

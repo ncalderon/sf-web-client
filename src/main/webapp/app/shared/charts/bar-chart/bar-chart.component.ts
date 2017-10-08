@@ -25,10 +25,10 @@ export class BarChartComponent implements OnInit {
             display: false,
             text: 'Bar Chart'
         },
-        hover: {
+        /*hover: {
             mode: 'nearest',
             intersect: true
-        },
+        },*/
         scaleShowVerticalLines: true,
         responsive: true,
         scales: {

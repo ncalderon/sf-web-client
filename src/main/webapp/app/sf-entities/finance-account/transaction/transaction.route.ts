@@ -2,10 +2,9 @@ import {UserRouteAccessService} from '../../../shared/auth/user-route-access-ser
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot, Routes} from '@angular/router';
 import {JhiPaginationUtil} from 'ng-jhipster';
 import {Injectable} from '@angular/core';
-import {TransactionUploadComponent} from './transaction-upload/transaction-upload.component';
-import {TransactionComponent} from './transaction.component';
 import {TransactionPopupComponent} from './transaction-dialog/transaction-dialog.component';
 import {TransactionDeletePopupComponent} from './transaction-delete-dialog/transaction-delete-dialog.component';
+import {TranUploadComponent} from "./tran-upload/tran-upload.component";
 
 @Injectable()
 export class TransactionResolvePagingParams implements Resolve<any> {
@@ -26,7 +25,7 @@ export class TransactionResolvePagingParams implements Resolve<any> {
 export const transactionRoute: Routes = [
     {
         path: 'finance-account/:accountId/transaction/upload',
-        component: TransactionUploadComponent,
+        component: TranUploadComponent,
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'sfWebClientApp.accountTransaction.home.title'
@@ -79,7 +78,7 @@ export const transactionPopupRoute: Routes = [
         outlet: 'popup'
     },
     {
-        path: 'finance-account/:accountId/account-transaction/:id/delete',
+        path: 'finance-account/:accountId/transaction/:id/delete',
         component: TransactionDeletePopupComponent,
         data: {
             authorities: ['ROLE_USER'],

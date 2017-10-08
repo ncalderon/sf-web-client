@@ -63,12 +63,12 @@ export class TranChartData {
             'Jun' : false,
             'Jul' : false,
             'Aug' : false,
-            'Sept': false,
+            'Sep': false,
             'Oct' : false,
             'Nov' : false,
             'Dec' : false
         };
-        const chartLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+        const chartLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         for (const tran of this._transactions) {
             if (tran.postDate.getFullYear() !== year) {
                 continue;

@@ -68,6 +68,9 @@ export class DashboardComponent implements OnInit {
                 allAcc.id = -1;
                 allAcc.name = 'ALL';
                 this.accounts.unshift(allAcc);
+                for (let account of this.accounts) {
+                    this.accChecked.push(account.id);
+                }
                 this.fillRowsAccount();
                 this.loadTransactions()
             }, (res: ResponseWrapper) => this.onError(res.json));

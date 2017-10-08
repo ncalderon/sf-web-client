@@ -1,4 +1,15 @@
-
+<div class="row">
+    <div class="col-auto mr-auto"></div>
+    <div class="col-auto">
+        <button class="btn btn-secondary" [routerLink]="['/tran-category']">
+            <span class="fa"></span>
+            <span>
+                Categories
+            </span>
+        </button>
+    </div>
+</div>
+<hr>
 <h2>
     <span jhiTranslate="sfWebClientApp.financeAccount.home.title">Finance Accounts</span>
     <button class="btn btn-primary float-right jh-create-entity create-finance-account" [routerLink]="['/', { outlets: { popup: ['finance-account-new'] } }]">

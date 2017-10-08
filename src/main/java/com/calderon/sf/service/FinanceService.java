@@ -37,6 +37,7 @@ public class FinanceService {
             return currentBalance.subtract(tranValue);
     }
 
+    @Transactional
     public List<AccountTransaction> save(List<AccountTransaction> transactions) {
         FinanceAccount account = transactions.get(0).getFinanceAccount();
         transactions.stream().forEach(tran -> {
@@ -47,6 +48,7 @@ public class FinanceService {
         return transactionPersited;
     }
 
+    @Transactional
     public void delete(Long id) {
         AccountTransaction tran = tranRepository.getOne(id);
         FinanceAccount account = tran.getFinanceAccount();

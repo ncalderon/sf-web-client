@@ -133,7 +133,7 @@ public class FinanceAccountResource {
     }
 
     //@Transactional
-    @GetMapping("/finance-accounts/{id}/transactions")
+    @GetMapping("/finance-accounts/{id}/transactionsByYear")
     @Timed
     public ResponseEntity<List<AccountTransaction>> getAllAccountTransactions(@PathVariable Long id, @RequestParam int year) {
         log.debug("REST request to get Transactions by Account : {}", id);

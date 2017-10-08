@@ -1,4 +1,3 @@
-
 import {
     TransactionPopupService,
     TransactionComponent,
@@ -6,7 +5,7 @@ import {
     TransactionPopupComponent,
     TransactionDeletePopupComponent,
     TransactionDeleteDialogComponent,
-    TransactionUploadComponent,
+    TranUploadComponent,
     transactionRoute,
     transactionPopupRoute,
     TransactionResolvePagingParams
@@ -39,20 +38,22 @@ const ENTITY_STATES = [
         TransactionDeleteDialogComponent,
         TransactionPopupComponent,
         TransactionDeletePopupComponent,
-        TransactionUploadComponent
-    ],
-    entryComponents: [
-        TransactionComponent,
-        TransactionDialogComponent,
-        TransactionPopupComponent,
-        TransactionDeleteDialogComponent,
-        TransactionDeletePopupComponent,
-        TransactionUploadComponent
+        TranUploadComponent
     ],
     providers: [
         AccountTransactionService,
         TransactionPopupService,
         TransactionResolvePagingParams,
+    ],
+    entryComponents: [
+        TranUploadComponent,
+        TransactionDialogComponent,
+        TransactionDeleteDialogComponent,
+        TransactionPopupComponent,
+        TransactionDeletePopupComponent
+    ],
+    exports: [
+        TransactionComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -3,7 +3,7 @@
         "financeAccount" : {
             "home": {
                 "title": "Accounts",
-                "createLabel": "Create a new Account",
+                "createLabel": "New Account",
                 "createOrEditLabel": "Create or edit an Account"
             },
             "created": "A new Finance Account is created with identifier {{ param }}",

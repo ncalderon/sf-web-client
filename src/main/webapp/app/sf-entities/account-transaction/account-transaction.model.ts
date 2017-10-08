@@ -22,6 +22,7 @@ export class AccountTransaction implements BaseEntity {
         public tranNumber?: string,
         public referenceNumber?: string,
         public postDate?: any,
+        public createdDate?: any,
         public description?: string,
         public amount?: number,
         public paymentMethod?: PaymentMethod,

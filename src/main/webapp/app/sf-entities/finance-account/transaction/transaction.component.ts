@@ -1,5 +1,4 @@
-
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AccountTransaction} from '../../account-transaction/account-transaction.model';
 import {Subscription} from 'rxjs/Subscription';
 import {AccountTransactionService} from '../../account-transaction/account-transaction.service';
@@ -18,6 +17,7 @@ import {FinanceAccountService} from '../finance-account.service';
 export class TransactionComponent implements OnInit, OnDestroy {
 
     accountId: number;
+    @Input()
     currentAccount: FinanceAccount;
     transactions: AccountTransaction[];
 
@@ -33,6 +33,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
     predicate: any;
     previousPage: any;
     reverse: any;
+    private subscription: Subscription;
 
     constructor(
         private accountService: FinanceAccountService,
@@ -54,11 +55,13 @@ export class TransactionComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
-        this.accountService.find(this.accountId)
-            .subscribe((account) => {
-                this.currentAccount = account;
-            }, (res: ResponseWrapper) => this.onError(res.json));
-        this.accountService.queryTransactions({
+        if(!this.currentAccount){
+            this.accountService.find(this.accountId)
+                .subscribe((account) => {
+                    this.currentAccount = account;
+                }, (res: ResponseWrapper) => this.onError(res.json));
+        }
+        this.accountService.queryTransactions(this.accountId, {
             page: this.page - 1,
             size: this.itemsPerPage,
             sort: this.sort()}).subscribe(
@@ -73,7 +76,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
         }
     }
     transition() {
-        this.router.navigate(['./'], {queryParams:
+        this.router.navigate(['./finance-account', this.accountId], {queryParams:
             {
                 page: this.page,
                 size: this.itemsPerPage,
@@ -85,13 +88,18 @@ export class TransactionComponent implements OnInit, OnDestroy {
 
     clear() {
         this.page = 0;
-        this.router.navigate(['./', {
+        this.router.navigate(['./finance-account/' + this.accountId, {
             page: this.page,
             sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
         }]);
         this.loadAll();
     }
     ngOnInit() {
+        this.subscription = this.activatedRoute.params.subscribe((params) => {
+            this.accountId = params['id'];
+        });
+        this.predicate = 'createdDate';
+        this.reverse = false;
         this.loadAll();
         this.registerChangeInAccountTransactions();
     }
