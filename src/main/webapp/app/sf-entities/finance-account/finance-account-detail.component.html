@@ -1,5 +1,10 @@
 <div *ngIf="financeAccount">
-    <h2 [ngSwitch]="financeAccount.isCreditCard"><span jhiTranslate="sfWebClientApp.financeAccount.detail.title">Account</span> - {{financeAccount.name}} <span *ngSwitchCase="true" class="badge badge-secondary">Credit Card</span><span *ngSwitchCase="false" class="badge badge-secondary">Generic</span></h2>
+    <h2 [ngSwitch]="financeAccount.isCreditCard"><span jhiTranslate="sfWebClientApp.financeAccount.detail.title">Account</span> - {{financeAccount.name}}
+        <!--<span *ngSwitchCase="true" class="badge badge-secondary">Credit Card</span>
+        <span *ngSwitchCase="false" class="badge badge-secondary">Generic</span></h2>-->
+        <span *ngSwitchCase="true" class="fa fa-credit-card"></span>
+        <span *ngSwitchCase="false" class="fa fa-money"></span>
+    </h2>
 
     <div>
         <button type="submit"

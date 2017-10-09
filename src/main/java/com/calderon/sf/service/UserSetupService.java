@@ -25,21 +25,16 @@ public class UserSetupService {
     private final Logger log = LoggerFactory.getLogger(UserSetupService.class);
 
     private final TranCategoryRepository categoryRepository;
-    private final FinanceAccountRepository accountRepository;
-    private final AccountTransactionRepository transactionRepository;
+    private final FinanceService financeService;
 
-    public UserSetupService(TranCategoryRepository categoryRepository, FinanceAccountRepository accountRepository, AccountTransactionRepository transactionRepository) {
+    public UserSetupService(TranCategoryRepository categoryRepository, FinanceService financeService) {
         this.categoryRepository = categoryRepository;
-        this.accountRepository = accountRepository;
-        this.transactionRepository = transactionRepository;
+        this.financeService = financeService;
     }
 
     public void createDefaultsForUser(User user){
         categoryRepository.save(defaultCategories(user));
-        List<FinanceAccount> accounts = accountRepository.save(defaultAccounts(user));
-        accounts.forEach(financeAccount -> {
-            transactionRepository.save(defaultTransactions(financeAccount, user));
-        });
+        financeService.save(defaultAccounts(user));
     }
 
     private List<TranCategory> defaultCategories(User user){
@@ -50,15 +45,11 @@ public class UserSetupService {
 
     private List<FinanceAccount> defaultAccounts(User user){
         List<FinanceAccount> accounts = new ArrayList<>();
-        accounts.add(new FinanceAccount().accountNumber("0000001").accountStatus(AccountStatus.ACTIVE).name("Wallet").isCreditCard(false).user(user));
-        accounts.add(new FinanceAccount().accountNumber("0000002").accountStatus(AccountStatus.ACTIVE).name("Saving Account").isCreditCard(false).user(user));
-        accounts.add(new FinanceAccount().accountNumber("0000003").accountStatus(AccountStatus.ACTIVE).name("Credit Card").isCreditCard(true).user(user));
+        accounts.add(new FinanceAccount().accountNumber("0000001").accountStatus(AccountStatus.ACTIVE).name("Wallet").description("Wallet").isCreditCard(false).user(user));
+        accounts.add(new FinanceAccount().accountNumber("0000002").accountStatus(AccountStatus.ACTIVE).name("Saving Account").description("Saving Account").isCreditCard(false).user(user));
+        accounts.add(new FinanceAccount().accountNumber("0000003").accountStatus(AccountStatus.ACTIVE).name("Credit Card").description("Credit Card").isCreditCard(true).user(user));
         return accounts;
     }
 
-    private List<AccountTransaction> defaultTransactions(FinanceAccount account, User user){
-        List<AccountTransaction> transactions = new ArrayList<>();
-        transactions.add(new AccountTransaction().amount(new BigDecimal(0)).description("Initial Balance").paymentMethod(PaymentMethod.UNSPECIFIED).postDate(LocalDate.now()).tranType(TranType.INCOME).user(user).financeAccount(account));
-        return transactions;
-    }
+
 }

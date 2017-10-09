@@ -24,7 +24,7 @@
 <br/>
 <div class="row" *ngFor="let rowAcc of rowsAccount">
     <div class="col-sm-3 mb-3" *ngFor="let colAcc of rowAcc.accounts">
-        <a class="border card bg-info text-white" [routerLink]="['../finance-account', colAcc.id ]">
+        <a class="border card bg-info text-white" [routerLink]="['../finance-account', colAcc.id ]" [ngSwitch]="colAcc.isCreditCard">
             <div class="card-body">
                 <h4 class="card-title">{{colAcc.name}}</h4>
 
@@ -34,11 +34,13 @@
                        replaceUrl="true"
                        class="badge badge-danger">Delete</a>
                 </div>-->
-                <div *ngIf="colAcc.isCreditCard == true" class="text-right">
-                    <span class="badge badge-secondary">Credit Card</span>
+                <div *ngSwitchCase="true" class="text-right">
+                    <!--<span class="badge badge-secondary">Credit Card</span>-->
+                    <i class="fa fa-credit-card"></i>
                 </div>
-                <div *ngIf="colAcc.isCreditCard == false" class="text-right">
-                    <span class="badge badge-secondary">Generic</span>
+                <div *ngSwitchCase="false" class="text-right">
+                    <!--<span class="badge badge-secondary">Generic</span>-->
+                    <i class="fa fa-money"></i>
                 </div>
             </div>
         </a>

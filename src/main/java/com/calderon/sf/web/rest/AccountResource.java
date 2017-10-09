@@ -102,6 +102,7 @@ public class AccountResource {
     public ResponseEntity<String> activateAccount(@RequestParam(value = "key") String key) {
         return userService.activateRegistration(key)
             .map(user -> {
+                log.info("Setting up defaults for user: {}", user);
                 userSetupService.createDefaultsForUser(user);
                 return new ResponseEntity<String>(HttpStatus.OK);
             })

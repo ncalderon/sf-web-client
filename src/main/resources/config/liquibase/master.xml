@@ -18,5 +18,5 @@
     <include file="config/liquibase/changelog/20170921190851_added_entity_constraints_FinanceAccount.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <include file="config/liquibase/changelog/20170921191551_implemented_audit_to_entities.xml" relativeToChangelogFile="false"/>
-    <!--<include file="config/liquibase/changelog/20170921191551_load_default_data.xml" relativeToChangelogFile="false"/>-->
+    <include file="config/liquibase/changelog/20170921191551_load_default_data.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
