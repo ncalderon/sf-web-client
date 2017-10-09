@@ -26,7 +26,7 @@ public class TranCategoryRegex extends AbstractAuditingEntity implements Seriali
     private Long id;
 
     @NotNull
-    @Size(min = 4, max = 64)
+    @Size(min = 2, max = 64)
     @Column(name = "name", length = 64, nullable = false)
     private String name;
 

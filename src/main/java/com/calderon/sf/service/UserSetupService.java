@@ -34,7 +34,7 @@ public class UserSetupService {
 
     public void createDefaultsForUser(User user){
         categoryRepository.save(defaultCategories(user));
-        financeService.save(defaultAccounts(user));
+        financeService.saveAccounts(defaultAccounts(user));
     }
 
     private List<TranCategory> defaultCategories(User user){

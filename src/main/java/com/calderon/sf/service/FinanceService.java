@@ -25,7 +25,7 @@ public class FinanceService {
     }
 
     @Transactional
-    public AccountTransaction save(AccountTransaction tran){
+    public AccountTransaction saveTransaction(AccountTransaction tran){
         FinanceAccount account = tran.getFinanceAccount();
         account.setBalance(calcNewBalance(account.getBalance(), tran.getAmount(), tran.getTranType()== TranType.INCOME));
         AccountTransaction transaction = tranRepository.save(tran);
@@ -41,7 +41,7 @@ public class FinanceService {
     }
 
     @Transactional
-    public List<AccountTransaction> save(List<AccountTransaction> transactions) {
+    public List<AccountTransaction> saveTransactions(List<AccountTransaction> transactions) {
         FinanceAccount account = transactions.get(0).getFinanceAccount();
         transactions.stream().forEach(tran -> {
             account.setBalance(calcNewBalance(account.getBalance(), tran.getAmount(), tran.getTranType()== TranType.INCOME));
@@ -60,31 +60,31 @@ public class FinanceService {
         accountRepository.save(account);
     }
 
-    public FinanceAccount save(FinanceAccount account) {
-        return save(account, true);
+    public FinanceAccount saveAccount(FinanceAccount account) {
+        return saveAccount(account, true);
     }
 
-    public FinanceAccount save(FinanceAccount account, boolean createDefaultTrans){
+    public FinanceAccount saveAccount(FinanceAccount account, boolean createDefaultTrans){
         FinanceAccount persistedAccount = accountRepository.save(account);
         if(createDefaultTrans)
-            save(createDefaultTransactiions(persistedAccount));
+            saveTransactions(createDefaultTransactions(persistedAccount));
         return persistedAccount;
     }
 
-    public List<FinanceAccount> save(List<FinanceAccount> accounts){
-        save(accounts, true);
+    public List<FinanceAccount> saveAccounts(List<FinanceAccount> accounts){
+        return saveAccounts(accounts, true);
     }
 
-    public List<FinanceAccount> save(List<FinanceAccount> accounts, boolean createDefaultTrans){
+    public List<FinanceAccount> saveAccounts(List<FinanceAccount> accounts, boolean createDefaultTrans){
         List<FinanceAccount> persistedAccounts = accountRepository.save(accounts);
         persistedAccounts.forEach(account -> {
             if(createDefaultTrans)
-                save(createDefaultTransactiions(account));
+                saveTransactions(createDefaultTransactions(account));
         });
         return persistedAccounts;
     }
 
-    private List<AccountTransaction> createDefaultTransactiions(FinanceAccount account){
+    private List<AccountTransaction> createDefaultTransactions(FinanceAccount account){
         List<AccountTransaction> transactions = new ArrayList<>();
         transactions.add(new AccountTransaction().amount(new BigDecimal(0)).description("Initial Balance").paymentMethod(PaymentMethod.UNSPECIFIED).postDate(LocalDate.now()).tranType(TranType.INCOME).user(account.getUser()).financeAccount(account));
         return transactions;

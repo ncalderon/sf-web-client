@@ -92,9 +92,8 @@ public class AccountTransactionResource {
         if (accountTransaction.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new accountTransaction cannot already have an ID")).body(null);
         }
-        AccountTransaction result = financeService.save(accountTransaction);
+        AccountTransaction result = financeService.saveTransaction(accountTransaction);
         return ResponseEntity.created(new URI("/api/account-transactions/" + result.getId()))
-            /*.headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))*/
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getDescription().toString()))
             .body(result);
     }
@@ -106,7 +105,7 @@ public class AccountTransactionResource {
         if (transactions.size() <= 0)
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "Empty list", "Transaction list cannot be empty")).body(null);
 
-        List<AccountTransaction> result = financeService.save(transactions);
+        List<AccountTransaction> result = financeService.saveTransactions(transactions);
         return ResponseEntity.created(new URI("/api/account-transactions/bulk"))
             .body(result);
     }
@@ -127,7 +126,7 @@ public class AccountTransactionResource {
         if (accountTransaction.getId() == null) {
             return createAccountTransaction(accountTransaction);
         }
-        AccountTransaction result = financeService.save(accountTransaction);
+        AccountTransaction result = financeService.saveTransaction(accountTransaction);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, accountTransaction.getId().toString()))
             .body(result);
@@ -203,7 +202,6 @@ public class AccountTransactionResource {
         String currentUserLogin = SecurityUtils.getCurrentUserLogin();
         Path tempFile = storageService.createTemporaryFile(currentUserLogin, ".csv", file);
         List<AccountTransaction> list = tranFileReaderService.read(bank, tempFile);
-        /*HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/account-transactions/upload");*/
         return ResponseEntity.ok(list);
     }
 
