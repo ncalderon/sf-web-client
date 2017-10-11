@@ -1,29 +1,15 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {JhiEventManager} from 'ng-jhipster';
-import {Subscription} from 'rxjs/Subscription';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'jhi-sidebar',
-    templateUrl: './sidebar.component.html',
-    styleUrls: ['./sidebar.component.css']
+  selector: 'jhi-sidebar',
+  templateUrl: './sidebar.component.html',
+  styles: []
 })
-export class SidebarComponent implements OnInit, OnDestroy {
+export class SidebarComponent implements OnInit {
 
-    eventSubscriber: Subscription;
+  constructor() { }
 
-    constructor(private eventManager: JhiEventManager) {
-    }
+  ngOnInit() {
+  }
 
-    ngOnInit() {
-    }
-
-    registerChangeInSidebarComponent() {
-        this.eventSubscriber = this.eventManager.subscribe('sidebarModification', (response) => {
-            console.log(response);
-        });
-    }
-
-    ngOnDestroy() {
-        this.eventManager.destroy(this.eventSubscriber);
-    }
 }

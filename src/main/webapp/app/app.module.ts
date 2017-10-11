@@ -21,8 +21,6 @@ import {
     JhiMainComponent,
     LayoutRoutingModule,
     NavbarComponent,
-    SidebarComponent,
-    CustomNavbarComponent,
     FooterComponent,
     ProfileService,
     PageRibbonComponent,
@@ -51,9 +49,7 @@ import {DashboardModule} from './dashboard/dashboard.module';
         ErrorComponent,
         PageRibbonComponent,
         ActiveMenuDirective,
-        FooterComponent,
-        CustomNavbarComponent,
-        SidebarComponent
+        FooterComponent
     ],
     providers: [
         ProfileService,
