@@ -16,7 +16,7 @@
             <column name="last_modified_date" type="timestamp"/>
         </loadData>
 
-        <loadData
+        <!--<loadData
             encoding="UTF-8"
             tableName="finance_account"
             separator=","
@@ -50,6 +50,6 @@
             file="config/liquibase/transactions.csv">
             <column name="created_date" type="timestamp"/>
             <column name="last_modified_date" type="timestamp"/>
-        </loadData>
+        </loadData>-->
     </changeSet>
 </databaseChangeLog>

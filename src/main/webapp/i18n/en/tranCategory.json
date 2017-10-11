@@ -3,7 +3,7 @@
         "tranCategory" : {
             "home": {
                 "title": "Categories",
-                "createLabel": "Create a new Category",
+                "createLabel": "New Category",
                 "createOrEditLabel": "Create or edit a Category"
             },
             "created": "A new Category is created with identifier {{ param }}",
