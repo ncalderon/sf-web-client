@@ -70,6 +70,7 @@
             <span class="fa fa-save"></span>&nbsp;<span>Import</span>
         </button>
     </div>
+
     <div class="row"></div>
     <br/>
 
@@ -85,7 +86,7 @@
                 jhiSearch
                 [searcher]="searcher"
                 [items]="transactionsObservables"
-                placeholder="Find by all fields"
+                placeholder="Find transaction"
                 [disabled]="transactions.length <= 0"
             />
             <div class="table-responsive" *ngIf="transactions">
@@ -111,22 +112,19 @@
                         <td>{{transaction.tranType}}</td>
                         <td>{{transaction.description}}</td>
                         <td class="text-right">{{transaction.amount | currency:'USD':true:'2.2-2'}}</td>
-                        <!--[value]="category.id === transaction.tranCategory?.id ? transaction.tranCategory : category" -->
-                        <!--[value]="category"-->
-                        <td class="text-right">
-                            <select class="form-control"
-                                    name="category"
-                                    [(ngModel)]="transaction.tranCategory"
-                                    #category="ngModel"
-                            >
-                                <option [ngValue]="null"></option>
-                                <option
-                                    *ngFor="let category of categories; trackBy: trackTranCategoryById"
-                                    [ngValue]="category.id === transaction.tranCategory?.id ? transaction.tranCategory : category"
-                                >
-                                    {{category.name}}
-                                </option>
-                            </select>
+                        <td>
+                            <input
+                                autocomplete="off"
+                                name="{{'category'+i}}"
+                                [(ngModel)]="categoryValues[i]"
+                                [typeahead]="categories"
+                                typeahedOptionsLimit="10"
+                                typeaheadOptionField="name"
+                                typeaheadMinLength="2"
+                                (typeaheadOnSelect)="onTypeaheadSelect(i, transaction, $event)"
+                                placeholder="Choose a category"
+                                class="form-control"
+                            />
                         </td>
                         <td>
                             <a href="javascript:void(0);" (click)="remove(i, transaction)"
@@ -142,3 +140,4 @@
         </div>
     </div>
 </form>
+

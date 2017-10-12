@@ -84,13 +84,32 @@
         </div>
 
         <!--section - financeAccount, category-->
-        <div class="form-row">
+        <div class="form-row" *ngIf="categories.length>0">
             <div class="form-group col-md-6">
-                <label class="form-control-label" jhiTranslate="sfWebClientApp.accountTransaction.tranCategory" for="field_tranCategory">Tran Category</label>
-                <select class="form-control" id="field_tranCategory" name="tranCategory" [(ngModel)]="transaction.tranCategory" >
+                <label class="form-control-label" jhiTranslate="sfWebClientApp.accountTransaction.tranCategory" for="fieldCategory">Category</label>
+                <!--<select class="form-control" id="field_tranCategory" name="tranCategory" [(ngModel)]="transaction.tranCategory" >
                     <option [ngValue]="null"></option>
                     <option [ngValue]="tranCategoryOption.id === transaction.tranCategory?.id ? transaction.tranCategory : tranCategoryOption" *ngFor="let tranCategoryOption of categories; trackBy: trackTranCategoryById">{{tranCategoryOption.name}}</option>
-                </select>
+                </select>-->
+                <!--[(ngModel)]="categoryTypeaheadValue"-->
+                <input
+                    id="fieldCategory"
+                    name="category"
+                    [typeahead]="categories"
+                    [(ngModel)]="categoryTypeaheadValue"
+                    typeahedOptionsLimit="10"
+                    typeaheadOptionField="name"
+                    typeaheadMinLength="2"
+                    (typeaheadOnSelect)="onTypeaheadSelect($event)"
+                    placeholder="Choose a category"
+                    class="form-control"
+                />
+                <!--<div [hidden]="!(editForm.controls.category?.invalid)">
+                    <small class="form-text text-danger"
+                           [hidden]="!editForm.controls.amount?.errors?.number" jhiTranslate="entity.validation.number">
+                        You should select one from the list
+                    </small>
+                </div>-->
             </div>
         </div>
 

@@ -12,8 +12,20 @@
     <div class="row">
     </div>
     <br/>
+
     <div class="table-responsive" *ngIf="tranCategories">
-        <table class="table table-striped">
+        <input
+            id="field_search"
+            class="form-control"
+            type="text"
+            name="field_search"
+            jhiSearch
+            [searcher]="searcher"
+            [items]="categoriesObservable"
+            placeholder="Find Category"
+            [disabled]="tranCategories.length <= 0"
+        />
+        <table class="table table-striped" >
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <!--<th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>-->
@@ -26,7 +38,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let tranCategory of tranCategories ;trackBy: trackId">
+            <tr *ngFor="let tranCategory of categoriesObservable | async ;trackBy: trackId">
                 <!--<td><a [routerLink]="['../tran-category', tranCategory.id ]">{{tranCategory.id}}</a></td>-->
                 <!--<td>{{tranCategory.description}}</td>
                 <td>
@@ -40,12 +52,12 @@
                 <td><a [routerLink]="['../tran-category', tranCategory.id ]">{{tranCategory.name}}</a></td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
+                        <!--<button type="submit"
                                 [routerLink]="['../tran-category', tranCategory.id ]"
                                 class="btn btn-info btn-sm">
                             <span class="fa fa-eye"></span>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                        </button>
+                        </button>-->
                         <button type="submit"
                                 [routerLink]="['/', { outlets: { popup: 'tran-category/'+ tranCategory.id + '/edit'} }]"
                                 replaceUrl="true"

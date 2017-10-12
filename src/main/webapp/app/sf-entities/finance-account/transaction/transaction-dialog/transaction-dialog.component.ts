@@ -26,13 +26,14 @@ export class TransactionDialogComponent implements OnInit {
     transaction: AccountTransaction;
 
     isSaving: boolean;
+
+    categoryTypeaheadValue: string;
     categories: TranCategory[] = [];
     postDateDp: any;
 
     isDetailsCollapsed = true;
 
-    constructor(
-                private activatedRoute: ActivatedRoute,
+    constructor(private activatedRoute: ActivatedRoute,
                 public activeModal: NgbActiveModal,
                 private alertService: JhiAlertService,
                 private tranService: AccountTransactionService,
@@ -44,7 +45,7 @@ export class TransactionDialogComponent implements OnInit {
 
     ngOnInit() {
         this.activatedRoute.children.find((value) => {
-            if (value.outlet === 'popup'){
+            if (value.outlet === 'popup') {
                 value.params.subscribe((params) => {
                     this.accountId = params['accountId'];
                     this.load();
@@ -134,6 +135,10 @@ export class TransactionDialogComponent implements OnInit {
             'btn-danger': this.transaction.tranType == <TranType><any>'EXPENSE',
             'btn-secondary': this.transaction.tranType == <TranType><any>'INCOME'
         };
+    }
+
+    onTypeaheadSelect(event: any) {
+        this.transaction.tranCategory = event.item;
     }
 }
 

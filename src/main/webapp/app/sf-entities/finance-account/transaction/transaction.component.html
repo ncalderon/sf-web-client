@@ -5,13 +5,14 @@
         <button class="btn btn-sm btn-primary float-right jh-create-entity create-account-transaction"
                 [routerLink]="['/', { outlets: { popup: ['finance-account',currentAccount.id ,'transaction-new'] } }]">
             <span class="fa fa-plus"></span>
-            <span  jhiTranslate="sfWebClientApp.accountTransaction.home.createLabel">
+            <span jhiTranslate="sfWebClientApp.accountTransaction.home.createLabel">
             Create new Account Transaction
             </span>
         </button>
-        <button class="btn btn-sm btn-success float-right jh-upload-entity upload-account-transaction mr-2" [routerLink]="['./transaction/upload']">
+        <button class="btn btn-sm btn-success float-right jh-upload-entity upload-account-transaction mr-2"
+                [routerLink]="['./transaction/upload']">
             <span class="fa fa-upload"></span>
-            <span >
+            <span>
             Upload
             </span>
         </button>
@@ -20,15 +21,59 @@
     <div class="row">
     </div>
     <br/>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="form-group">
+                <input name="dateRangeFilter" class="form-control" placeholder="mm-dd-yyyy to mm-dd-yyyy"
+                       bsDaterangepicker #dpr="bsDaterangepicker">
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <input name="descriptionFilter" class="form-control" placeholder="description"
+                       [(ngModel)]="byDescription"
+                />
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <select class="form-control"
+                        [(ngModel)]="byOperator">
+                    <option value="'-1'">Equal or less than</option>
+                    <option value="'1'">Equal or greater than</option>
+                </select>
+                <input name="amount" class="form-control" placeholder="amount"
+                       [(ngModel)]="byAmount"
+                />
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="form-group">
+                <button class="btn btn-default"
+                        [disabled]="byDescription.length == 0 || byAmount >= 0"
+                        (click)="onFilterClick()"
+                >
+                    Filter
+                </button>
+            </div>
+        </div>
+    </div>
     <div class="table-responsive" *ngIf="transactions">
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-                <th jhiSortBy="postDate"><span jhiTranslate="sfWebClientApp.accountTransaction.postDate">Post Date</span> <span class="fa fa-sort"></span></th>
-                <th jhiSortBy="tranCategory.name"><span jhiTranslate="sfWebClientApp.accountTransaction.tranCategory">Tran Category</span> <span class="fa fa-sort"></span></th>
-                <th jhiSortBy="tranType"><span jhiTranslate="sfWebClientApp.accountTransaction.tranType">Tran Type</span> <span class="fa fa-sort"></span></th>
-                <th jhiSortBy="description"><span jhiTranslate="sfWebClientApp.accountTransaction.description">Description</span> <span class="fa fa-sort"></span></th>
-                <th jhiSortBy="amount"><span jhiTranslate="sfWebClientApp.accountTransaction.amount">Amount</span> <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="postDate"><span
+                    jhiTranslate="sfWebClientApp.accountTransaction.postDate">Post Date</span> <span
+                    class="fa fa-sort"></span></th>
+                <th jhiSortBy="tranCategory.name"><span jhiTranslate="sfWebClientApp.accountTransaction.tranCategory">Tran Category</span>
+                    <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="tranType"><span
+                    jhiTranslate="sfWebClientApp.accountTransaction.tranType">Tran Type</span> <span
+                    class="fa fa-sort"></span></th>
+                <th jhiSortBy="description"><span jhiTranslate="sfWebClientApp.accountTransaction.description">Description</span>
+                    <span class="fa fa-sort"></span></th>
+                <th jhiSortBy="amount"><span jhiTranslate="sfWebClientApp.accountTransaction.amount">Amount</span> <span
+                    class="fa fa-sort"></span></th>
                 <th jhiSortBy="createdDate"><span>Created Date</span> <span class="fa fa-sort"></span></th>
                 <th></th>
             </tr>
@@ -38,7 +83,7 @@
                 <td>{{transaction.postDate | date:'mediumDate'}}</td>
                 <td>
                     <div *ngIf="transaction.tranCategory">
-                        <a [routerLink]="['../../tran-category', transaction.tranCategory?.id ]" >{{transaction.tranCategory?.name}}</a>
+                        <a [routerLink]="['../../tran-category', transaction.tranCategory?.id ]">{{transaction.tranCategory?.name}}</a>
                     </div>
                 </td>
                 <td jhiTranslate="{{'sfWebClientApp.TranType.' + transaction.tranType}}">{{transaction.tranType}}</td>
@@ -72,7 +117,8 @@
             <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
         </div>
         <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page"
+                            (pageChange)="loadPage(page)"></ngb-pagination>
         </div>
     </div>
 </div>

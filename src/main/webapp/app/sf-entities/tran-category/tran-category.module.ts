@@ -16,6 +16,7 @@ import {
     tranCategoryPopupRoute,
     TranCategoryResolvePagingParams,
 } from './';
+import {SearchModule} from '../../shared/search/search.module';
 
 const ENTITY_STATES = [
     ...tranCategoryRoute,
@@ -26,7 +27,8 @@ const ENTITY_STATES = [
     imports: [
         SfWebClientSharedModule,
         SfWebClientAdminModule,
-        RouterModule.forRoot(ENTITY_STATES, { useHash: true })
+        RouterModule.forRoot(ENTITY_STATES, { useHash: true }),
+        SearchModule
     ],
     declarations: [
         TranCategoryComponent,
