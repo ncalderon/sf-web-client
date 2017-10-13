@@ -1,7 +1,6 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AccountTransaction} from '../../account-transaction/account-transaction.model';
 import {Subscription} from 'rxjs/Subscription';
-import {AccountTransactionService} from '../../account-transaction/account-transaction.service';
 import {JhiAlertService, JhiEventManager, JhiPaginationUtil, JhiParseLinks} from 'ng-jhipster';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PaginationConfig} from '../../../blocks/config/uib-pagination.config';
@@ -9,6 +8,7 @@ import {ITEMS_PER_PAGE} from '../../../shared/constants/pagination.constants';
 import {ResponseWrapper} from '../../../shared/model/response-wrapper.model';
 import {FinanceAccount} from '../finance-account.model';
 import {FinanceAccountService} from '../finance-account.service';
+import {LoggerService} from '../../../shared/logger/logger.service';
 
 @Component({
     selector: 'jhi-transaction',
@@ -35,16 +35,23 @@ export class TransactionComponent implements OnInit, OnDestroy {
     reverse: any;
     private subscription: Subscription;
 
-    constructor(
-        private accountService: FinanceAccountService,
-        private parseLinks: JhiParseLinks,
-        private alertService: JhiAlertService,
-        private activatedRoute: ActivatedRoute,
-        private router: Router,
-        private eventManager: JhiEventManager,
-        private paginationUtil: JhiPaginationUtil,
-        private paginationConfig: PaginationConfig
-    ) {
+    /****** filter ******/
+    filterObj = {
+        byDescription: '',
+        byAmount: 0,
+        byOperator: 1,
+        dateRange: []
+    };
+
+    constructor(private accountService: FinanceAccountService,
+                private parseLinks: JhiParseLinks,
+                private alertService: JhiAlertService,
+                private activatedRoute: ActivatedRoute,
+                private router: Router,
+                private eventManager: JhiEventManager,
+                private paginationUtil: JhiPaginationUtil,
+                private paginationConfig: PaginationConfig,
+                private logger: LoggerService) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
             this.page = data['pagingParams'].page;
@@ -55,7 +62,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
-        if(!this.currentAccount){
+        if (!this.currentAccount) {
             this.accountService.find(this.accountId)
                 .subscribe((account) => {
                     this.currentAccount = account;
@@ -64,24 +71,28 @@ export class TransactionComponent implements OnInit, OnDestroy {
         this.accountService.queryTransactions(this.accountId, {
             page: this.page - 1,
             size: this.itemsPerPage,
-            sort: this.sort()}).subscribe(
+            sort: this.sort()
+        }).subscribe(
             (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
             (res: ResponseWrapper) => this.onError(res.json)
         );
     }
+
     loadPage(page: number) {
         if (page !== this.previousPage) {
             this.previousPage = page;
             this.transition();
         }
     }
+
     transition() {
-        this.router.navigate(['./finance-account', this.accountId], {queryParams:
-            {
-                page: this.page,
-                size: this.itemsPerPage,
-                sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-            }
+        this.router.navigate(['./finance-account', this.accountId], {
+            queryParams:
+                {
+                    page: this.page,
+                    size: this.itemsPerPage,
+                    sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
+                }
         });
         this.loadAll();
     }
@@ -94,6 +105,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
         }]);
         this.loadAll();
     }
+
     ngOnInit() {
         this.subscription = this.activatedRoute.params.subscribe((params) => {
             this.accountId = params['id'];
@@ -111,6 +123,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
     trackId(index: number, item: AccountTransaction) {
         return item.id;
     }
+
     registerChangeInAccountTransactions() {
         this.eventSubscriber = this.eventManager.subscribe('transactionListModification', (response) => this.loadAll());
     }
@@ -130,7 +143,20 @@ export class TransactionComponent implements OnInit, OnDestroy {
         // this.page = pagingParams.page;
         this.transactions = data;
     }
+
     private onError(error) {
         this.alertService.error(error.message, null, null);
+    }
+
+    onFilterClick() {
+        this.logger.info("****** On Filter click *****");
+        this.accountService.queryTransactionsBy(this.accountId, {
+            page: this.page - 1,
+            size: this.itemsPerPage,
+            sort: this.sort()
+        }).subscribe(
+            (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
+            (res: ResponseWrapper) => this.onError(res.json)
+        );
     }
 }

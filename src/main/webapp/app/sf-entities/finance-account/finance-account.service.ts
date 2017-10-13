@@ -7,7 +7,7 @@ import {JhiDateUtils} from 'ng-jhipster';
 
 import {FinanceAccount} from './finance-account.model';
 import {createRequestOption, ResponseWrapper} from '../../shared';
-import {AccountTransaction} from "../account-transaction/account-transaction.model";
+import {AccountTransaction} from '../account-transaction/account-transaction.model';
 import {HttpObserve} from '@angular/common/http/src/client';
 import {HttpParams} from '@angular/common/http';
 
@@ -66,6 +66,12 @@ export class FinanceAccountService {
     }
 
     queryTransactions(id: number, req?: any): Observable<ResponseWrapper> {
+        const options = createRequestOption(req);
+        return this.http.get(`${this.resourceUrl}/${id}/transactions`, options)
+            .map((res: Response) => this.convertResponse(res));
+    }
+
+    queryTransactions(id: number, req?: any, filter?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
         return this.http.get(`${this.resourceUrl}/${id}/transactions`, options)
             .map((res: Response) => this.convertResponse(res));
