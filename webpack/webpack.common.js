@@ -96,6 +96,8 @@ module.exports = (options) => {
                 { from: './src/main/webapp/manifest.webapp', to: 'manifest.webapp' },
                 // { from: './src/main/webapp/sw.js', to: 'sw.js' },
                 { from: './src/main/webapp/robots.txt', to: 'robots.txt' }
+                /*customs*/
+                ,{ from: './node_modules/ngx-bootstrap/datepicker/bs-datepicker.css', to: 'datepicker/bs-datepicker.css' }
             ]),
             new webpack.ProvidePlugin({
                 $: "jquery",

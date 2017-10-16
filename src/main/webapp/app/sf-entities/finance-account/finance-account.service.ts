@@ -10,6 +10,7 @@ import {createRequestOption, ResponseWrapper} from '../../shared';
 import {AccountTransaction} from '../account-transaction/account-transaction.model';
 import {HttpObserve} from '@angular/common/http/src/client';
 import {HttpParams} from '@angular/common/http';
+import {createQueryRequestOption} from "../../shared/model/request-util";
 
 @Injectable()
 export class FinanceAccountService {
@@ -66,13 +67,13 @@ export class FinanceAccountService {
     }
 
     queryTransactions(id: number, req?: any): Observable<ResponseWrapper> {
-        const options = createRequestOption(req);
+        const options = createQueryRequestOption(req);
         return this.http.get(`${this.resourceUrl}/${id}/transactions`, options)
             .map((res: Response) => this.convertResponse(res));
     }
 
-    queryTransactions(id: number, req?: any, filter?: any): Observable<ResponseWrapper> {
-        const options = createRequestOption(req);
+    queryTransactionsBy(id: number, req?: any, criteria?: any): Observable<ResponseWrapper> {
+        const options = createQueryRequestOption(req, this.convertCriteria(criteria));
         return this.http.get(`${this.resourceUrl}/${id}/transactions`, options)
             .map((res: Response) => this.convertResponse(res));
     }
@@ -128,6 +129,17 @@ export class FinanceAccountService {
             .convertLocalDateToServer(financeAccount.dueDate);
         copy.closingDate = this.dateUtils
             .convertLocalDateToServer(financeAccount.closingDate);
+        return copy;
+    }
+
+    private convertCriteria(criteria: any): any {
+        const copy: any = Object.assign({}, criteria);
+        if(copy.startDate)
+            copy.startDate = this.dateUtils
+            .convertLocalDateToServer(criteria.startDate);
+        if(copy.endDate)
+            copy.endDate = this.dateUtils
+            .convertLocalDateToServer(criteria.endDate);
         return copy;
     }
 }

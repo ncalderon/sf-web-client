@@ -2,8 +2,11 @@ package com.calderon.sf.repository;
 
 import com.calderon.sf.domain.AccountTransaction;
 import com.calderon.sf.domain.projections.Transaction;
+import com.querydsl.core.types.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.support.QueryDslJpaRepository;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
@@ -16,7 +19,7 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface AccountTransactionRepository extends JpaRepository<AccountTransaction, Long> {
+public interface AccountTransactionRepository extends JpaRepository<AccountTransaction, Long>, QueryDslPredicateExecutor<AccountTransaction> {
 
     @Query("select account_transaction from AccountTransaction account_transaction where account_transaction.user.login = ?#{principal.username}")
     List<AccountTransaction> findByUserIsCurrentUser();
@@ -30,6 +33,9 @@ public interface AccountTransactionRepository extends JpaRepository<AccountTrans
     @Query("select account_transaction from AccountTransaction account_transaction where account_transaction.user.login = ?#{principal.username} and account_transaction.financeAccount.id = ?1")
     Page<AccountTransaction> findByUserIsCurrentUserAndFinanceAccount_Id(Long accountId, Pageable pageable);
 
+    @Query("select account_transaction from AccountTransaction account_transaction where account_transaction.user.login = ?#{principal.username} and account_transaction.financeAccount.id = ?1")
+    Page<AccountTransaction> findByUserIsCurrentUserAndFinanceAccount_Id(Long accountId, Pageable page, Predicate predicate);
+
     @Query("select account_transaction from AccountTransaction account_transaction where account_transaction.user.login = ?#{principal.username} and account_transaction.financeAccount.id = ?1 and account_transaction.postDate >= ?2 and account_transaction.postDate <= ?3")
     List<AccountTransaction> findByUserIsCurrentUserAndFinanceAccount_IdAndPostDateGreaterThanEqualAndPostDateLessThanEqual(Long accountId, LocalDate startDate, LocalDate endDate);
 
@@ -38,5 +44,6 @@ public interface AccountTransactionRepository extends JpaRepository<AccountTrans
 
     @Query("select account_transaction from AccountTransaction account_transaction where account_transaction.user.login = ?#{principal.username} and account_transaction.postDate >= ?1 and account_transaction.postDate <= ?2")
     List<AccountTransaction> findByUserIsCurrentUserAndPostDateGreaterThanEqualAndPostDateLessThanEqual(LocalDate startDate, LocalDate endDate);
+
 
 }

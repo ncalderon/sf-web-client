@@ -12,7 +12,8 @@ import {LoggerService} from '../../../shared/logger/logger.service';
 
 @Component({
     selector: 'jhi-transaction',
-    templateUrl: './transaction.component.html'
+    templateUrl: './transaction.component.html',
+    styleUrls: ['./transaction.component.css']
 })
 export class TransactionComponent implements OnInit, OnDestroy {
 
@@ -36,11 +37,12 @@ export class TransactionComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
 
     /****** filter ******/
+
+    dateRange: Date[];
     filterObj = {
-        byDescription: '',
-        byAmount: 0,
-        byOperator: 1,
-        dateRange: []
+        description: '',
+        amount: null,
+        operator: 1
     };
 
     constructor(private accountService: FinanceAccountService,
@@ -154,9 +156,32 @@ export class TransactionComponent implements OnInit, OnDestroy {
             page: this.page - 1,
             size: this.itemsPerPage,
             sort: this.sort()
-        }).subscribe(
+        }, this.mapToTranCriteria(this.filterObj)).subscribe(
             (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
             (res: ResponseWrapper) => this.onError(res.json)
         );
     }
+
+    mapToTranCriteria(filterObj: any): any{
+        let tranCriteria = {};
+        this.filterObj["dateRange"] = this.dateRange;
+        if (filterObj.dateRange && filterObj.dateRange.length>0){
+            tranCriteria["startDate"]=filterObj.dateRange[0];
+            tranCriteria["endDate"]=filterObj.dateRange[1];
+        }
+        if (filterObj.description.length>0){
+            tranCriteria["desc"]=filterObj.description;
+        }
+        if (filterObj.amount != null){
+            if(filterObj.operator>0){
+                tranCriteria["startAmount"]=filterObj.amount;
+            }
+            else {
+                tranCriteria["endAmount"]=filterObj.amount;
+            }
+        }
+        return tranCriteria;
+    }
+
+
 }

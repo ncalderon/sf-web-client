@@ -15,3 +15,29 @@ export const createRequestOption = (req?: any): BaseRequestOptions => {
     }
     return options;
 };
+
+export const createQueryRequestOption = (req?: any, criteria?: any): BaseRequestOptions => {
+    const options: BaseRequestOptions = new BaseRequestOptions();
+    if (req) {
+        const urlParams: URLSearchParams = new URLSearchParams();
+        const params = {};
+        params['page'] = req.page;
+        params['size'] = req.size;
+        if (req.sort) {
+            params['sort'] = req.sort;
+        }
+        params['query'] = req.query;
+
+
+        urlParams.set("pageable", JSON.stringify(params));
+        if(criteria){
+            criteria["active"]=true;
+            urlParams.set("criteria", JSON.stringify(criteria));
+        }
+        else
+            //urlParams.set("criteria", JSON.stringify({"active": false, "startDate":"", "endDate":"","desc":"","startAmount":"","endAmount":""}));
+            urlParams.set("criteria", JSON.stringify({"active": false}));
+        options.params = urlParams;
+    }
+    return options;
+};

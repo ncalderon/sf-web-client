@@ -5,6 +5,7 @@ import com.calderon.sf.SfWebClientApp;
 import com.calderon.sf.domain.FinanceAccount;
 import com.calderon.sf.repository.AccountTransactionRepository;
 import com.calderon.sf.repository.FinanceAccountRepository;
+import com.calderon.sf.service.FinanceService;
 import com.calderon.sf.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -70,7 +71,7 @@ public class FinanceAccountResourceIntTest {
     private FinanceAccountRepository financeAccountRepository;
 
     @Autowired
-    private AccountTransactionRepository accountTransactionRepository;
+    private FinanceService financeService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -91,7 +92,7 @@ public class FinanceAccountResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final FinanceAccountResource financeAccountResource = new FinanceAccountResource(financeAccountRepository, accountTransactionRepository);
+        final FinanceAccountResource financeAccountResource = new FinanceAccountResource(financeService);
         this.restFinanceAccountMockMvc = MockMvcBuilders.standaloneSetup(financeAccountResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

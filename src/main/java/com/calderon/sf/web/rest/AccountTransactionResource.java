@@ -159,11 +159,9 @@ public class AccountTransactionResource {
         LocalDate endDate = LocalDate.of(year <= 0? currentYear: year, Month.DECEMBER, 31);
 
         if (accountsId.length <= 0)
-            transactions = accountTransactionRepository.findByUserIsCurrentUserAndPostDateGreaterThanEqualAndPostDateLessThanEqual
-                (startDate, endDate);
+            transactions = financeService.findTransactionBy(startDate, endDate);
         else {
-            transactions = accountTransactionRepository.findByUserIsCurrentUserAndFinanceAccount_IdIsInAndPostDateGreaterThanEqualAndPostDateLessThanEqual
-                (accountsId, startDate, endDate);
+            transactions = financeService.findTransactionBy(accountsId, startDate, endDate);
         }
         return new ResponseEntity<>(transactions, HttpStatus.OK);
     }
@@ -192,7 +190,7 @@ public class AccountTransactionResource {
     @Timed
     public ResponseEntity<Void> deleteAccountTransaction(@PathVariable Long id) {
         log.debug("REST request to delete AccountTransaction : {}", id);
-        financeService.delete(id);
+        financeService.deleteTransaction(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 

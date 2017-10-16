@@ -21,38 +21,55 @@
     <div class="row">
     </div>
     <br/>
-    <div class="row">
+    <div class="row" *ngIf="filterObj">
         <div class="col-sm-3">
             <div class="form-group">
-                <input name="dateRangeFilter" class="form-control" placeholder="mm-dd-yyyy to mm-dd-yyyy"
+                <input name="dateRangeFilter"
+                       type="text"
+                       placeholder="mm-dd-yyyy"
                        bsDaterangepicker #dpr="bsDaterangepicker"
-                       [(ngModel)]="filterObj.dateRange"
+                       [(ngModel)]="dateRange"
                 >
             </div>
         </div>
         <div class="col-sm-3">
             <div class="form-group">
                 <input name="descriptionFilter" class="form-control" placeholder="description"
-                       [(ngModel)]="filterObj.byDescription"
+                       [(ngModel)]="filterObj.description"
                 />
             </div>
         </div>
-        <div class="col-sm-3">
-            <div class="form-group">
-                <select class="form-control"
-                        [(ngModel)]="filterObj.byOperator">
-                    <option value="'-1'">Equal or less than</option>
-                    <option value="'1'">Equal or greater than</option>
-                </select>
-                <input name="amount" class="form-control" placeholder="amount"
-                       [(ngModel)]="filterObj.byAmount"
-                />
+        <div class="col-sm-2">
+            <select class="form-control"
+                    name="operator"
+                    [(ngModel)]="filterObj.operator">
+                <option value="0"></option>
+                <option value="-1">Equal or less than</option>
+                <option value="1">Equal or greater than</option>
+            </select>
+        </div>
+        <!--mb-2 mr-sm-2 mb-sm-0-->
+        <div class="col-sm-2">
+            <input
+                    type="number"
+                    name="amount"
+                   class="form-control"
+                   placeholder="amount"
+                   [(ngModel)]="filterObj.amount"
+                    #amount="ngModel"
+            />
+            <div [hidden]="!(amount?.dirty && amount?.invalid)">
+                <small class="form-text text-danger"
+                       [hidden]="!amount?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
             </div>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-2">
             <div class="form-group">
+                <!--[disabled]="(description && description.length == 0 || byAmount >= 0"-->
                 <button class="btn btn-default"
-                        [disabled]="byDescription.length == 0 || byAmount >= 0"
+
                         (click)="onFilterClick()"
                 >
                     Filter

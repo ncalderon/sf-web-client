@@ -18,6 +18,7 @@ import {SearchModule} from '../../../shared/search/search.module';
 import {AccountTransactionService} from '../../account-transaction/account-transaction.service';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {TypeaheadModule} from 'ngx-bootstrap/typeahead';
+import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 
 
 const ENTITY_STATES = [
@@ -32,7 +33,8 @@ const ENTITY_STATES = [
         RouterModule.forRoot(ENTITY_STATES, { useHash: true, enableTracing: true }),
         FileUploadModule,
         SearchModule,
-        TypeaheadModule.forRoot()
+        TypeaheadModule.forRoot(),
+        BsDatepickerModule.forRoot()
     ],
     declarations: [
         TransactionComponent,
