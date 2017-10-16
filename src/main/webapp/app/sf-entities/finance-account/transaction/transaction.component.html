@@ -24,19 +24,22 @@
     <div class="row" *ngIf="filterObj">
         <div class="col-sm-3">
             <div class="form-group">
-                <input name="dateRangeFilter"
-                       type="text"
-                       placeholder="mm-dd-yyyy"
-                       bsDaterangepicker #dpr="bsDaterangepicker"
-                       [(ngModel)]="dateRange"
-                >
-            </div>
-        </div>
-        <div class="col-sm-3">
-            <div class="form-group">
-                <input name="descriptionFilter" class="form-control" placeholder="description"
+                <input name="descriptionFilter" class="form-control" placeholder="Description"
                        [(ngModel)]="filterObj.description"
                 />
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <input name="dateRangeFilter"
+                       type="text"
+                       placeholder="MM/dd/yyyy"
+                       bsDaterangepicker #dpr="bsDaterangepicker"
+                       (focus)="onDateRangeFocus()"
+                       (focusout)="onDateRangeFocusout()"
+                       [(ngModel)]="dateRange"
+                       class="form-control"
+                >
             </div>
         </div>
         <div class="col-sm-2">
@@ -65,16 +68,16 @@
                 </small>
             </div>
         </div>
-        <div class="col-sm-2">
-            <div class="form-group">
-                <!--[disabled]="(description && description.length == 0 || byAmount >= 0"-->
-                <button class="btn btn-default"
+        <div class="col-sm-1">
+            <button class="btn btn-sm btn-default"
+                    (click)="onFilterClick()"
+                    >
+                <span class="fa fa-refresh"></span>
+                <span>
+            Refresh
+            </span>
+            </button>
 
-                        (click)="onFilterClick()"
-                >
-                    Filter
-                </button>
-            </div>
         </div>
     </div>
     <div class="table-responsive" *ngIf="transactions">

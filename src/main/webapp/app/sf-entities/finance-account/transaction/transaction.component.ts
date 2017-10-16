@@ -12,8 +12,7 @@ import {LoggerService} from '../../../shared/logger/logger.service';
 
 @Component({
     selector: 'jhi-transaction',
-    templateUrl: './transaction.component.html',
-    styleUrls: ['./transaction.component.css']
+    templateUrl: './transaction.component.html'
 })
 export class TransactionComponent implements OnInit, OnDestroy {
 
@@ -181,6 +180,14 @@ export class TransactionComponent implements OnInit, OnDestroy {
             }
         }
         return tranCriteria;
+    }
+
+    onDateRangeFocus(){
+        this.logger.info("on focus");
+    }
+
+    onDateRangeFocusout(){
+        this.logger.info("on focus out");
     }
 
 
