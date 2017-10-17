@@ -35,12 +35,13 @@ export class TransactionComponent implements OnInit, OnDestroy {
     reverse: any;
     private subscription: Subscription;
 
+    hidePagingDiv = false;
     /****** filter ******/
 
     dateRange: Date[];
     filterObj = {
         description: '',
-        amount: null,
+        amount: 0,
         operator: 1
     };
 
@@ -182,12 +183,12 @@ export class TransactionComponent implements OnInit, OnDestroy {
         return tranCriteria;
     }
 
-    onDateRangeFocus(){
-        this.logger.info("on focus");
+    onDateRangeShown(): any{
+        this.hidePagingDiv = true;
     }
 
-    onDateRangeFocusout(){
-        this.logger.info("on focus out");
+    onDateRangeHidden(): any{
+        this.hidePagingDiv = false;
     }
 
 

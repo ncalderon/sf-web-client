@@ -11,13 +11,14 @@ import {AccountTransaction} from '../account-transaction/account-transaction.mod
 import {HttpObserve} from '@angular/common/http/src/client';
 import {HttpParams} from '@angular/common/http';
 import {createQueryRequestOption} from "../../shared/model/request-util";
+import {DatetimeService} from "../../shared/datetime/datetime.service";
 
 @Injectable()
 export class FinanceAccountService {
 
     private resourceUrl = SERVER_API_URL + 'api/finance-accounts';
 
-    constructor(private http: Http, private dateUtils: JhiDateUtils) {
+    constructor(private http: Http, private dateUtils: JhiDateUtils, private dateTimeService: DatetimeService) {
     }
 
     create(financeAccount: FinanceAccount): Observable<FinanceAccount> {
@@ -136,10 +137,10 @@ export class FinanceAccountService {
         const copy: any = Object.assign({}, criteria);
         if(copy.startDate)
             copy.startDate = this.dateUtils
-            .convertLocalDateToServer(criteria.startDate);
+            .convertLocalDateToServer(this.dateTimeService.convertToObjDate(criteria.startDate));
         if(copy.endDate)
             copy.endDate = this.dateUtils
-            .convertLocalDateToServer(criteria.endDate);
+            .convertLocalDateToServer(this.dateTimeService.convertToObjDate(criteria.endDate));
         return copy;
     }
 }

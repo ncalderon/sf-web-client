@@ -35,8 +35,8 @@
                        type="text"
                        placeholder="MM/dd/yyyy"
                        bsDaterangepicker #dpr="bsDaterangepicker"
-                       (focus)="onDateRangeFocus()"
-                       (focusout)="onDateRangeFocusout()"
+                       (onShown)="onDateRangeShown()"
+                       (onHidden)="onDateRangeHidden()"
                        [(ngModel)]="dateRange"
                        class="form-control"
                 >
@@ -134,7 +134,7 @@
             </tbody>
         </table>
     </div>
-    <div *ngIf="transactions && transactions.length">
+    <div *ngIf="!hidePagingDiv && transactions && transactions.length > 0">
         <div class="row justify-content-center">
             <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
         </div>
