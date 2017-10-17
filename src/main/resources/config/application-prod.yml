@@ -90,11 +90,12 @@ liquibase:
 #        keyAlias: sf_web_client
 # ===================================================================
 server:
-    port: 8080
+    port: 8085
     compression:
         enabled: true
         mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
         min-response-size: 1024
+    context-path: /smart-finance
 
 # ===================================================================
 # JHipster specific properties
