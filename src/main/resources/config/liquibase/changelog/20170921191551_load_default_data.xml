@@ -21,6 +21,7 @@
             tableName="finance_account"
             separator=","
             file="config/liquibase/accounts.csv">
+            <column name="is_credit_card" type="boolean"/>
             <column name="created_date" type="timestamp"/>
             <column name="last_modified_date" type="timestamp"/>
         </loadData>

@@ -15,10 +15,11 @@
 
 eureka:
     instance:
-        hostname: sf-web-client.herokuapp.com
+        #hostname: sf-web-client.herokuapp.com
         non-secure-port: 80
         prefer-ip-address: false
     client:
+        enabled: false
         service-url:
             defaultZone: http://admin:${jhipster.registry.password}@localhost:8761/eureka/
 
@@ -30,7 +31,7 @@ spring:
             enabled: false
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://localhost:3306/sfdb?useUnicode=true&characterEncoding=utf8&useSSL=false
+        url: jdbc:mysql://45.77.160.68:3306/sfdb?useUnicode=true&characterEncoding=utf8&useSSL=false
         username: sfuser
         password: sfuser
         hikari:
@@ -95,7 +96,6 @@ server:
         enabled: true
         mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
         min-response-size: 1024
-    context-path: /smart-finance
 
 # ===================================================================
 # JHipster specific properties
