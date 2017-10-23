@@ -5,10 +5,11 @@ import com.calderon.sf.domain.Bank;
 import com.calderon.sf.reader.CsvReader;
 import com.calderon.sf.reader.Reader;
 import com.calderon.sf.service.mapper.TransactionMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.nio.file.Path;
 import java.util.List;
 

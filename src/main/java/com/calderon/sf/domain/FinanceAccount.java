@@ -1,19 +1,19 @@
 package com.calderon.sf.domain;
 
+import com.calderon.sf.domain.enumeration.AccountStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
-
-import com.calderon.sf.domain.enumeration.AccountStatus;
+import java.util.Set;
 
 /**
  * A FinanceAccount.

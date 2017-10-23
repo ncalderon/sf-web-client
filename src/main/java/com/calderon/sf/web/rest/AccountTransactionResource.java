@@ -1,22 +1,20 @@
 package com.calderon.sf.web.rest;
 
+import com.calderon.sf.domain.AccountTransaction;
 import com.calderon.sf.domain.Bank;
+import com.calderon.sf.repository.AccountTransactionRepository;
 import com.calderon.sf.security.SecurityUtils;
 import com.calderon.sf.service.FinanceService;
 import com.calderon.sf.service.TranFileReaderService;
 import com.calderon.sf.service.io.StorageService;
-import com.codahale.metrics.annotation.Timed;
-import com.calderon.sf.domain.AccountTransaction;
-
-import com.calderon.sf.repository.AccountTransactionRepository;
 import com.calderon.sf.web.rest.util.HeaderUtil;
 import com.calderon.sf.web.rest.util.PaginationUtil;
-import io.swagger.annotations.ApiParam;
+import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -26,16 +24,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
-
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;

@@ -1,7 +1,6 @@
 package com.calderon.sf.repository;
 
 import com.calderon.sf.domain.SocialUserConnection;
-
 import org.springframework.social.connect.*;
 
 import java.util.List;

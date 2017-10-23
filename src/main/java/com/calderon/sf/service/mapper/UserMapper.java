@@ -3,10 +3,11 @@ package com.calderon.sf.service.mapper;
 import com.calderon.sf.domain.Authority;
 import com.calderon.sf.domain.User;
 import com.calderon.sf.service.dto.UserDTO;
-
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**

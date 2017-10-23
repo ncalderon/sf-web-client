@@ -100,81 +100,81 @@ export class FinanceAccountDialogPage {
 
     setAccountStatusSelect = function (accountStatus) {
         this.accountStatusSelect.sendKeys(accountStatus);
-    }
+    };
 
     getAccountStatusSelect = function () {
         return this.accountStatusSelect.element(by.css('option:checked')).getText();
-    }
+    };
 
     accountStatusSelectLastOption = function () {
         this.accountStatusSelect.all(by.tagName('option')).last().click();
-    }
+    };
     setAccountNumberInput = function (accountNumber) {
         this.accountNumberInput.sendKeys(accountNumber);
-    }
+    };
 
     getAccountNumberInput = function () {
         return this.accountNumberInput.getAttribute('value');
-    }
+    };
 
     setNameInput = function (name) {
         this.nameInput.sendKeys(name);
-    }
+    };
 
     getNameInput = function () {
         return this.nameInput.getAttribute('value');
-    }
+    };
 
     setDescriptionInput = function (description) {
         this.descriptionInput.sendKeys(description);
-    }
+    };
 
     getDescriptionInput = function () {
         return this.descriptionInput.getAttribute('value');
-    }
+    };
 
     setBalanceInput = function (balance) {
         this.balanceInput.sendKeys(balance);
-    }
+    };
 
     getBalanceInput = function () {
         return this.balanceInput.getAttribute('value');
-    }
+    };
 
     getIsCreditCardInput = function () {
         return this.isCreditCardInput;
-    }
+    };
     setDueDateInput = function (dueDate) {
         this.dueDateInput.sendKeys(dueDate);
-    }
+    };
 
     getDueDateInput = function () {
         return this.dueDateInput.getAttribute('value');
-    }
+    };
 
     setClosingDateInput = function (closingDate) {
         this.closingDateInput.sendKeys(closingDate);
-    }
+    };
 
     getClosingDateInput = function () {
         return this.closingDateInput.getAttribute('value');
-    }
+    };
 
     userSelectLastOption = function () {
         this.userSelect.all(by.tagName('option')).last().click();
-    }
+    };
 
     userSelectOption = function (option) {
         this.userSelect.sendKeys(option);
-    }
+    };
 
     getUserSelect = function () {
         return this.userSelect;
-    }
+    };
 
     getUserSelectedOption = function () {
         return this.userSelect.element(by.css('option:checked')).getText();
-    }
+    };
 
     save() {
         this.saveButton.click();

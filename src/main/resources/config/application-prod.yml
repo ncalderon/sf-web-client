@@ -121,9 +121,9 @@ jhipster:
                 token-validity-in-seconds-for-remember-me: 2592000
     mail: # specific JHipster mail property, for standard properties see MailProperties
         from: smart.finance.dr@gmail.com
-        base-url: http://sf-web-client.herokuapp.com # Modify according to your server's URL
+        base-url: http://45.77.160.68 # Modify according to your server's URL
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
-        jmx.enabled: true
+        jmx.enabled: false
         graphite:
             enabled: false
             host: localhost

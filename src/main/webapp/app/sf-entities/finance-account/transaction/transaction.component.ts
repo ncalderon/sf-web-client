@@ -127,7 +127,17 @@ export class TransactionComponent implements OnInit, OnDestroy {
     }
 
     registerChangeInAccountTransactions() {
-        this.eventSubscriber = this.eventManager.subscribe('transactionListModification', (response) => this.loadAll());
+        this.eventSubscriber = this.eventManager.subscribe('transactionListModification', (response) => {
+
+            if(!response.data)
+                this.loadAll();
+
+            if(response.data.action === "transactionDeleted"){
+                this.transactions = this.transactions.filter(value => {
+                    return value.id != response.data.item.id;
+                });
+            }
+        });
     }
 
     sort() {

@@ -1,15 +1,13 @@
 package com.calderon.sf.repository;
 
 import com.calderon.sf.domain.AccountTransaction;
-import com.calderon.sf.domain.projections.Transaction;
 import com.querydsl.core.types.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.support.QueryDslJpaRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.stereotype.Repository;
-
-import org.springframework.data.jpa.repository.*;
 
 import java.time.LocalDate;
 import java.util.List;

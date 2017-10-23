@@ -1,19 +1,18 @@
 package com.calderon.sf.web.rest;
 
 import com.calderon.sf.config.Constants;
-import com.codahale.metrics.annotation.Timed;
 import com.calderon.sf.domain.User;
 import com.calderon.sf.repository.UserRepository;
 import com.calderon.sf.security.AuthoritiesConstants;
 import com.calderon.sf.service.MailService;
 import com.calderon.sf.service.UserService;
 import com.calderon.sf.service.dto.UserDTO;
-import com.calderon.sf.web.rest.vm.ManagedUserVM;
 import com.calderon.sf.web.rest.util.HeaderUtil;
 import com.calderon.sf.web.rest.util.PaginationUtil;
+import com.calderon.sf.web.rest.vm.ManagedUserVM;
+import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -27,7 +26,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing users.

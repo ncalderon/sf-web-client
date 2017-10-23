@@ -1,8 +1,8 @@
 package com.calderon.sf.web.rest.vm;
 
 import com.calderon.sf.service.dto.UserDTO;
-import javax.validation.constraints.Size;
 
+import javax.validation.constraints.Size;
 import java.time.Instant;
 import java.util.Set;
 

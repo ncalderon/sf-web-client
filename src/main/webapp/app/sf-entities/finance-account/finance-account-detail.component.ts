@@ -5,6 +5,7 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { FinanceAccount } from './finance-account.model';
 import { FinanceAccountService } from './finance-account.service';
+import {AccountTransaction} from "../account-transaction/account-transaction.model";
 
 @Component({
     selector: 'jhi-finance-account-detail',
@@ -15,6 +16,7 @@ export class FinanceAccountDetailComponent implements OnInit, OnDestroy {
     financeAccount: FinanceAccount;
     private subscription: Subscription;
     private eventSubscriber: Subscription;
+    private tranEventSubscriber: Subscription;
 
     constructor(
         private eventManager: JhiEventManager,
@@ -47,7 +49,24 @@ export class FinanceAccountDetailComponent implements OnInit, OnDestroy {
     registerChangeInFinanceAccounts() {
         this.eventSubscriber = this.eventManager.subscribe(
             'financeAccountListModification',
-            (response) => this.load(this.financeAccount.id)
+            (response) => {
+                if(!response.data)
+                    this.load(this.financeAccount.id)
+
+            }
+        );
+        this.tranEventSubscriber = this.eventManager.subscribe(
+            'transactionListModification'
+            , (response) => {
+
+                if(!response.data)
+                    return;
+
+                if(response.data.action === 'transactionDeleted'){
+                    let tran: AccountTransaction  = response.data.item;
+                    this.financeAccount.balance = this.financeAccount.balance - tran.amount;
+                }
+            }
         );
     }
 }

@@ -28,8 +28,9 @@ export class TransactionDeleteDialogComponent {
     confirmDelete(id: number) {
         this.accountTransactionService.delete(id).subscribe((response) => {
             this.eventManager.broadcast({
-                name: 'accountTransactionListModification',
-                content: 'Deleted an accountTransaction'
+                name: 'transactionListModification',
+                content: "Deleted an Transaction",
+                data: { action: "transactionDeleted", item: this.transaction}
             });
             this.activeModal.dismiss(true);
         });

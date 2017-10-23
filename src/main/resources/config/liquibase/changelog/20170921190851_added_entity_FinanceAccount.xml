@@ -38,7 +38,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="balance" type="decimal(10,2)">
+            <column name="balance" type="decimal(10,2)" defaultValueNumeric="0">
                 <constraints nullable="true" />
             </column>
 

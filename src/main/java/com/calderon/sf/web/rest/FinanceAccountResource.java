@@ -1,19 +1,15 @@
 package com.calderon.sf.web.rest;
 
 import com.calderon.sf.domain.AccountTransaction;
-import com.calderon.sf.domain.predicates.SearchCriteria;
+import com.calderon.sf.domain.FinanceAccount;
 import com.calderon.sf.domain.predicates.TransactionCriteria;
 import com.calderon.sf.domain.predicates.TransactionPredicate;
-import com.calderon.sf.repository.AccountTransactionRepository;
 import com.calderon.sf.service.FinanceService;
-import com.codahale.metrics.annotation.Timed;
-import com.calderon.sf.domain.FinanceAccount;
-
-import com.calderon.sf.repository.FinanceAccountRepository;
 import com.calderon.sf.web.rest.util.HeaderUtil;
 import com.calderon.sf.web.rest.util.PaginationUtil;
-import io.swagger.annotations.ApiParam;
+import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,12 +23,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 /**
  * REST controller for managing FinanceAccount.
@@ -103,7 +97,7 @@ public class FinanceAccountResource {
     @Timed
     public ResponseEntity<List<FinanceAccount>> getAllFinanceAccounts(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of FinanceAccounts");
-        Page<FinanceAccount> page = financeService.findAccounts(pageable);
+        Page<FinanceAccount> page = financeService.findAccountsByCurrentUserAndActive(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/finance-accounts");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

@@ -137,4 +137,8 @@ public class FinanceService {
     public void deleteAccount(Long id) {
         accountRepository.delete(id);
     }
+
+    public Page<FinanceAccount> findAccountsByCurrentUserAndActive(Pageable pageable) {
+        return accountRepository.findByUserIsCurrentUserAndAccountStatusIsActive(pageable);
+    }
 }

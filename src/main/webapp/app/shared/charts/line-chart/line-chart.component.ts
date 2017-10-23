@@ -86,12 +86,10 @@ export class LineChartComponent implements OnInit {
 
     formatTick(value: any, index: any, values: any): any {
         return new DecimalPipe('USD').transform(value, '2.2-2');
-        ;
     }
 
     formatTooltip(value: any, values: any): any {
         return new DecimalPipe('USD').transform(value.yLabel, '2.2-2');
-        ;
     }
 
 // events

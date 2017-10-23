@@ -1,9 +1,12 @@
 package com.calderon.sf.repository;
 
 import com.calderon.sf.domain.FinanceAccount;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import org.springframework.data.jpa.repository.*;
 import java.util.List;
 
 /**
@@ -15,5 +18,8 @@ public interface FinanceAccountRepository extends JpaRepository<FinanceAccount, 
 
     @Query("select finance_account from FinanceAccount finance_account where finance_account.user.login = ?#{principal.username}")
     List<FinanceAccount> findByUserIsCurrentUser();
+
+    @Query("select finance_account from FinanceAccount finance_account where finance_account.user.login = ?#{principal.username} and finance_account.accountStatus = 'ACTIVE'")
+    Page<FinanceAccount> findByUserIsCurrentUserAndAccountStatusIsActive(Pageable pageable);
 
 }

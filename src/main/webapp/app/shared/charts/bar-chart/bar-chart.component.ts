@@ -18,7 +18,7 @@ export class BarChartComponent implements OnInit {
         {data: [], label: 'INCOMES'}
     ];
 
-    chartLegend = true
+    chartLegend = true;
     chartType = 'bar';
     chartOptions: any = {
         title: {
@@ -90,7 +90,6 @@ export class BarChartComponent implements OnInit {
     formatTick(value: any, index: any, values: any): any {
         console.log('*****Format Tick*****');
         return new DecimalPipe('USD').transform(value, '2.2-2');
-        ;
     }
 
     formatTooltip(value: any, values: any): any {

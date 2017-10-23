@@ -79,43 +79,43 @@ export class TranCategoryRegexDialogPage {
 
     setNameInput = function (name) {
         this.nameInput.sendKeys(name);
-    }
+    };
 
     getNameInput = function () {
         return this.nameInput.getAttribute('value');
-    }
+    };
 
     setDescriptionInput = function (description) {
         this.descriptionInput.sendKeys(description);
-    }
+    };
 
     getDescriptionInput = function () {
         return this.descriptionInput.getAttribute('value');
-    }
+    };
 
     setRegexInput = function (regex) {
         this.regexInput.sendKeys(regex);
-    }
+    };
 
     getRegexInput = function () {
         return this.regexInput.getAttribute('value');
-    }
+    };
 
     userSelectLastOption = function () {
         this.userSelect.all(by.tagName('option')).last().click();
-    }
+    };
 
     userSelectOption = function (option) {
         this.userSelect.sendKeys(option);
-    }
+    };
 
     getUserSelect = function () {
         return this.userSelect;
-    }
+    };
 
     getUserSelectedOption = function () {
         return this.userSelect.element(by.css('option:checked')).getText();
-    }
+    };
 
     save() {
         this.saveButton.click();

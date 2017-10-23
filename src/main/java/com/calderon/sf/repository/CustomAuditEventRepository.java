@@ -3,7 +3,6 @@ package com.calderon.sf.repository;
 import com.calderon.sf.config.Constants;
 import com.calderon.sf.config.audit.AuditEventConverter;
 import com.calderon.sf.domain.PersistentAuditEvent;
-
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.boot.actuate.audit.AuditEventRepository;
 import org.springframework.stereotype.Repository;
