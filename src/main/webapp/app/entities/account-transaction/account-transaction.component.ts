@@ -14,7 +14,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 })
 export class AccountTransactionComponent implements OnInit, OnDestroy {
 
-currentAccount: any;
+    currentAccount: any;
     accountTransactions: AccountTransaction[];
     error: any;
     success: any;

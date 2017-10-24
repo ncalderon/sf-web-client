@@ -1,17 +1,17 @@
 {
     "global": {
-        "title": "Sf_web_client",
+        "title": "Smart Finance",
         "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
         "menu": {
             "home": "Home",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Entities",
-                "bankAccount": "Bank Account",
-                "bank": "Bank",
-                "tranCategory": "Tran Category",
-                "tranCategoryRegex": "Tran Category Regex",
-                "accountTransaction": "Account Transaction",
+                "bank": "Banks",
+                "tranCategory": "Categories",
+                "tranCategoryRegex": "Category Regex",
+                "accountTransaction": "Transactions",
+                "financeAccount": "Accounts",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

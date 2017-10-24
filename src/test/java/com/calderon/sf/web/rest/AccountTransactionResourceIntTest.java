@@ -3,8 +3,7 @@ package com.calderon.sf.web.rest;
 import com.calderon.sf.SfWebClientApp;
 
 import com.calderon.sf.domain.AccountTransaction;
-import com.calderon.sf.domain.BankAccount;
-import com.calderon.sf.domain.TranCategory;
+import com.calderon.sf.domain.FinanceAccount;
 import com.calderon.sf.repository.AccountTransactionRepository;
 import com.calderon.sf.web.rest.errors.ExceptionTranslator;
 
@@ -24,8 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -53,8 +52,8 @@ public class AccountTransactionResourceIntTest {
     private static final String DEFAULT_REFERENCE_NUMBER = "AAAAAAAAAA";
     private static final String UPDATED_REFERENCE_NUMBER = "BBBBBBBBBB";
 
-    private static final Instant DEFAULT_POST_DATE = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_POST_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final LocalDate DEFAULT_POST_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_POST_DATE = LocalDate.now(ZoneId.systemDefault());
 
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
@@ -110,15 +109,10 @@ public class AccountTransactionResourceIntTest {
             .amount(DEFAULT_AMOUNT)
             .paymentMethod(DEFAULT_PAYMENT_METHOD);
         // Add required entity
-        BankAccount bankAccount = BankAccountResourceIntTest.createEntity(em);
-        em.persist(bankAccount);
+        FinanceAccount financeAccount = FinanceAccountResourceIntTest.createEntity(em);
+        em.persist(financeAccount);
         em.flush();
-        accountTransaction.setBankAccount(bankAccount);
-        // Add required entity
-        TranCategory tranCategory = TranCategoryResourceIntTest.createEntity(em);
-        em.persist(tranCategory);
-        em.flush();
-        accountTransaction.setTranCategory(tranCategory);
+        accountTransaction.setFinanceAccount(financeAccount);
         return accountTransaction;
     }
 
@@ -176,24 +170,6 @@ public class AccountTransactionResourceIntTest {
         int databaseSizeBeforeTest = accountTransactionRepository.findAll().size();
         // set the field null
         accountTransaction.setTranType(null);
-
-        // Create the AccountTransaction, which fails.
-
-        restAccountTransactionMockMvc.perform(post("/api/account-transactions")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(accountTransaction)))
-            .andExpect(status().isBadRequest());
-
-        List<AccountTransaction> accountTransactionList = accountTransactionRepository.findAll();
-        assertThat(accountTransactionList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkTranNumberIsRequired() throws Exception {
-        int databaseSizeBeforeTest = accountTransactionRepository.findAll().size();
-        // set the field null
-        accountTransaction.setTranNumber(null);
 
         // Create the AccountTransaction, which fails.
 

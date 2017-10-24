@@ -4,14 +4,17 @@ import { RouterModule } from '@angular/router';
 import { SfWebClientSharedModule } from '../shared';
 
 import { HOME_ROUTE, HomeComponent } from './';
+import {DashboardModule} from '../dashboard/dashboard.module';
+
 
 @NgModule({
     imports: [
         SfWebClientSharedModule,
-        RouterModule.forRoot([ HOME_ROUTE ], { useHash: true })
+        RouterModule.forRoot([ HOME_ROUTE ], { useHash: true }),
+        DashboardModule
     ],
     declarations: [
-        HomeComponent,
+        HomeComponent
     ],
     entryComponents: [
     ],

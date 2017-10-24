@@ -6,17 +6,14 @@ import org.ehcache.config.builders.ResourcePoolsBuilder;
 import org.ehcache.expiry.Duration;
 import org.ehcache.expiry.Expirations;
 import org.ehcache.jsr107.Eh107Configuration;
-
-import java.util.concurrent.TimeUnit;
-
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.cache.JCacheManagerCustomizer;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cloud.client.ServiceInstance;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.cloud.client.serviceregistry.Registration;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableCaching
@@ -45,15 +42,14 @@ public class CacheConfiguration {
             cm.createCache(com.calderon.sf.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(com.calderon.sf.domain.User.class.getName() + ".authorities", jcacheConfiguration);
             cm.createCache(com.calderon.sf.domain.SocialUserConnection.class.getName(), jcacheConfiguration);
-            cm.createCache(com.calderon.sf.domain.BankAccount.class.getName(), jcacheConfiguration);
-            cm.createCache(com.calderon.sf.domain.BankAccount.class.getName() + ".accountTransactions", jcacheConfiguration);
             cm.createCache(com.calderon.sf.domain.Bank.class.getName(), jcacheConfiguration);
-            cm.createCache(com.calderon.sf.domain.Bank.class.getName() + ".bankAccounts", jcacheConfiguration);
             cm.createCache(com.calderon.sf.domain.TranCategory.class.getName(), jcacheConfiguration);
             cm.createCache(com.calderon.sf.domain.TranCategory.class.getName() + ".transactions", jcacheConfiguration);
             cm.createCache(com.calderon.sf.domain.TranCategoryRegex.class.getName(), jcacheConfiguration);
             cm.createCache(com.calderon.sf.domain.TranCategoryRegex.class.getName() + ".tranCategories", jcacheConfiguration);
             cm.createCache(com.calderon.sf.domain.AccountTransaction.class.getName(), jcacheConfiguration);
+            cm.createCache(com.calderon.sf.domain.FinanceAccount.class.getName(), jcacheConfiguration);
+            cm.createCache(com.calderon.sf.domain.FinanceAccount.class.getName() + ".accountTransactions", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

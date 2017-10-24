@@ -1,12 +1,10 @@
 package com.calderon.sf.config.social;
 
-import com.calderon.sf.repository.SocialUserConnectionRepository;
 import com.calderon.sf.repository.CustomSocialUsersConnectionRepository;
+import com.calderon.sf.repository.SocialUserConnectionRepository;
 import com.calderon.sf.security.jwt.TokenProvider;
 import com.calderon.sf.security.social.CustomSignInAdapter;
-
 import io.github.jhipster.config.JHipsterProperties;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;

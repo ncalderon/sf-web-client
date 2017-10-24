@@ -52,16 +52,10 @@
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="sfWebClientApp.tranCategory.tranCategoryRegex" for="field_tranCategoryRegex">Tran Category Regex</label>
-            <select class="form-control" id="field_tranCategoryRegex" name="tranCategoryRegex" [(ngModel)]="tranCategory.tranCategoryRegex"  required>
-                <option *ngIf="!editForm.value.tranCategoryRegex" [ngValue]="null" selected></option>
+            <select class="form-control" id="field_tranCategoryRegex" name="tranCategoryRegex" [(ngModel)]="tranCategory.tranCategoryRegex" >
+                <option [ngValue]="null"></option>
                 <option [ngValue]="tranCategoryRegexOption.id === tranCategory.tranCategoryRegex?.id ? tranCategory.tranCategoryRegex : tranCategoryRegexOption" *ngFor="let tranCategoryRegexOption of trancategoryregexes; trackBy: trackTranCategoryRegexById">{{tranCategoryRegexOption.name}}</option>
             </select>
-        </div>
-        <div [hidden]="!(editForm.controls.tranCategoryRegex?.dirty && editForm.controls.tranCategoryRegex?.invalid)">
-            <small class="form-text text-danger"
-                [hidden]="!editForm.controls.tranCategoryRegex?.errors?.required" jhiTranslate="entity.validation.required">
-                This field is required.
-            </small>
         </div>
     </div>
     <div class="modal-footer">

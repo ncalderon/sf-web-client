@@ -96,6 +96,12 @@
         <springfox.version>2.7.0</springfox.version>
         <validation-api.version>1.1.0.Final</validation-api.version>
         <yarn.version>v0.27.5</yarn.version>
+
+        <!--smart finance depedencies-->
+        <smart-finance.version>1.0</smart-finance.version>
+
+        <!--my dependencies-->
+        <querydsl.version>4.1.3</querydsl.version>
     </properties>
 
     <dependencyManagement>
@@ -111,6 +117,34 @@
     </dependencyManagement>
 
     <dependencies>
+
+        <!--begin - my dependecies-->
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-apt</artifactId>
+            <version>${querydsl.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+            <version>${querydsl.version}</version>
+        </dependency>
+        <!--end - my dependcies-->
+
+        <!--begin - smart finance dependecies-->
+        <dependency>
+            <groupId>com.calderon.sf</groupId>
+            <artifactId>sf-reader-spec</artifactId>
+            <version>${smart-finance.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.calderon.sf</groupId>
+            <artifactId>bpd-csv-reader</artifactId>
+            <version>${smart-finance.version}</version>
+        </dependency>
+        <!--end - smart finance dependecies-->
+
         <dependency>
             <groupId>io.github.jhipster</groupId>
             <artifactId>jhipster</artifactId>
@@ -418,6 +452,24 @@
     <build>
         <defaultGoal>spring-boot:run</defaultGoal>
         <plugins>
+            <!--begin - my plugins-->
+            <plugin>
+                <groupId>com.mysema.maven</groupId>
+                <artifactId>apt-maven-plugin</artifactId>
+                <version>1.1.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>target/generated-sources/java</outputDirectory>
+                            <processor>com.querydsl.apt.hibernate.HibernateAnnotationProcessor</processor>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--end - my plugins-->
             <plugin>
                 <groupId>io.gatling</groupId>
                 <artifactId>gatling-maven-plugin</artifactId>

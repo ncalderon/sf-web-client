@@ -1,7 +1,6 @@
 package com.calderon.sf.repository;
 
 import com.calderon.sf.domain.Authority;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

@@ -1,7 +1,6 @@
 import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { DatePipe } from '@angular/common';
 import { AccountTransaction } from './account-transaction.model';
 import { AccountTransactionService } from './account-transaction.service';
 
@@ -10,7 +9,6 @@ export class AccountTransactionPopupService {
     private ngbModalRef: NgbModalRef;
 
     constructor(
-        private datePipe: DatePipe,
         private modalService: NgbModal,
         private router: Router,
         private accountTransactionService: AccountTransactionService
@@ -28,8 +26,13 @@ export class AccountTransactionPopupService {
 
             if (id) {
                 this.accountTransactionService.find(id).subscribe((accountTransaction) => {
-                    accountTransaction.postDate = this.datePipe
-                        .transform(accountTransaction.postDate, 'yyyy-MM-ddTHH:mm:ss');
+                    if (accountTransaction.postDate) {
+                        accountTransaction.postDate = {
+                            year: accountTransaction.postDate.getFullYear(),
+                            month: accountTransaction.postDate.getMonth() + 1,
+                            day: accountTransaction.postDate.getDate()
+                        };
+                    }
                     this.ngbModalRef = this.accountTransactionModalRef(component, accountTransaction);
                     resolve(this.ngbModalRef);
                 });

@@ -1,18 +1,17 @@
 package com.calderon.sf.domain;
 
+import com.calderon.sf.domain.enumeration.PaymentMethod;
+import com.calderon.sf.domain.enumeration.TranType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Objects;
-
-import com.calderon.sf.domain.enumeration.TranType;
-
-import com.calderon.sf.domain.enumeration.PaymentMethod;
 
 /**
  * A AccountTransaction.
@@ -20,7 +19,7 @@ import com.calderon.sf.domain.enumeration.PaymentMethod;
 @Entity
 @Table(name = "account_transaction")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class AccountTransaction implements Serializable {
+public class AccountTransaction extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -33,9 +32,7 @@ public class AccountTransaction implements Serializable {
     @Column(name = "tran_type", nullable = false)
     private TranType tranType;
 
-    @NotNull
-    @Size(min = 1, max = 128)
-    @Column(name = "tran_number", length = 128, nullable = false)
+    @Column(name = "tran_number")
     private String tranNumber;
 
     @Column(name = "reference_number")
@@ -43,10 +40,10 @@ public class AccountTransaction implements Serializable {
 
     @NotNull
     @Column(name = "post_date", nullable = false)
-    private Instant postDate;
+    private LocalDate postDate;
 
-    @Size(max = 512)
-    @Column(name = "description", length = 512)
+    @Size(max = 256, min = 2)
+    @Column(name = "description", length = 256, nullable = false)
     private String description;
 
     @NotNull
@@ -62,10 +59,9 @@ public class AccountTransaction implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    private BankAccount bankAccount;
+    private FinanceAccount financeAccount;
 
-    @ManyToOne(optional = false)
-    @NotNull
+    @ManyToOne
     private TranCategory tranCategory;
 
     // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
@@ -116,16 +112,16 @@ public class AccountTransaction implements Serializable {
         this.referenceNumber = referenceNumber;
     }
 
-    public Instant getPostDate() {
+    public LocalDate getPostDate() {
         return postDate;
     }
 
-    public AccountTransaction postDate(Instant postDate) {
+    public AccountTransaction postDate(LocalDate postDate) {
         this.postDate = postDate;
         return this;
     }
 
-    public void setPostDate(Instant postDate) {
+    public void setPostDate(LocalDate postDate) {
         this.postDate = postDate;
     }
 
@@ -181,17 +177,17 @@ public class AccountTransaction implements Serializable {
         this.user = user;
     }
 
-    public BankAccount getBankAccount() {
-        return bankAccount;
+    public FinanceAccount getFinanceAccount() {
+        return financeAccount;
     }
 
-    public AccountTransaction bankAccount(BankAccount bankAccount) {
-        this.bankAccount = bankAccount;
+    public AccountTransaction financeAccount(FinanceAccount financeAccount) {
+        this.financeAccount = financeAccount;
         return this;
     }
 
-    public void setBankAccount(BankAccount bankAccount) {
-        this.bankAccount = bankAccount;
+    public void setFinanceAccount(FinanceAccount financeAccount) {
+        this.financeAccount = financeAccount;
     }
 
     public TranCategory getTranCategory() {

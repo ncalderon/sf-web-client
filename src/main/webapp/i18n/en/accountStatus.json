@@ -3,8 +3,7 @@
         "AccountStatus" : {
             "null": "",
             "INACTIVE": "INACTIVE",
-            "ACTIVE": "ACTIVE",
-            "DISABLED": "DISABLED"
+            "ACTIVE": "ACTIVE"
         }
     }
 }

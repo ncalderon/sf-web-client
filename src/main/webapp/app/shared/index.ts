@@ -22,6 +22,13 @@ export * from './model/request-util';
 export * from './model/base-entity';
 export * from './social/social.service';
 export * from './social/social.component';
+export * from './logger/logger.service';
+export * from './datetime/datetime.service';
+export * from './arrays/arrays';
+
 export * from './shared-libs.module';
 export * from './shared-common.module';
 export * from './shared.module';
+export * from './search/search.module';
+export * from './charts/sf-charts.module';
+

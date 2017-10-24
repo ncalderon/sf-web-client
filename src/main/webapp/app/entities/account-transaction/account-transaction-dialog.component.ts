@@ -10,7 +10,7 @@ import { AccountTransaction } from './account-transaction.model';
 import { AccountTransactionPopupService } from './account-transaction-popup.service';
 import { AccountTransactionService } from './account-transaction.service';
 import { User, UserService } from '../../shared';
-import { BankAccount, BankAccountService } from '../bank-account';
+import { FinanceAccount, FinanceAccountService } from '../finance-account';
 import { TranCategory, TranCategoryService } from '../tran-category';
 import { ResponseWrapper } from '../../shared';
 
@@ -25,16 +25,17 @@ export class AccountTransactionDialogComponent implements OnInit {
 
     users: User[];
 
-    bankaccounts: BankAccount[];
+    financeaccounts: FinanceAccount[];
 
     trancategories: TranCategory[];
+    postDateDp: any;
 
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: JhiAlertService,
         private accountTransactionService: AccountTransactionService,
         private userService: UserService,
-        private bankAccountService: BankAccountService,
+        private financeAccountService: FinanceAccountService,
         private tranCategoryService: TranCategoryService,
         private eventManager: JhiEventManager
     ) {
@@ -44,8 +45,8 @@ export class AccountTransactionDialogComponent implements OnInit {
         this.isSaving = false;
         this.userService.query()
             .subscribe((res: ResponseWrapper) => { this.users = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
-        this.bankAccountService.query()
-            .subscribe((res: ResponseWrapper) => { this.bankaccounts = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        this.financeAccountService.query()
+            .subscribe((res: ResponseWrapper) => { this.financeaccounts = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
         this.tranCategoryService.query()
             .subscribe((res: ResponseWrapper) => { this.trancategories = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
@@ -88,7 +89,7 @@ export class AccountTransactionDialogComponent implements OnInit {
         return item.id;
     }
 
-    trackBankAccountById(index: number, item: BankAccount) {
+    trackFinanceAccountById(index: number, item: FinanceAccount) {
         return item.id;
     }
 

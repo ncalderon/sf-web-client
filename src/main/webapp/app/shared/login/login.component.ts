@@ -13,6 +13,7 @@ import { SocialService } from '../social/social.service';
 })
 export class JhiLoginModalComponent implements AfterViewInit {
     authenticationError: boolean;
+    authenticationErrorMessage: string = 'Please check your credentials and try again.';
     password: string;
     rememberMe: boolean;
     username: string;
@@ -33,6 +34,10 @@ export class JhiLoginModalComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         this.renderer.invokeElementMethod(this.elementRef.nativeElement.querySelector('#username'), 'focus', []);
+    }
+
+    get authenticationErrorMsg(){
+        return this.authenticationErrorMessage;
     }
 
     cancel() {
@@ -70,8 +75,9 @@ export class JhiLoginModalComponent implements AfterViewInit {
                 this.stateStorageService.storeUrl(null);
                 this.router.navigate([redirect]);
             }
-        }).catch(() => {
+        }).catch(reason => {
             this.authenticationError = true;
+            this.authenticationErrorMessage = JSON.parse(reason._body)["AuthenticationException"];
         });
     }
 

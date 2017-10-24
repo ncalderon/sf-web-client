@@ -1,8 +1,8 @@
 package com.calderon.sf.repository;
 
 import com.calderon.sf.domain.SocialUserConnection;
-
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import java.util.List;
 import java.util.Set;
 

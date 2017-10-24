@@ -1,15 +1,14 @@
 package com.calderon.sf.service;
 
+import com.calderon.sf.config.Constants;
 import com.calderon.sf.domain.Authority;
 import com.calderon.sf.domain.User;
 import com.calderon.sf.repository.AuthorityRepository;
-import com.calderon.sf.config.Constants;
 import com.calderon.sf.repository.UserRepository;
 import com.calderon.sf.security.AuthoritiesConstants;
 import com.calderon.sf.security.SecurityUtils;
-import com.calderon.sf.service.util.RandomUtil;
 import com.calderon.sf.service.dto.UserDTO;
-
+import com.calderon.sf.service.util.RandomUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
@@ -22,7 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**

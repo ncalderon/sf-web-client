@@ -15,7 +15,6 @@
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipValidateRules": "required",
             "relationshipName": "tranCategoryRegex",
             "otherEntityName": "tranCategoryRegex",
             "otherEntityField": "name"
@@ -39,10 +38,10 @@
             "fieldValidateRules": [
                 "maxlength"
             ],
-            "fieldValidateRulesMaxlength": 512
+            "fieldValidateRulesMaxlength": 256
         }
     ],
-    "changelogDate": "20170917034904",
+    "changelogDate": "20170918191345",
     "entityTableName": "tran_category",
     "dto": "no",
     "pagination": "pagination",

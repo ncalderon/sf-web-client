@@ -4,7 +4,6 @@ import com.calderon.sf.domain.Authority;
 import com.calderon.sf.domain.User;
 import com.calderon.sf.repository.AuthorityRepository;
 import com.calderon.sf.repository.UserRepository;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

@@ -1,10 +1,9 @@
 package com.calderon.sf.config;
 
-import com.calderon.sf.security.*;
-import com.calderon.sf.security.jwt.*;
-
-import io.github.jhipster.security.*;
-
+import com.calderon.sf.security.AuthoritiesConstants;
+import com.calderon.sf.security.jwt.JWTConfigurer;
+import com.calderon.sf.security.jwt.TokenProvider;
+import io.github.jhipster.security.Http401UnauthorizedEntryPoint;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

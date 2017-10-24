@@ -11,7 +11,8 @@ export const enum PaymentMethod {
     'CHECK',
     'CREDIT_CARD',
     'DEBIT',
-    'ELECTRONIC_TRANSFER'
+    'ELECTRONIC_TRANSFER',
+    'OTHER'
 }
 
 export class AccountTransaction implements BaseEntity {
@@ -25,7 +26,7 @@ export class AccountTransaction implements BaseEntity {
         public amount?: number,
         public paymentMethod?: PaymentMethod,
         public user?: User,
-        public bankAccount?: BaseEntity,
+        public financeAccount?: BaseEntity,
         public tranCategory?: BaseEntity,
     ) {
     }

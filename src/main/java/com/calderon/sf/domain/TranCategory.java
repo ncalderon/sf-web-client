@@ -5,11 +5,12 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A TranCategory.
@@ -17,7 +18,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "tran_category")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class TranCategory implements Serializable {
+public class TranCategory extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,12 +27,12 @@ public class TranCategory implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(min = 4, max = 64)
+    @Size(min = 2, max = 64)
     @Column(name = "name", length = 64, nullable = false)
     private String name;
 
-    @Size(max = 512)
-    @Column(name = "description", length = 512)
+    @Size(max = 256)
+    @Column(name = "description", length = 256)
     private String description;
 
     @OneToMany(mappedBy = "tranCategory")
@@ -42,8 +43,7 @@ public class TranCategory implements Serializable {
     @ManyToOne
     private User user;
 
-    @ManyToOne(optional = false)
-    @NotNull
+    @ManyToOne
     private TranCategoryRegex tranCategoryRegex;
 
     // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove

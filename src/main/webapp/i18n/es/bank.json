@@ -16,9 +16,7 @@
                 "title": "Bank"
             },
             "name": "Name",
-            "description": "Description",
-            "bankAccount": "Bank Account",
-            "user": "User"
+            "description": "Description"
         }
     }
 }

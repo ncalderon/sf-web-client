@@ -2,7 +2,7 @@
 DEFAULT_MIN_LENGTH = 4
 DEFAULT_MAX_LENGTH = 64
 
-DEFAULT_DESC_MAX_LENGTH = 512
+DEFAULT_DESC_MAX_LENGTH = 256
 
 DEFAULT_MIN_BYTES = 20
 DEFAULT_MAX_BYTES = 40
@@ -11,11 +11,11 @@ DEFAULT_MAX = 41
 
 
 enum AccountStatus {
-	INACTIVE, ACTIVE, DISABLED
+	INACTIVE, ACTIVE
 }
 
 enum AccountType {
-	CHECKING_ACCOUNT, SAVING_ACCOUNT, CREDIT_CARD
+	GENERIC, CHECKING_ACCOUNT, SAVING_ACCOUNT, CREDIT_CARD
 }
 
 enum TranType {
@@ -23,16 +23,18 @@ enum TranType {
 }
 
 enum PaymentMethod {
-	UNSPECIFIED, CASH, CHECK, CREDIT_CARD, DEBIT, ELECTRONIC_TRANSFER
+	UNSPECIFIED, CASH, CHECK, CREDIT_CARD, DEBIT, ELECTRONIC_TRANSFER, OTHER
 }
 
-entity BankAccount {
+entity FinanceAccount {
 	accountStatus AccountStatus required,
-    accountType AccountType required,
     accountNumber String required minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH),
     name String required minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH),
     description String maxlength(DEFAULT_DESC_MAX_LENGTH),
-    balance BigDecimal
+    balance BigDecimal,
+    isCreditCard Boolean,
+    dueDate LocalDate,
+    closingDate LocalDate
 }
 
 entity Bank {
@@ -41,16 +43,7 @@ entity Bank {
 }
 
 relationship OneToMany {
-	Bank{bankAccount} to BankAccount{bank(name) required}
-}
-
-
-#relationship OneToOne {
-#	BankAccount{bank} to Bank required
-#}
-
-relationship OneToMany {
-	BankAccount{accountTransaction} to AccountTransaction{bankAccount(name) required}
+	FinanceAccount{accountTransaction} to AccountTransaction{financeAccount(name) required}
 }
 
 entity TranCategory {
@@ -65,40 +58,27 @@ entity TranCategoryRegex {
 }
 
 relationship OneToMany {
-	TranCategoryRegex{tranCategory} to TranCategory{tranCategoryRegex(name) required}
+	TranCategoryRegex{tranCategory} to TranCategory{tranCategoryRegex(name)}
 }
-
-#relationship OneToOne {
-#	TranCategory{regex} to TranCategoryRegex
-#}
-
-#relationship ManyToOne {
-#	TranCategory{parent} to TranCategory
-#}
-
-#relationship OneToMany {
-#	TranCategoryRegex{category} to TranCategory
-#}
 
 entity AccountTransaction {
     tranType TranType required,
-   	tranNumber String required minlength(1) maxlength(128),
+   	tranNumber String,
     referenceNumber String,
-    postDate Instant required,
+    postDate LocalDate required,
     description String maxlength(DEFAULT_DESC_MAX_LENGTH),
     amount BigDecimal required,
     paymentMethod PaymentMethod
 }
 
 relationship OneToMany {
-	TranCategory{transaction} to AccountTransaction{tranCategory(name) required}
+	TranCategory{transaction} to AccountTransaction{tranCategory(name)}
 }
 
 relationship ManyToOne {
 	AccountTransaction{user(login)} to User,
-    BankAccount{user(login)} to User,
-    Bank{user(login)} to User,
+    FinanceAccount{user(login)} to User,
     TranCategory{user(login)} to User,
     TranCategoryRegex{user(login)} to User
 }
-paginate AccountTransaction, BankAccount, Bank, TranCategory, TranCategoryRegex with pagination
+paginate AccountTransaction, FinanceAccount, Bank, TranCategory, TranCategoryRegex with pagination
