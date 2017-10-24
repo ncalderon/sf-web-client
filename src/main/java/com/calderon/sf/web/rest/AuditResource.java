@@ -2,7 +2,6 @@ package com.calderon.sf.web.rest;
 
 import com.calderon.sf.service.AuditEventService;
 import com.calderon.sf.web.rest.util.PaginationUtil;
-
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
 import org.springframework.boot.actuate.audit.AuditEvent;

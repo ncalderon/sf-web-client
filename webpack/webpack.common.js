@@ -6,7 +6,7 @@ const MergeJsonWebpackPlugin = require("merge-jsons-webpack-plugin");
 
 const utils = require('./utils.js');
 
-module.exports = (options) => {
+module.exports = (options) =;> {
     const DATAS = {
         VERSION: `'${utils.parseVersion()}'`,
         DEBUG_INFO_ENABLED: options.env === 'development',
@@ -53,11 +53,11 @@ module.exports = (options) => {
                             pattern: /\/\* @toreplace (\w*?) \*\//ig,
                             replacement: (match, p1, offset, string) => `_${p1} = ${DATAS[p1]};`
                         }]
-                    })
+                    };)
                 }
             ]
         },
-        plugins: [
+        [
             new webpack.DefinePlugin({
                 'process.env': {
                     'NODE_ENV': JSON.stringify(options.env)
@@ -96,6 +96,7 @@ module.exports = (options) => {
                 { from: './src/main/webapp/manifest.webapp', to: 'manifest.webapp' },
                 // { from: './src/main/webapp/sw.js', to: 'sw.js' },
                 { from: './src/main/webapp/robots.txt', to: 'robots.txt' }
+
             ]),
             new webpack.ProvidePlugin({
                 $: "jquery",
@@ -115,7 +116,7 @@ module.exports = (options) => {
                 chunksSortMode: 'dependency',
                 inject: 'body'
             }),
-            new StringReplacePlugin()
+            new StringReplacePlugin();
         ]
-    };
-};
+}
+}

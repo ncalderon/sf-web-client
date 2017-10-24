@@ -1,6 +1,7 @@
 package com.calderon.sf.web.rest.vm;
 
 import com.calderon.sf.config.Constants;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;

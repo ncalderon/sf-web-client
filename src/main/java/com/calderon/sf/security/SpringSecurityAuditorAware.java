@@ -1,7 +1,6 @@
 package com.calderon.sf.security;
 
 import com.calderon.sf.config.Constants;
-
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 

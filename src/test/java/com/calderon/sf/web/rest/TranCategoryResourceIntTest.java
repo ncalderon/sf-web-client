@@ -3,7 +3,6 @@ package com.calderon.sf.web.rest;
 import com.calderon.sf.SfWebClientApp;
 
 import com.calderon.sf.domain.TranCategory;
-import com.calderon.sf.domain.TranCategoryRegex;
 import com.calderon.sf.repository.TranCategoryRepository;
 import com.calderon.sf.web.rest.errors.ExceptionTranslator;
 
@@ -83,11 +82,6 @@ public class TranCategoryResourceIntTest {
         TranCategory tranCategory = new TranCategory()
             .name(DEFAULT_NAME)
             .description(DEFAULT_DESCRIPTION);
-        // Add required entity
-        TranCategoryRegex tranCategoryRegex = TranCategoryRegexResourceIntTest.createEntity(em);
-        em.persist(tranCategoryRegex);
-        em.flush();
-        tranCategory.setTranCategoryRegex(tranCategoryRegex);
         return tranCategory;
     }
 

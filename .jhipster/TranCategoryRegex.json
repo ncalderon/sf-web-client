@@ -32,7 +32,7 @@
             "fieldValidateRules": [
                 "maxlength"
             ],
-            "fieldValidateRulesMaxlength": 512
+            "fieldValidateRulesMaxlength": 256
         },
         {
             "fieldName": "regex",
@@ -42,7 +42,7 @@
             ]
         }
     ],
-    "changelogDate": "20170917034905",
+    "changelogDate": "20170918191346",
     "entityTableName": "tran_category_regex",
     "dto": "no",
     "pagination": "pagination",

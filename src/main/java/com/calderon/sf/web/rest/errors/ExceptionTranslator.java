@@ -20,7 +20,6 @@ import org.zalando.problem.spring.web.advice.validation.ConstraintViolationProbl
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**

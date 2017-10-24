@@ -7,7 +7,7 @@
     <div class="row justify-content-center">
         <div class="col-12">
             <div class="alert alert-danger" *ngIf="authenticationError" jhiTranslate="login.messages.error.authentication">
-                <strong>Failed to sign in!</strong> Please check your credentials and try again.
+                <strong>Failed to sign in!</strong>{{authenticationErrorMsg}}
             </div>
         </div>
         <div class="col-md-6">
@@ -39,12 +39,12 @@
                 <a class="alert-link" (click)="register()" jhiTranslate="global.messages.info.register.link">Register a new account</a>
             </div>
         </div>
-        <div class="col-md-6">
+        <!--<div class="col-md-6">
             <br/>
             <jhi-social provider="google"></jhi-social>
             <jhi-social provider="facebook"></jhi-social>
             <jhi-social provider="twitter"></jhi-social>
-            <!-- jhipster-needle-add-social-button -->
-        </div>
+            &lt;!&ndash; jhipster-needle-add-social-button &ndash;&gt;
+        </div>-->
     </div>
 </div>

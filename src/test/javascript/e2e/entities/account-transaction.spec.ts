@@ -40,15 +40,15 @@ describe('AccountTransaction e2e test', () => {
         expect(accountTransactionDialogPage.getTranNumberInput()).toMatch('tranNumber');
         accountTransactionDialogPage.setReferenceNumberInput('referenceNumber');
         expect(accountTransactionDialogPage.getReferenceNumberInput()).toMatch('referenceNumber');
-        accountTransactionDialogPage.setPostDateInput(12310020012301);
-        expect(accountTransactionDialogPage.getPostDateInput()).toMatch('2001-12-31T02:30');
+        accountTransactionDialogPage.setPostDateInput('2000-12-31');
+        expect(accountTransactionDialogPage.getPostDateInput()).toMatch('2000-12-31');
         accountTransactionDialogPage.setDescriptionInput('description');
         expect(accountTransactionDialogPage.getDescriptionInput()).toMatch('description');
         accountTransactionDialogPage.setAmountInput('5');
         expect(accountTransactionDialogPage.getAmountInput()).toMatch('5');
         accountTransactionDialogPage.paymentMethodSelectLastOption();
         accountTransactionDialogPage.userSelectLastOption();
-        accountTransactionDialogPage.bankAccountSelectLastOption();
+        accountTransactionDialogPage.financeAccountSelectLastOption();
         accountTransactionDialogPage.tranCategorySelectLastOption();
         accountTransactionDialogPage.save();
         expect(accountTransactionDialogPage.getSaveButton().isPresent()).toBeFalsy();
@@ -84,7 +84,7 @@ export class AccountTransactionDialogPage {
     amountInput = element(by.css('input#field_amount'));
     paymentMethodSelect = element(by.css('select#field_paymentMethod'));
     userSelect = element(by.css('select#field_user'));
-    bankAccountSelect = element(by.css('select#field_bankAccount'));
+    financeAccountSelect = element(by.css('select#field_financeAccount'));
     tranCategorySelect = element(by.css('select#field_tranCategory'));
 
     getModalTitle() {
@@ -93,113 +93,113 @@ export class AccountTransactionDialogPage {
 
     setTranTypeSelect = function (tranType) {
         this.tranTypeSelect.sendKeys(tranType);
-    }
+    };
 
     getTranTypeSelect = function () {
         return this.tranTypeSelect.element(by.css('option:checked')).getText();
-    }
+    };
 
     tranTypeSelectLastOption = function () {
         this.tranTypeSelect.all(by.tagName('option')).last().click();
-    }
+    };
     setTranNumberInput = function (tranNumber) {
         this.tranNumberInput.sendKeys(tranNumber);
-    }
+    };
 
     getTranNumberInput = function () {
         return this.tranNumberInput.getAttribute('value');
-    }
+    };
 
     setReferenceNumberInput = function (referenceNumber) {
         this.referenceNumberInput.sendKeys(referenceNumber);
-    }
+    };
 
     getReferenceNumberInput = function () {
         return this.referenceNumberInput.getAttribute('value');
-    }
+    };
 
     setPostDateInput = function (postDate) {
         this.postDateInput.sendKeys(postDate);
-    }
+    };
 
     getPostDateInput = function () {
         return this.postDateInput.getAttribute('value');
-    }
+    };
 
     setDescriptionInput = function (description) {
         this.descriptionInput.sendKeys(description);
-    }
+    };
 
     getDescriptionInput = function () {
         return this.descriptionInput.getAttribute('value');
-    }
+    };
 
     setAmountInput = function (amount) {
         this.amountInput.sendKeys(amount);
-    }
+    };
 
     getAmountInput = function () {
         return this.amountInput.getAttribute('value');
-    }
+    };
 
     setPaymentMethodSelect = function (paymentMethod) {
         this.paymentMethodSelect.sendKeys(paymentMethod);
-    }
+    };
 
     getPaymentMethodSelect = function () {
         return this.paymentMethodSelect.element(by.css('option:checked')).getText();
-    }
+    };
 
     paymentMethodSelectLastOption = function () {
         this.paymentMethodSelect.all(by.tagName('option')).last().click();
-    }
+    };
     userSelectLastOption = function () {
         this.userSelect.all(by.tagName('option')).last().click();
-    }
+    };
 
     userSelectOption = function (option) {
         this.userSelect.sendKeys(option);
-    }
+    };
 
     getUserSelect = function () {
         return this.userSelect;
-    }
+    };
 
     getUserSelectedOption = function () {
         return this.userSelect.element(by.css('option:checked')).getText();
-    }
+    };
 
-    bankAccountSelectLastOption = function () {
-        this.bankAccountSelect.all(by.tagName('option')).last().click();
-    }
+    financeAccountSelectLastOption = function () {
+        this.financeAccountSelect.all(by.tagName('option')).last().click();
+    };
 
-    bankAccountSelectOption = function (option) {
-        this.bankAccountSelect.sendKeys(option);
-    }
+    financeAccountSelectOption = function (option) {
+        this.financeAccountSelect.sendKeys(option);
+    };
 
-    getBankAccountSelect = function () {
-        return this.bankAccountSelect;
-    }
+    getFinanceAccountSelect = function () {
+        return this.financeAccountSelect;
+    };
 
-    getBankAccountSelectedOption = function () {
-        return this.bankAccountSelect.element(by.css('option:checked')).getText();
-    }
+    getFinanceAccountSelectedOption = function () {
+        return this.financeAccountSelect.element(by.css('option:checked')).getText();
+    };
 
     tranCategorySelectLastOption = function () {
         this.tranCategorySelect.all(by.tagName('option')).last().click();
-    }
+    };
 
     tranCategorySelectOption = function (option) {
         this.tranCategorySelect.sendKeys(option);
-    }
+    };
 
     getTranCategorySelect = function () {
         return this.tranCategorySelect;
-    }
+    };
 
     getTranCategorySelectedOption = function () {
         return this.tranCategorySelect.element(by.css('option:checked')).getText();
-    }
+    };
 
     save() {
         this.saveButton.click();

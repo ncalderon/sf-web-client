@@ -1,0 +1,47 @@
+<!--<div class="row">
+    <div class="col-auto mr-auto"></div>
+    <div class="col-auto">
+        <button class="btn btn-secondary" [routerLink]="['/tran-category']">
+            <span class="fa"></span>
+            <span>
+                Categories
+            </span>
+        </button>
+    </div>
+</div>
+<hr>-->
+<h2>
+    <span jhiTranslate="sfWebClientApp.financeAccount.home.title">Finance Accounts</span>
+    <button class="btn btn-primary float-right jh-create-entity create-finance-account" [routerLink]="['/', { outlets: { popup: ['finance-account-new'] } }]">
+        <span class="fa fa-plus"></span>
+        <span  jhiTranslate="sfWebClientApp.financeAccount.home.createLabel">
+        Create new Finance Account
+        </span>
+    </button>
+</h2>
+<jhi-alert></jhi-alert>
+<hr>
+<div class="row" *ngFor="let rowAcc of rowsAccount">
+    <div class="col-sm-3 mb-3" *ngFor="let colAcc of rowAcc.accounts">
+        <a class="border card bg-info text-white" [routerLink]="['../finance-account', colAcc.id ]" [ngSwitch]="colAcc.isCreditCard">
+            <div class="card-body">
+                <h4 class="card-title">{{colAcc.name}}</h4>
+
+                <!--<p class="card-text">{{colAcc.description}}</p>-->
+                <!--<div class="text-right">
+                    <a [routerLink]="['/', { outlets: { popup: 'finance-account/'+ colAcc.id + '/delete'} }]"
+                       replaceUrl="true"
+                       class="badge badge-danger">Delete</a>
+                </div>-->
+                <div *ngSwitchCase="true" class="text-right">
+                    <!--<span class="badge badge-secondary">Credit Card</span>-->
+                    <i class="fa fa-credit-card"></i>
+                </div>
+                <div *ngSwitchCase="false" class="text-right">
+                    <!--<span class="badge badge-secondary">Generic</span>-->
+                    <i class="fa fa-money"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

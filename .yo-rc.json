@@ -22,7 +22,7 @@
     "buildTool": "maven",
     "enableSocialSignIn": true,
     "enableSwaggerCodegen": false,
-    "jwtSecretKey": "293387c0c591b3e3b965ee61e8e21113d62cbc67",
+    "jwtSecretKey": "9fc139643f67ea30c312c652a6155eb7cf5eb702",
     "clientFramework": "angularX",
     "useSass": true,
     "clientPackageManager": "yarn",
@@ -37,6 +37,7 @@
     "languages": [
       "en",
       "es"
-    ]
+    ],
+    "herokuAppName": "sf-web-client"
   }
 }

@@ -1,10 +1,8 @@
 package com.calderon.sf.repository;
 
 import com.calderon.sf.domain.Bank;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import org.springframework.data.jpa.repository.*;
-import java.util.List;
 
 /**
  * Spring Data JPA repository for the Bank entity.
@@ -12,8 +10,5 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface BankRepository extends JpaRepository<Bank, Long> {
-
-    @Query("select bank from Bank bank where bank.user.login = ?#{principal.username}")
-    List<Bank> findByUserIsCurrentUser();
 
 }

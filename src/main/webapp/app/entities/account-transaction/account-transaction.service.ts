@@ -61,13 +61,13 @@ export class AccountTransactionService {
 
     private convertItemFromServer(entity: any) {
         entity.postDate = this.dateUtils
-            .convertDateTimeFromServer(entity.postDate);
+            .convertLocalDateFromServer(entity.postDate);
     }
 
     private convert(accountTransaction: AccountTransaction): AccountTransaction {
         const copy: AccountTransaction = Object.assign({}, accountTransaction);
-
-        copy.postDate = this.dateUtils.toDate(accountTransaction.postDate);
+        copy.postDate = this.dateUtils
+            .convertLocalDateToServer(accountTransaction.postDate);
         return copy;
     }
 }

@@ -18,7 +18,7 @@
         </dd>
         <dt><span jhiTranslate="sfWebClientApp.accountTransaction.postDate">Post Date</span></dt>
         <dd>
-            <span>{{accountTransaction.postDate | date:'medium'}}</span>
+            <span>{{accountTransaction.postDate | date:'mediumDate'}}</span>
         </dd>
         <dt><span jhiTranslate="sfWebClientApp.accountTransaction.description">Description</span></dt>
         <dd>
@@ -36,10 +36,10 @@
         <dd>
             {{accountTransaction.user?.login}}
         </dd>
-        <dt><span jhiTranslate="sfWebClientApp.accountTransaction.bankAccount">Bank Account</span></dt>
+        <dt><span jhiTranslate="sfWebClientApp.accountTransaction.financeAccount">Finance Account</span></dt>
         <dd>
-            <div *ngIf="accountTransaction.bankAccount">
-                <a [routerLink]="['/bank-account', accountTransaction.bankAccount?.id]">{{accountTransaction.bankAccount?.name}}</a>
+            <div *ngIf="accountTransaction.financeAccount">
+                <a [routerLink]="['/finance-account', accountTransaction.financeAccount?.id]">{{accountTransaction.financeAccount?.name}}</a>
             </div>
         </dd>
         <dt><span jhiTranslate="sfWebClientApp.accountTransaction.tranCategory">Tran Category</span></dt>

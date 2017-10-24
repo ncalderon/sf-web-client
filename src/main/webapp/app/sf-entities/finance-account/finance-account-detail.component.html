@@ -1,0 +1,84 @@
+<div *ngIf="financeAccount">
+    <h2 [ngSwitch]="financeAccount.isCreditCard"><span jhiTranslate="sfWebClientApp.financeAccount.detail.title">Account</span> - {{financeAccount.name}}
+        <!--<span *ngSwitchCase="true" class="badge badge-secondary">Credit Card</span>
+        <span *ngSwitchCase="false" class="badge badge-secondary">Generic</span></h2>-->
+        <span *ngSwitchCase="true" class="fa fa-credit-card"></span>
+        <span *ngSwitchCase="false" class="fa fa-money"></span>
+    </h2>
+
+    <div>
+        <button type="submit"
+                (click)="previousState()"
+                class="btn btn-sm btn-info">
+            <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+        </button>
+
+        <button type="submit"
+                [routerLink]="['/', { outlets: { popup: 'finance-account/'+ financeAccount.id + '/delete'} }]"
+                replaceUrl="true"
+                class="btn btn-sm btn-danger float-sm-right ml-2">
+            <span class="fa fa-remove"></span>&nbsp;<span jhiTranslate="entity.action.delete">Delete</span>
+        </button>
+
+        <button type="button"
+                [routerLink]="['/', { outlets: { popup: 'finance-account/'+ financeAccount.id + '/edit'} }]"
+                replaceUrl="true"
+                class="btn btn-sm btn-primary float-sm-right">
+            <span class="fa fa-pencil"></span>&nbsp;<span>Edit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        </button>
+
+
+    </div>
+
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+
+
+    <dl class="row">
+        <dt class="col-sm-2"
+            *jhiHasAnyAuthority="'ADMIN'"
+            ><span jhiTranslate="sfWebClientApp.financeAccount.accountNumber">Account Number</span></dt>
+        <dd class="col-sm-2"
+            *jhiHasAnyAuthority="'ADMIN'"
+            >
+            <span>{{financeAccount.accountNumber}}</span>
+        </dd>
+        <dt class="col-sm-2"><span jhiTranslate="sfWebClientApp.financeAccount.description">Description</span></dt>
+        <dd class="col-sm-2">
+            <span>{{financeAccount.description}}</span>
+        </dd>
+        <dt class="col-sm-2"><span jhiTranslate="sfWebClientApp.financeAccount.accountStatus">Account Status</span></dt>
+        <dd class="col-sm-2">
+            <span jhiTranslate="{{'sfWebClientApp.AccountStatus.' + financeAccount.accountStatus}}">{{financeAccount.accountStatus}}</span>
+        </dd>
+        <dt class="col-sm-2"><span jhiTranslate="sfWebClientApp.financeAccount.balance">Balance</span></dt>
+        <dd class="col-sm-2">
+            <span>{{financeAccount.balance | currency:'USD':true:'2.2-2'}}</span>
+        </dd>
+        <dt class="col-sm-2"
+            *jhiHasAnyAuthority="'ADMIN'"
+        ><span jhiTranslate="sfWebClientApp.financeAccount.isCreditCard">Is Credit Card</span></dt>
+        <dd class="col-sm-2"
+            *jhiHasAnyAuthority="'ADMIN'"
+        >
+            <span>{{financeAccount.isCreditCard}}</span>
+        </dd>
+        <dt class="col-sm-2"><span jhiTranslate="sfWebClientApp.financeAccount.dueDate">Due Date</span></dt>
+        <dd class="col-sm-2">
+            <span>{{financeAccount.dueDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt class="col-sm-2"><span jhiTranslate="sfWebClientApp.financeAccount.closingDate">Closing Date</span></dt>
+        <dd class="col-sm-2">
+            <span>{{financeAccount.closingDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt class="col-sm-2"
+            *jhiHasAnyAuthority="'ADMIN'"><span jhiTranslate="sfWebClientApp.financeAccount.user">User</span></dt>
+        <dd class="col-sm-2"
+            *jhiHasAnyAuthority="'ADMIN'">
+            {{financeAccount.user?.login}}
+        </dd>
+    </dl>
+</div>
+<hr>
+<jhi-transaction *ngIf="financeAccount" [currentAccount]="financeAccount"></jhi-transaction>
+<router-outlet name="popup_child"></router-outlet>

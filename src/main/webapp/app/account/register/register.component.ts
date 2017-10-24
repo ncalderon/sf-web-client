@@ -19,6 +19,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     registerAccount: any;
     success: boolean;
     modalRef: NgbModalRef;
+    socialProviderEnable: false;
 
     constructor(
         private languageService: JhiLanguageService,

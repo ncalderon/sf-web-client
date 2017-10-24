@@ -13,10 +13,9 @@
 # Full reference is available at:
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
-
 eureka:
     client:
-        enabled: true
+        enabled: false
         healthcheck:
             enabled: true
         fetch-registry: true
@@ -47,6 +46,10 @@ management:
 spring:
     application:
         name: sf_web_client
+    http:
+            multipart:
+              max-file-size: 128KB
+              max-request-size: 128KB
     profiles:
         # The commented value for `active` can be replaced with valid Spring profiles to load.
         # Otherwise, it will be filled in by maven when building the WAR file
@@ -94,10 +97,11 @@ server:
     session:
         cookie:
             http-only: true
+    context-path: /
 
 info:
     project:
-        version: #project.version#
+        version: 1.0 #project.version#
 
 # ===================================================================
 # JHipster specific properties

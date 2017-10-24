@@ -61,7 +61,7 @@ Navbar
 /* ==========================================================================
 Logo styles
 ========================================================================== */
-.navbar-brand {
+/*.navbar-brand {
     &.logo {
         padding: 5px 15px;
         .logo-img {
@@ -70,6 +70,20 @@ Logo styles
             display: inline-block;
             vertical-align: middle;
             background: url("../../../content/images/logo-jhipster.png") no-repeat center center;
+            background-size: contain;
+        }
+    }
+}*/
+
+.navbar-brand {
+    &.logo {
+        padding: 5px 15px;
+        .logo-img {
+            height: 45px;
+            width: 70px;
+            display: inline-block;
+            vertical-align: middle;
+            background: url("../../../content/images/logo-sf.png") no-repeat center center;
             background-size: contain;
         }
     }

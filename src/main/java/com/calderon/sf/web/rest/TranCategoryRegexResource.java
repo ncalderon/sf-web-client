@@ -1,13 +1,12 @@
 package com.calderon.sf.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
 import com.calderon.sf.domain.TranCategoryRegex;
-
 import com.calderon.sf.repository.TranCategoryRegexRepository;
 import com.calderon.sf.web.rest.util.HeaderUtil;
 import com.calderon.sf.web.rest.util.PaginationUtil;
-import io.swagger.annotations.ApiParam;
+import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -93,7 +91,8 @@ public class TranCategoryRegexResource {
     @Timed
     public ResponseEntity<List<TranCategoryRegex>> getAllTranCategoryRegexes(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of TranCategoryRegexes");
-        Page<TranCategoryRegex> page = tranCategoryRegexRepository.findAll(pageable);
+        /*Page<TranCategoryRegex> page = tranCategoryRegexRepository.findAll(pageable);*/
+        Page<TranCategoryRegex> page = tranCategoryRegexRepository.findByUserIsCurrentUser(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/tran-category-regexes");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

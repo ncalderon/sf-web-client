@@ -1,0 +1,143 @@
+<style>
+    .my-drop-zone {
+        border: dotted 3px lightgray;
+    }
+
+    .nv-file-over {
+        border: dotted 3px red;
+    }
+
+    /* Default class applied to drop zones on over */
+    .another-file-over-class {
+        border: dotted 3px green;
+    }
+
+    .windowClass {
+    }
+
+    /*
+        html, body { height: 100%; }*/
+</style>
+
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+    <h2><span>Upload File Transactions</span></h2>
+    <hr>
+    <button type="button"
+            (click)="goBack()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+
+    <div class="form-group">
+        <label class="form-control-label"
+               for="field_bank">Template</label>
+        <select class="form-control" id="field_bank" name="bank"
+                [(ngModel)]="bank" required>
+            <option *ngIf="!editForm.value.bank" [ngValue]="null"></option>
+            <option
+                [ngValue]="bankOption.id === bank?.id ? bank : bankOption"
+                *ngFor="let bankOption of banks; trackBy: trackBankById">{{bankOption.name}}
+            </option>
+        </select>
+        <div [hidden]="!(editForm.controls.bank?.dirty && editForm.controls.bank?.invalid)">
+            <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.bank?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="file" name="fileInput" ng2FileSelect [uploader]="uploader" [(ngModel)]="fileInput"
+               [disabled]="!bank"/>
+        <button type="button" class="btn btn-success btn-s"
+                (click)="upload()" [disabled]="!uploader.getNotUploadedItems().length">
+            <span class="glyphicon glyphicon-upload"></span> Upload file
+        </button>
+        <button type="button" class="btn btn-warning btn-s"
+                (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+            <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+        </button>
+    </div>
+
+    <div class="form-group">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span>Clear</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving || transactions.length<=0"
+                class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span>Import</span>
+        </button>
+    </div>
+
+    <div class="row"></div>
+    <br/>
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Transactions</h4>
+            <!--<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>-->
+            <input
+                id="field_search"
+                class="form-control"
+                type="text"
+                name="field_search"
+                jhiSearch
+                [searcher]="searcher"
+                [items]="transactionsObservables"
+                placeholder="Find transaction"
+                [disabled]="transactions.length <= 0"
+            />
+            <div class="table-responsive" *ngIf="transactions">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th><span>Post Date</span>
+                        </th>
+                        <th><span>Tran Type</span>
+                        </th>
+                        <th><span>Description</span>
+                        </th>
+                        <th><span>Amount</span>
+                        </th>
+                        <th><span>Tran Category</span>
+                        </th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let transaction of transactionsObservables | async ;let i=index ; trackBy: trackId">
+                        <td>{{transaction.postDate | date:'medium'}}</td>
+                        <td>{{transaction.tranType}}</td>
+                        <td>{{transaction.description}}</td>
+                        <td class="text-right">{{transaction.amount | currency:'USD':true:'2.2-2'}}</td>
+                        <td>
+                            <input
+                                autocomplete="off"
+                                name="{{'category'+i}}"
+                                [(ngModel)]="categoryValues[i]"
+                                [typeahead]="categories"
+                                typeahedOptionsLimit="10"
+                                typeaheadOptionField="name"
+                                typeaheadMinLength="2"
+                                (typeaheadOnSelect)="onTypeaheadSelect(i, transaction, $event)"
+                                placeholder="Choose a category"
+                                class="form-control"
+                            />
+                        </td>
+                        <td>
+                            <a href="javascript:void(0);" (click)="remove(i, transaction)"
+                               class="btn btn-danger btn-sm">
+                                <span class="fa fa-remove" aria-hidden="true"></span>
+                                <span><strong></strong></span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
+
