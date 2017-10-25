@@ -7,9 +7,9 @@ import { Observable } from 'rxjs/Rx';
 import { JhiDateUtils, JhiDataUtils, JhiEventManager } from 'ng-jhipster';
 import { SfWebClientTestModule } from '../../../test.module';
 import { MockActivatedRoute } from '../../../helpers/mock-route.service';
-import { AccountTransactionDetailComponent } from '../../../../../../main/webapp/app/entities/account-transaction/account-transaction-detail.component';
-import { AccountTransactionService } from '../../../../../../main/webapp/app/entities/account-transaction/account-transaction.service';
-import { AccountTransaction } from '../../../../../../main/webapp/app/entities/account-transaction/account-transaction.model';
+import { AccountTransactionDetailComponent } from '../../../../../../main/webapp/app/sf-entities/account-transaction/account-transaction-detail.component';
+import { AccountTransactionService } from '../../../../../../main/webapp/app/sf-entities/account-transaction/account-transaction.service';
+import { AccountTransaction } from '../../../../../../main/webapp/app/sf-entities/account-transaction/account-transaction.model';
 
 describe('Component Tests', () => {
 

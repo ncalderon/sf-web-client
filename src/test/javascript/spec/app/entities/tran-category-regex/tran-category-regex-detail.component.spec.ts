@@ -7,9 +7,9 @@ import { Observable } from 'rxjs/Rx';
 import { JhiDateUtils, JhiDataUtils, JhiEventManager } from 'ng-jhipster';
 import { SfWebClientTestModule } from '../../../test.module';
 import { MockActivatedRoute } from '../../../helpers/mock-route.service';
-import { TranCategoryRegexDetailComponent } from '../../../../../../main/webapp/app/entities/tran-category-regex/tran-category-regex-detail.component';
-import { TranCategoryRegexService } from '../../../../../../main/webapp/app/entities/tran-category-regex/tran-category-regex.service';
-import { TranCategoryRegex } from '../../../../../../main/webapp/app/entities/tran-category-regex/tran-category-regex.model';
+import { TranCategoryRegexDetailComponent } from '../../../../../../main/webapp/app/sf-entities/tran-category-regex/tran-category-regex-detail.component';
+import { TranCategoryRegexService } from '../../../../../../main/webapp/app/sf-entities/tran-category-regex/tran-category-regex.service';
+import { TranCategoryRegex } from '../../../../../../main/webapp/app/sf-entities/tran-category-regex/tran-category-regex.model';
 
 describe('Component Tests', () => {
 

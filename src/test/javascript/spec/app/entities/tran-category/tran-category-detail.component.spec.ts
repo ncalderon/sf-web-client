@@ -7,9 +7,9 @@ import { Observable } from 'rxjs/Rx';
 import { JhiDateUtils, JhiDataUtils, JhiEventManager } from 'ng-jhipster';
 import { SfWebClientTestModule } from '../../../test.module';
 import { MockActivatedRoute } from '../../../helpers/mock-route.service';
-import { TranCategoryDetailComponent } from '../../../../../../main/webapp/app/entities/tran-category/tran-category-detail.component';
-import { TranCategoryService } from '../../../../../../main/webapp/app/entities/tran-category/tran-category.service';
-import { TranCategory } from '../../../../../../main/webapp/app/entities/tran-category/tran-category.model';
+import { TranCategoryDetailComponent } from '../../../../../../main/webapp/app/sf-entities/tran-category/tran-category-detail.component';
+import { TranCategoryService } from '../../../../../../main/webapp/app/sf-entities/tran-category/tran-category.service';
+import { TranCategory } from '../../../../../../main/webapp/app/sf-entities/tran-category/tran-category.model';
 
 describe('Component Tests', () => {
 
