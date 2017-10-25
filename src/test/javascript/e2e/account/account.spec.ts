@@ -81,7 +81,7 @@ describe('account', () => {
         signInPage.autoSignInUsing('admin', 'newpassword');
 
         // change back to default
-        navBarPage.goToPasswordMenu();
+        navBarPage.goToPasswordMenu()
         passwordPage.setPassword('admin');
         passwordPage.setConfirmPassword('admin');
         passwordPage.save();

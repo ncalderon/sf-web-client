@@ -77,7 +77,7 @@ export class TranUploadComponent implements OnInit, OnDestroy {
         this.searcher = new Searcher();
         this.searcher.onSearch = (term: string) => {
             return this.OnSearch(term.toLocaleLowerCase());
-        };
+        }
         this.uploader = new FileUploader(
             {
                 url: 'api/account-transactions/upload',
