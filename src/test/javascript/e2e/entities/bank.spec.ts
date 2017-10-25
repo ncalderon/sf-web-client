@@ -74,19 +74,19 @@ export class BankDialogPage {
 
     setNameInput = function (name) {
         this.nameInput.sendKeys(name);
-    };
+    }
 
     getNameInput = function () {
         return this.nameInput.getAttribute('value');
-    };
+    }
 
     setDescriptionInput = function (description) {
         this.descriptionInput.sendKeys(description);
-    };
+    }
 
     getDescriptionInput = function () {
         return this.descriptionInput.getAttribute('value');
-    };
+    }
 
     save() {
         this.saveButton.click();
