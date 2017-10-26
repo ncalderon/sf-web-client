@@ -17,8 +17,7 @@ import {
     SocialService,
     JhiLoginModalComponent,
     LoggerService,
-    DatetimeService,
-    Arrays
+    DatetimeService
 } from './';
 
 @NgModule({
@@ -43,8 +42,7 @@ import {
         UserService,
         DatePipe,
         LoggerService,
-        DatetimeService,
-        Arrays
+        DatetimeService
         /*forwardRef(() => LoggerService)*/
     ],
     entryComponents: [JhiLoginModalComponent],

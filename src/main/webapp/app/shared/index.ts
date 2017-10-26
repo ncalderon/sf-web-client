@@ -24,7 +24,6 @@ export * from './social/social.service';
 export * from './social/social.component';
 export * from './logger/logger.service';
 export * from './datetime/datetime.service';
-export * from './arrays/arrays';
 
 export * from './shared-libs.module';
 export * from './shared-common.module';

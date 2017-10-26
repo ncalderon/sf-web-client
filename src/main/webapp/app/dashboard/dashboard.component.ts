@@ -8,19 +8,40 @@ import {Principal} from '../shared/auth/principal.service';
 import {JhiAlertService} from 'ng-jhipster';
 import {AccountTransaction} from '../sf-entities/account-transaction/account-transaction.model';
 import {ResponseWrapper} from '../shared/model/response-wrapper.model';
-import {Arrays} from '../shared/arrays/arrays';
+import { trigger, state, style, animate, transition} from '@angular/animations';
 
 @Component({
     selector: 'jhi-dashboard',
     templateUrl: './dashboard.component.html',
-    styles: []
+    styles: [],
+    animations: [
+        trigger('in-out', [
+            state('in', style({
+                transform: 'translateX(0)',
+                opacity: 1
+            })),
+            transition('void => *', [
+                style({
+                    transform: 'translateX(-100%)',
+                    opacity: 0
+                }),
+                animate('0.2s 100ms ease-in')
+
+            ]),
+            transition('* => void', [
+                style({
+                    transform: 'translateX(100%)',
+                    opacity: 0
+                }),
+                animate('0.2s 100ms ease-out')
+
+            ])
+        ])
+    ]
 })
 export class DashboardComponent implements OnInit {
 
     accChecked: number[] = [];
-
-    rowsAccount: RowAccount[] = [];
-
     currentUser: any;
     accounts: FinanceAccount[];
 
@@ -34,18 +55,14 @@ export class DashboardComponent implements OnInit {
         {data: [], label: 'EXPENSES'},
         {data: [], label: 'INCOMES'}
     ];
-    /*= [
-        {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-        {data: [28, 48, 40, 19, 86, 27, '90'], label: 'Series B'}
-    ];*/
     chartLabels: Array<any> = [];
 
     constructor(private tranService: AccountTransactionService,
                 private accountService: FinanceAccountService,
                 private logger: LoggerService,
                 private principal: Principal,
-                private alertService: JhiAlertService,
-                private arrays: Arrays) {
+                private alertService: JhiAlertService
+                ) {
     }
 
     ngOnInit() {
@@ -71,13 +88,8 @@ export class DashboardComponent implements OnInit {
                 for (let account of this.accounts) {
                     this.accChecked.push(account.id);
                 }
-                this.fillRowsAccount();
                 this.loadTransactions()
             }, (res: ResponseWrapper) => this.onError(res.json));
-    }
-
-    fillRowsAccount() {
-        this.rowsAccount = this.arrays.mapToDimArray(this.accounts, 'accounts', 6);
     }
 
     onRefresh() {
@@ -103,11 +115,11 @@ export class DashboardComponent implements OnInit {
 
     // events
     public chartClicked(e: any): void {
-        console.log(e);
+        //console.log(e);
     }
 
     public chartHovered(e: any): void {
-        console.log(e);
+        //console.log(e);
     }
 
     private onError(error) {
@@ -138,8 +150,4 @@ export class DashboardComponent implements OnInit {
             }
         }
     }
-}
-
-class RowAccount {
-    accounts: FinanceAccount[];
 }

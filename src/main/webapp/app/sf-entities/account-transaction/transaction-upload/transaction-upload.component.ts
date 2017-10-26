@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {LoggerService} from '../../../shared/logger/logger.service';
-import {Subscription} from 'rxjs/Subscription';
 import {FileItem, FileUploader, ParsedResponseHeaders} from 'ng2-file-upload';
 import {FinanceAccount} from '../../finance-account/finance-account.model';
 import {AccountTransaction} from '../account-transaction.model';
@@ -15,10 +14,9 @@ import {TranCategory} from '../../tran-category/tran-category.model';
 import {Observable} from 'rxjs/Observable';
 import {User} from '../../../shared/user/user.model';
 import {Principal} from '../../../shared/auth/principal.service';
-import {DatetimeService} from '../../../shared/datetime/datetime.service';
 import {Bank} from '../../bank/bank.model';
 import {BankService} from '../../bank/bank.service';
-import {Searcher} from "../../../shared/search/searcher";
+import {Searcher} from '../../../shared/search/searcher';
 
 @Component({
     selector: 'jhi-transaction-upload',
@@ -38,31 +36,30 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
 
     /*model*/
     transactions: AccountTransaction[] = [];
-    transactionsObservables: Observable<AccountTransaction[]>= Observable.of([]);
+    transactionsObservables: Observable<AccountTransaction[]> = Observable.of([]);
     account: FinanceAccount;
     bank: Bank;
     banks: Bank[] = [];
     currentUser: User;
     fileInput: any;
 
-    constructor(
-        private logger: LoggerService,
-        private alertService: JhiAlertService,
-
-        private accountService: FinanceAccountService,
-        private tranCategoryService: TranCategoryService,
-        private transactionService: AccountTransactionService,
-        private bankService: BankService,
-        private eventManager: JhiEventManager,
-        private route: ActivatedRoute,
-        private authServerProvider: AuthServerProvider,
-        private principal: Principal,
-        private dateUtils: JhiDateUtils
-    ) {
+    constructor(private logger: LoggerService,
+                private alertService: JhiAlertService,
+                private accountService: FinanceAccountService,
+                private tranCategoryService: TranCategoryService,
+                private transactionService: AccountTransactionService,
+                private bankService: BankService,
+                private eventManager: JhiEventManager,
+                private route: ActivatedRoute,
+                private authServerProvider: AuthServerProvider,
+                private principal: Principal,
+                private dateUtils: JhiDateUtils) {
     }
 
     // TODO: Remove this when we're done
-    get diagnostic() { return JSON.stringify(this.transactions); }
+    get diagnostic() {
+        return JSON.stringify(this.transactions);
+    }
 
     ngOnInit() {
         this.load();
@@ -110,7 +107,7 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
                 this.bank = this.banks.length > 0 ? this.banks[0] : this.bank;
             }, (res: ResponseWrapper) =>
                 this.onError(res.json)
-            );
+        );
 
     }
 
@@ -118,8 +115,8 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
         this.logger.info("***** OnSearch ******");
         this.logger.info(term);
         this.transactionsObservables = Observable.of(this.transactions);
-        if(term.length<=0){
-            return this.transactionsObservables ;
+        if (term.length <= 0) {
+            return this.transactionsObservables;
         }
         this.transactionsObservables = this.transactionsObservables.map(trans =>
             trans.filter(tran =>
@@ -144,6 +141,7 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
         this.fileInput = null;
         return void 0;
     }
+
     upload() {
         this.logger.info("Uploading");
         this.uploader.uploadItem(<FileItem>this.uploader.getNotUploadedItems()[0]);
@@ -151,7 +149,7 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
     }
 
     remove(index: number, item: AccountTransaction) {
-        this.transactions.splice(index,  1);
+        this.transactions.splice(index, 1);
     }
 
     trackBankById(index: number, item: Bank) {
@@ -185,7 +183,7 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
     }
 
     private onSaveSuccess(result: AccountTransaction[]) {
-        this.eventManager.broadcast({ name: 'accountTransactionListModification', content: 'OK'});
+        this.eventManager.broadcast({name: 'accountTransactionListModification', content: 'OK'});
         this.isSaving = false;
         this.goBack();
     }
@@ -197,7 +195,7 @@ export class TransactionUploadComponent implements OnInit, OnDestroy {
 
     private prepareTransactions(): AccountTransaction[] {
         const copyTransactions: AccountTransaction[] = [];
-        for (let tran of this.transactions){
+        for (let tran of this.transactions) {
             const copy: AccountTransaction = Object.assign({}, tran);
             copy.id = null;
             copy.financeAccount = this.account;

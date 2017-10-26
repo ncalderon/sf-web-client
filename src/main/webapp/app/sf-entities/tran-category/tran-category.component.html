@@ -38,7 +38,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let tranCategory of categoriesObservable | async ;trackBy: trackId">
+            <tr [@in-out]="'in'" *ngFor="let tranCategory of categoriesObservable | async ;trackBy: trackId">
                 <!--<td><a [routerLink]="['../tran-category', tranCategory.id ]">{{tranCategory.id}}</a></td>-->
                 <!--<td>{{tranCategory.description}}</td>
                 <td>

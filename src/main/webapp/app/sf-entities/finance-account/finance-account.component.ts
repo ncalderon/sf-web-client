@@ -7,11 +7,35 @@ import {FinanceAccount} from './finance-account.model';
 import {FinanceAccountService} from './finance-account.service';
 import {ITEMS_PER_PAGE, Principal, ResponseWrapper} from '../../shared';
 import {PaginationConfig} from '../../blocks/config/uib-pagination.config';
-import {Arrays} from '../../shared/arrays/arrays';
+import { trigger, state, style, animate, transition, stagger, query} from '@angular/animations';
 
 @Component({
     selector: 'jhi-finance-account',
-    templateUrl: './finance-account.component.html'
+    templateUrl: './finance-account.component.html',
+    animations: [
+        trigger('in-out', [
+            state('in', style({
+                transform: 'translateX(0)',
+                opacity: 1
+            })),
+            transition('void => *', [
+                style({
+                    transform: 'translateX(-100%)',
+                    opacity: 1
+                }),
+                animate('0.4s ease-in')
+
+            ]),
+            transition('* => void', [
+                style({
+                    transform: 'translateX(100%)',
+                    opacity: 0
+                }),
+                animate('0.2s 0.5s ease-out')
+
+            ])
+        ])
+    ]
 })
 export class FinanceAccountComponent implements OnInit, OnDestroy {
 
@@ -30,8 +54,6 @@ export class FinanceAccountComponent implements OnInit, OnDestroy {
     previousPage: any;
     reverse: any;
 
-    rowsAccount: RowAccount[] = [];
-
     constructor(private financeAccountService: FinanceAccountService,
                 private parseLinks: JhiParseLinks,
                 private alertService: JhiAlertService,
@@ -40,8 +62,8 @@ export class FinanceAccountComponent implements OnInit, OnDestroy {
                 private router: Router,
                 private eventManager: JhiEventManager,
                 private paginationUtil: JhiPaginationUtil,
-                private paginationConfig: PaginationConfig,
-                private arrays: Arrays) {
+                private paginationConfig: PaginationConfig
+                ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
             this.page = data['pagingParams'].page;
@@ -127,38 +149,15 @@ export class FinanceAccountComponent implements OnInit, OnDestroy {
         return result;
     }
 
-    private refreshRowsModel() {
-        this.rowsAccount = this.arrays.mapToDimArray(this.financeAccounts, 'accounts', 4);
-        /*let currentRow;
-        currentRow = new RowAccount();
-        currentRow.accounts = [];
-        for(let i = 0; i < this.financeAccounts.length; i++){
-            currentRow.accounts.push(this.financeAccounts[i]);
-            if ((i+1) % 4 == 0){
-                this.rowsAccount.push(currentRow);
-                currentRow = new RowAccount();
-                currentRow.accounts = [];
-            }
-        }
-        if (currentRow.accounts.length>0)
-            this.rowsAccount.push(currentRow);*/
-    }
-
     private onSuccess(data, headers) {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         this.queryCount = this.totalItems;
         // this.page = pagingParams.page;
-        this.financeAccounts = data;
-        this.refreshRowsModel();
-
+        this.financeAccounts = data
     }
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
     }
-}
-
-class RowAccount {
-    accounts: FinanceAccount[];
 }
