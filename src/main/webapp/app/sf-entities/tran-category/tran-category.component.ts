@@ -7,13 +7,38 @@ import {TranCategory} from './tran-category.model';
 import {TranCategoryService} from './tran-category.service';
 import {ITEMS_PER_PAGE, Principal, ResponseWrapper} from '../../shared';
 import {PaginationConfig} from '../../blocks/config/uib-pagination.config';
-import {Searcher} from "../../shared/search/searcher";
+import {Searcher} from '../../shared/search/searcher';
 import {Observable} from 'rxjs/Observable';
 import {LoggerService} from '../../shared/logger/logger.service';
+import { trigger, state, style, animate, transition} from '@angular/animations';
 
 @Component({
     selector: 'jhi-tran-category',
-    templateUrl: './tran-category.component.html'
+    templateUrl: './tran-category.component.html',
+    animations: [
+        trigger('in-out', [
+            state('in', style({
+                transform: 'translateX(0)',
+                opacity: 1
+            })),
+            transition('void => *', [
+                style({
+                    transform: 'translateX(-100%)',
+                    opacity: 1
+                }),
+                animate('0.5s ease-in')
+
+            ]),
+            transition('* => void', [
+                style({
+                    transform: 'translateX(100%)',
+                    opacity: 0
+                }),
+                animate('0.2s 0.6s ease-out')
+
+            ])
+        ])
+    ]
 })
 export class TranCategoryComponent implements OnInit, OnDestroy {
 

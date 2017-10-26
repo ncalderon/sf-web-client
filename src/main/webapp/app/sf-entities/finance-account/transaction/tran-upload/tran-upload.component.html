@@ -107,7 +107,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr *ngFor="let transaction of transactionsObservables | async ;let i=index ; trackBy: trackId">
+                    <tr [@in-out]="'in'" *ngFor="let transaction of transactionsObservables | async ;let i=index ; trackBy: trackId">
                         <td>{{transaction.postDate | date:'medium'}}</td>
                         <td>{{transaction.tranType}}</td>
                         <td>{{transaction.description}}</td>

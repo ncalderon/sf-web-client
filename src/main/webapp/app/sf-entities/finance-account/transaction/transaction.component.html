@@ -101,7 +101,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let transaction of transactions ;trackBy: trackId">
+            <tr [@in-out]="'in'" *ngFor="let transaction of transactions ;trackBy: trackId">
                 <td>{{transaction.postDate | date:'mediumDate'}}</td>
                 <td>
                     <div *ngIf="transaction.tranCategory">

@@ -12,10 +12,11 @@
             Refresh
         </button>
     </div>
+    <!--*ngFor="let rowAcc of rowsAccount; let idx=index"-->
     <div class="form-group"
-         *ngFor="let rowAcc of rowsAccount; let idx=index">
+         >
         <div class="form-check form-check-inline"
-             *ngFor="let acc of rowAcc.accounts; let j=index">
+             *ngFor="let acc of accounts; let j=index">
             <label class="form-check-label">
                 <input class="form-check-input" type="checkbox" value="option1"
                        [checked]="isChecked(acc.id)"
@@ -35,7 +36,7 @@
                 <tr>
                     <th *ngFor="let label of chartLabels">{{label}}</th>
                 </tr>
-                <tr *ngFor="let d of chartData">
+                <tr *ngFor="let d of chartData" [@in-out]="'in'">
                     <td *ngFor="let label of chartLabels; let j=index">{{d && d.data[j] | currency:'USD':true:'2.2-2'}}</td>
                 </tr>
             </table>

@@ -21,8 +21,40 @@
 </h2>
 <jhi-alert></jhi-alert>
 <hr>
-<div class="row" *ngFor="let rowAcc of rowsAccount">
-    <div class="col-sm-3 mb-3" *ngFor="let colAcc of rowAcc.accounts">
+<!--<div class="row" *ngFor="let rowAcc of rowsAccount"  >-->
+    <!--<div class="col-sm-3 mb-3"-->
+
+         <!--[@in-out]="'in'"-->
+         <!--(@in-out.done)="accountAnimationDone($event)"-->
+
+         <!--*ngFor="let colAcc of rowAcc.accounts">-->
+        <!--<a class="border card bg-info text-white" [routerLink]="['../finance-account', colAcc.id ]" [ngSwitch]="colAcc.isCreditCard">-->
+            <!--<div class="card-body">-->
+                <!--<h4 class="card-title">{{colAcc.name}}</h4>-->
+
+                <!--&lt;!&ndash;<p class="card-text">{{colAcc.description}}</p>&ndash;&gt;-->
+                <!--&lt;!&ndash;<div class="text-right">-->
+                    <!--<a [routerLink]="['/', { outlets: { popup: 'finance-account/'+ colAcc.id + '/delete'} }]"-->
+                       <!--replaceUrl="true"-->
+                       <!--class="badge badge-danger">Delete</a>-->
+                <!--</div>&ndash;&gt;-->
+                <!--<div *ngSwitchCase="true" class="text-right">-->
+                    <!--&lt;!&ndash;<span class="badge badge-secondary">Credit Card</span>&ndash;&gt;-->
+                    <!--<i class="fa fa-credit-card"></i>-->
+                <!--</div>-->
+                <!--<div *ngSwitchCase="false" class="text-right">-->
+                    <!--&lt;!&ndash;<span class="badge badge-secondary">Generic</span>&ndash;&gt;-->
+                    <!--<i class="fa fa-money"></i>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</a>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div class="row">
+    <div class="col-sm-3 mb-3"
+         [@in-out]="'in'"
+         *ngFor="let colAcc of financeAccounts" >
         <a class="border card bg-info text-white" [routerLink]="['../finance-account', colAcc.id ]" [ngSwitch]="colAcc.isCreditCard">
             <div class="card-body">
                 <h4 class="card-title">{{colAcc.name}}</h4>
