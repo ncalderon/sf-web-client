@@ -118,6 +118,7 @@
     "webpack-dev-server": "node --max_old_space_size=4096 node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "webpack": "node --max_old_space_size=4096 node_modules/webpack/bin/webpack.js",
     "e2e": "protractor src/test/javascript/protractor.conf.js",
-    "postinstall": "webdriver-manager update && node node_modules/phantomjs-prebuilt/install.js"
+    "postinstall": "node node_modules/phantomjs-prebuilt/install.js",
+    "_postinstall": "webdriver-manager update && node node_modules/phantomjs-prebuilt/install.js"
   }
 }
