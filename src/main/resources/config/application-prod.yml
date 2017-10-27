@@ -91,7 +91,7 @@ liquibase:
 #        keyAlias: sf_web_client
 # ===================================================================
 server:
-    port: 8085
+    port: 80
     compression:
         enabled: true
         mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json

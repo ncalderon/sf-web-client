@@ -1,0 +1,46 @@
+Mira como como es el flow que uso:
+
+master
+dev
+
+tengo que hacer feature x-1
+
+$ git pull
+$ git checkout dev
+$ git checkout -b x-1
+
+... hago mis cambios
+
+$ git commit -m "x-1 - agrega x-1"
+$ git push # la primera vez uso --set-upstream
+
+Si estoy en otra compu y tengo que hacer mas cambios a x-1,
+
+$ git pull
+$ git checkout x-1
+
+... hago mas cambios
+
+$ git push
+
+_______
+
+Ahi voy para GitHub
+
+1. creo un PR de x-1 -> dev
+2. espero que jenkins haga el build y me deje saber que nada se rompio
+3. hago un squash and merge
+
+--------
+
+llega el dia de lanzar la version que esta en dev a produccion
+
+1. creo el branch 'release' de dev
+    $ git pull
+    $ git checkout development
+    $ git checkout -b release
+2. si hay un archivo que hay que subirle la version lo hago y doy commit
+3. creo un PR de 'release' a 'master'
+4. Hago un merge regular (me gusta tener el mismo historial en dev y en master)
+5. creo un PR de 'release' a 'dev'
+6. Hago un merge regular (las mismas razones que 4)
