@@ -8,36 +8,13 @@ import {Principal} from '../shared/auth/principal.service';
 import {JhiAlertService} from 'ng-jhipster';
 import {AccountTransaction} from '../sf-entities/account-transaction/account-transaction.model';
 import {ResponseWrapper} from '../shared/model/response-wrapper.model';
-import { trigger, state, style, animate, transition} from '@angular/animations';
+import {ENTER_LEAVE_ANIMATION} from '../shared/animation/enter-leave-animation';
 
 @Component({
     selector: 'jhi-dashboard',
     templateUrl: './dashboard.component.html',
     styles: [],
-    animations: [
-        trigger('in-out', [
-            state('in', style({
-                transform: 'translateX(0)',
-                opacity: 1
-            })),
-            transition('void => *', [
-                style({
-                    transform: 'translateX(-100%)',
-                    opacity: 0
-                }),
-                animate('0.2s 100ms ease-in')
-
-            ]),
-            transition('* => void', [
-                style({
-                    transform: 'translateX(100%)',
-                    opacity: 0
-                }),
-                animate('0.2s 100ms ease-out')
-
-            ])
-        ])
-    ]
+    animations: ENTER_LEAVE_ANIMATION
 })
 export class DashboardComponent implements OnInit {
 

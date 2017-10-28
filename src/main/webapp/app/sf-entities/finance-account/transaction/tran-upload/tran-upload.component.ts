@@ -17,36 +17,13 @@ import {ActivatedRoute} from '@angular/router';
 import {AuthServerProvider} from '../../../../shared/auth/auth-jwt.service';
 import {Principal} from '../../../../shared/auth/principal.service';
 import {ResponseWrapper} from '../../../../shared/model/response-wrapper.model';
-import { trigger, state, style, animate, transition, stagger, query} from '@angular/animations';
+import {ENTER_LEAVE_ANIMATION} from '../../../../shared/animation/enter-leave-animation';
 
 @Component({
     selector: 'jhi-tran-upload',
     templateUrl: './tran-upload.component.html',
     styles: [],
-    animations: [
-        trigger('in-out', [
-            state('in', style({
-                transform: 'translateX(0)',
-                opacity: 1
-            })),
-            transition('void => *', [
-                style({
-                    transform: 'translateX(-100%)',
-                    opacity: 1
-                }),
-                animate('0.5s ease-in')
-
-            ]),
-            transition('* => void', [
-                style({
-                    transform: 'translateX(100%)',
-                    opacity: 0
-                }),
-                animate('0.2s 0.4s ease-out')
-
-            ])
-        ])
-    ]
+    animations: ENTER_LEAVE_ANIMATION
 })
 export class TranUploadComponent implements OnInit, OnDestroy {
     searcher: Searcher;

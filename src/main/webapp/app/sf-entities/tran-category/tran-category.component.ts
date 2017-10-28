@@ -10,35 +10,12 @@ import {PaginationConfig} from '../../blocks/config/uib-pagination.config';
 import {Searcher} from '../../shared/search/searcher';
 import {Observable} from 'rxjs/Observable';
 import {LoggerService} from '../../shared/logger/logger.service';
-import { trigger, state, style, animate, transition} from '@angular/animations';
+import {ENTER_LEAVE_ANIMATION} from '../../shared/animation/enter-leave-animation';
 
 @Component({
     selector: 'jhi-tran-category',
     templateUrl: './tran-category.component.html',
-    animations: [
-        trigger('in-out', [
-            state('in', style({
-                transform: 'translateX(0)',
-                opacity: 1
-            })),
-            transition('void => *', [
-                style({
-                    transform: 'translateX(-100%)',
-                    opacity: 1
-                }),
-                animate('0.5s ease-in')
-
-            ]),
-            transition('* => void', [
-                style({
-                    transform: 'translateX(100%)',
-                    opacity: 0
-                }),
-                animate('0.2s 0.6s ease-out')
-
-            ])
-        ])
-    ]
+    animations: ENTER_LEAVE_ANIMATION
 })
 export class TranCategoryComponent implements OnInit, OnDestroy {
 
