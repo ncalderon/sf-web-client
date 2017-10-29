@@ -6,6 +6,7 @@ import { JhiEventManager } from 'ng-jhipster';
 import { LoginService } from './login.service';
 import { StateStorageService } from '../auth/state-storage.service';
 import { SocialService } from '../social/social.service';
+import {EventManager} from "@angular/platform-browser";
 
 @Component({
     selector: 'jhi-login-modal',
