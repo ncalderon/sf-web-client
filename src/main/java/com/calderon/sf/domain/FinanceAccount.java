@@ -48,8 +48,8 @@ public class FinanceAccount extends AbstractAuditingEntity implements Serializab
     @Column(name = "description", length = 256)
     private String description;
 
-    @Column(name = "balance", precision=10, scale=2)
-    private BigDecimal balance;
+    @Column(name = "balance", precision=10, scale=2, nullable = false, columnDefinition = "default 0")
+    private BigDecimal balance = new BigDecimal(0);
 
     @Column(name = "is_credit_card")
     private Boolean isCreditCard;

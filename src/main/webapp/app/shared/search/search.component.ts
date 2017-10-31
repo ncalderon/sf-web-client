@@ -7,7 +7,7 @@ import {Subject} from "rxjs/Subject";
     templateUrl: './search.component.html',
     providers: []
 })
-export class HeroSearchComponent implements OnInit {
+export class SearchComponent implements OnInit {
     items: Observable<any[]>;
     private searchTerms = new Subject<string>();
 

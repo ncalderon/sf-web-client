@@ -39,7 +39,7 @@
             </column>
 
             <column name="balance" type="decimal(10,2)" defaultValueNumeric="0">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <column name="is_credit_card" type="bit">
