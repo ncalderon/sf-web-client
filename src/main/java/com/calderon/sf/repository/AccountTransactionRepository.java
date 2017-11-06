@@ -43,5 +43,5 @@ public interface AccountTransactionRepository extends JpaRepository<AccountTrans
     @Query("select account_transaction from AccountTransaction account_transaction where account_transaction.user.login = ?#{principal.username} and account_transaction.postDate >= ?1 and account_transaction.postDate <= ?2")
     List<AccountTransaction> findByUserIsCurrentUserAndPostDateGreaterThanEqualAndPostDateLessThanEqual(LocalDate startDate, LocalDate endDate);
 
-
+    void deleteByFinanceAccount_Id(Long id);
 }

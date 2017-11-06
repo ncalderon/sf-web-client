@@ -116,7 +116,19 @@ export class FinanceAccountComponent implements OnInit, OnDestroy {
     }
 
     registerChangeInFinanceAccounts() {
-        this.eventSubscriber = this.eventManager.subscribe('financeAccountListModification', (response) => this.loadAll());
+        this.eventSubscriber = this.eventManager.subscribe('financeAccountListModification', (response) => {
+            if(!response.data){
+                this.loadAll();
+                return;
+            }
+
+            if(response.data.action === 'financeAccountDeleted'){
+                let account: FinanceAccount  = response.data.item;
+                this.financeAccounts = this.financeAccounts.filter(value => {
+                    return value.id != account.id;
+                });
+            }
+        });
     }
 
     sort() {

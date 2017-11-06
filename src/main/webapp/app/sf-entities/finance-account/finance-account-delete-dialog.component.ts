@@ -31,7 +31,13 @@ export class FinanceAccountDeleteDialogComponent {
         this.financeAccountService.delete(id).subscribe((response) => {
             this.eventManager.broadcast({
                 name: 'financeAccountListModification',
-                content: 'Deleted an financeAccount'
+                content: 'Deleted an financeAccount',
+                data: { action: "financeAccountDeleted", item: this.financeAccount}
+            });
+            this.eventManager.broadcast({
+                name: 'financeAccountDetailModification',
+                content: 'Deleted an financeAccount',
+                data: { action: "financeAccountDeleted", item: this.financeAccount}
             });
             this.activeModal.dismiss(true);
         });

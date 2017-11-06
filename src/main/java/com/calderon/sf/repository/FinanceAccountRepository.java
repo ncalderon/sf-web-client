@@ -22,4 +22,6 @@ public interface FinanceAccountRepository extends JpaRepository<FinanceAccount, 
     @Query("select finance_account from FinanceAccount finance_account where finance_account.user.login = ?#{principal.username} and finance_account.accountStatus = 'ACTIVE'")
     Page<FinanceAccount> findByUserIsCurrentUserAndAccountStatusIsActive(Pageable pageable);
 
+    @Query("select finance_account from FinanceAccount finance_account where finance_account.user.login = ?#{principal.username} and finance_account.id = ?1")
+    FinanceAccount findOneByIdAndUserIsCurrentUser(Long id);
 }

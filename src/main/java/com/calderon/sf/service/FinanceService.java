@@ -130,11 +130,12 @@ public class FinanceService {
     }
 
     public FinanceAccount findAccount(Long id) {
-        return accountRepository.findOne(id);
+        return accountRepository.findOneByIdAndUserIsCurrentUser(id);
     }
 
-
+    @Transactional
     public void deleteAccount(Long id) {
+        tranRepository.deleteByFinanceAccount_Id(id);
         accountRepository.delete(id);
     }
 
