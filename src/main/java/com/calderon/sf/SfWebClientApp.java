@@ -6,6 +6,7 @@ import com.calderon.sf.service.io.StorageProperties;
 import io.github.jhipster.config.JHipsterConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.MetricFilterAutoConfiguration;
 import org.springframework.boot.actuate.autoconfigure.MetricRepositoryAutoConfiguration;
@@ -64,6 +65,7 @@ public class SfWebClientApp {
      */
     public static void main(String[] args) throws UnknownHostException {
         SpringApplication app = new SpringApplication(SfWebClientApp.class);
+        app.setBannerMode(Banner.Mode.OFF);
         DefaultProfileUtil.addDefaultProfile(app);
         Environment env = app.run(args).getEnvironment();
         String protocol = "http";
