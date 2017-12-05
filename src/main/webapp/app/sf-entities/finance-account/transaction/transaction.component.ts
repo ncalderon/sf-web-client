@@ -131,10 +131,10 @@ export class TransactionComponent implements OnInit, OnDestroy {
     registerChangeInAccountTransactions() {
         this.eventSubscriber = this.eventManager.subscribe('transactionListModification', (response) => {
 
-            if(!response.data)
+            if (!response.data)
                 this.loadAll();
 
-            if(response.data.action === "transactionDeleted"){
+            if (response.data.action === "transactionDeleted") {
                 this.transactions = this.transactions.filter(value => {
                     return value.id != response.data.item.id;
                 });
@@ -174,34 +174,33 @@ export class TransactionComponent implements OnInit, OnDestroy {
         );
     }
 
-    mapToTranCriteria(filterObj: any): any{
+    mapToTranCriteria(filterObj: any): any {
         let tranCriteria = {};
         this.filterObj["dateRange"] = this.dateRange;
-        if (filterObj.dateRange && filterObj.dateRange.length>0){
-            tranCriteria["startDate"]=filterObj.dateRange[0];
-            tranCriteria["endDate"]=filterObj.dateRange[1];
+        if (filterObj.dateRange && filterObj.dateRange.length > 0) {
+            tranCriteria["startDate"] = filterObj.dateRange[0];
+            tranCriteria["endDate"] = filterObj.dateRange[1];
         }
-        if (filterObj.description.length>0){
-            tranCriteria["desc"]=filterObj.description;
+        if (filterObj.description.length > 0) {
+            tranCriteria["desc"] = filterObj.description;
         }
-        if (filterObj.amount != null){
-            if(filterObj.operator>0){
-                tranCriteria["startAmount"]=filterObj.amount;
+        if (filterObj.amount != null) {
+            if (filterObj.operator > 0) {
+                tranCriteria["startAmount"] = filterObj.amount;
             }
             else {
-                tranCriteria["endAmount"]=filterObj.amount;
+                tranCriteria["endAmount"] = filterObj.amount;
             }
         }
         return tranCriteria;
     }
 
-    onDateRangeShown(): any{
+    onDateRangeShown(): any {
         this.hidePagingDiv = true;
     }
 
-    onDateRangeHidden(): any{
+    onDateRangeHidden(): any {
         this.hidePagingDiv = false;
     }
-
 
 }

@@ -105,11 +105,20 @@
                 <td>{{transaction.postDate | date:'mediumDate'}}</td>
                 <td>
                     <div *ngIf="transaction.tranCategory">
-                        <a [routerLink]="['../../tran-category', transaction.tranCategory?.id ]">{{transaction.tranCategory?.name}}</a>
+                        <!--<a [routerLink]="['../../tran-category', transaction.tranCategory?.id, 'edit' ]">{{transaction.tranCategory?.name}}</a>-->
+                        <a
+                            [routerLink]="['/', { outlets: { popup: ['tran-category', transaction.tranCategory?.id, 'edit']} }]"
+                        >{{transaction.tranCategory?.name}}</a>
                     </div>
                 </td>
                 <td jhiTranslate="{{'sfWebClientApp.TranType.' + transaction.tranType}}">{{transaction.tranType}}</td>
-                <td><a [routerLink]="['./transaction', transaction.id ]">{{transaction.description}}</a></td>
+                <td>
+                    <!--[routerLink]="['./transaction', transaction.id ]"-->
+                    <a
+                        [routerLink]="['/', { outlets: { popup: ['finance-account', currentAccount.id, 'transaction', transaction.id, 'edit']} }]"
+                    >{{transaction.description}}</a>
+                </td>
+
                 <td class="text-right">{{transaction.amount | currency:'USD':true:'2.2-2'}}</td>
                 <td class="text-right">{{transaction.createdDate | date:'short'}}</td>
                 <td class="text-right">

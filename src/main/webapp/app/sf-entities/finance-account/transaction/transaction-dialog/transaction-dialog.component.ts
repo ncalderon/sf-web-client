@@ -147,15 +147,12 @@ export class TransactionDialogComponent implements OnInit {
     template: ''
 })
 export class TransactionPopupComponent implements OnInit, OnDestroy {
-
     routeSub: any;
-
     constructor(private route: ActivatedRoute,
                 private accountTransactionPopupService: TransactionPopupService) {
     }
 
     ngOnInit() {
-
         this.routeSub = this.route.params.subscribe((params) => {
             if (params['id']) {
                 this.accountTransactionPopupService

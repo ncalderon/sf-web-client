@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { FinanceAccount } from './finance-account.model';
 import { FinanceAccountService } from './finance-account.service';
-import {AccountTransaction} from "../account-transaction/account-transaction.model";
+import {AccountTransaction} from '../account-transaction/account-transaction.model';
 
 @Component({
     selector: 'jhi-finance-account-detail',
@@ -21,7 +22,9 @@ export class FinanceAccountDetailComponent implements OnInit, OnDestroy {
     constructor(
         private eventManager: JhiEventManager,
         private financeAccountService: FinanceAccountService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private router: Router,
+        private location: Location
     ) {
     }
 
@@ -38,7 +41,7 @@ export class FinanceAccountDetailComponent implements OnInit, OnDestroy {
         });
     }
     previousState() {
-        window.history.back();
+        this.router.navigate(['finance-account']);
     }
 
     ngOnDestroy() {
@@ -50,7 +53,7 @@ export class FinanceAccountDetailComponent implements OnInit, OnDestroy {
         this.eventSubscriber = this.eventManager.subscribe(
             'financeAccountListModification',
             (response) => {
-                if(!response.data)
+                if (!response.data)
                     this.load(this.financeAccount.id)
 
             }
@@ -59,10 +62,10 @@ export class FinanceAccountDetailComponent implements OnInit, OnDestroy {
             'transactionListModification'
             , (response) => {
 
-                if(!response.data)
+                if (!response.data)
                     return;
 
-                if(response.data.action === 'transactionDeleted'){
+                if (response.data.action === 'transactionDeleted'){
                     let tran: AccountTransaction  = response.data.item;
                     this.financeAccount.balance = this.financeAccount.balance - tran.amount;
                 }
