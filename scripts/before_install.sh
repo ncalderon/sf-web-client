@@ -3,4 +3,4 @@ openssl aes-256-cbc -K $encrypted_a08d1d0bac4b_key -iv $encrypted_a08d1d0bac4b_i
 tar xvf s-travis.tar
 chmod +x mvnw
 chmod +x install.sh
-chmod +x deploy.sh
+exit 0
