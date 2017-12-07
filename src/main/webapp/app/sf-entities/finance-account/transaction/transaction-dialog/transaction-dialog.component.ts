@@ -93,7 +93,11 @@ export class TransactionDialogComponent implements OnInit {
     }
 
     private onSaveSuccess(result: AccountTransaction) {
-        this.eventManager.broadcast({name: 'transactionListModification', content: 'OK'});
+        this.eventManager.broadcast({
+            name: 'transactionListModification'
+            , content: 'OK'
+            , data: { action: this.transaction.id === undefined ? 'transactionCreated' : 'transactionSaved', item: result}
+        });
         this.isSaving = false;
         this.activeModal.dismiss(result);
     }

@@ -18,7 +18,7 @@
 
         <!--section - status-->
         <div class="form-row">
-            <div class="form-group col-md-12">
+            <div class="form-group col col-auto">
                 <div class="btn-group">
                     <label [ngClass]="getInactiveStatusClass()" name="accountStatus"
                            [(ngModel)]="financeAccount.accountStatus" btnRadio="INACTIVE">{{'sfWebClientApp.AccountStatus.INACTIVE'
@@ -33,6 +33,15 @@
                            jhiTranslate="entity.validation.required">
                         This field is required.
                     </small>
+                </div>
+            </div>
+            <div class="form-group col col-auto align-self-end">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="isCreditCard"
+                               [(ngModel)]="financeAccount.isCreditCard"/>{{'sfWebClientApp.financeAccount.isCreditCard'
+                        | translate}}
+                    </label>
                 </div>
             </div>
         </div>
@@ -79,14 +88,26 @@
         </div>
 
         <div class="form-row">
-            <div class="form-group col-md-12">
-                <div class="form-check">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" name="isCreditCard"
-                               [(ngModel)]="financeAccount.isCreditCard"/>{{'sfWebClientApp.financeAccount.isCreditCard'
-                        | translate}}
-                    </label>
+            <div class="form-group col-md-6">
+                <label class="form-control-label" jhiTranslate="sfWebClientApp.financeAccount.description"
+                       for="field_description">Description</label>
+                <input type="text" class="form-control" name="description" id="field_description"
+                       [(ngModel)]="financeAccount.description" maxlength="256"/>
+                <div
+                    [hidden]="!(editForm.controls.description?.dirty && editForm.controls.description?.invalid)">
+                    <small class="form-text text-danger"
+                           [hidden]="!editForm.controls.description?.errors?.maxlength"
+                           jhiTranslate="entity.validation.maxlength" translateValues="{ max: 256 }">
+                        This field cannot be longer than 256 characters.
+                    </small>
                 </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="form-control-label" jhiTranslate="sfWebClientApp.financeAccount.balance"
+                       for="field_balance">Balance</label>
+                <input type="number" class="form-control" name="balance" id="field_balance"
+                       [disabled]="financeAccount.id"
+                       [(ngModel)]="financeAccount.balance"/>
             </div>
         </div>
 
@@ -125,29 +146,6 @@
                                     class="fa fa-calendar"></i></button>
                             </span>
                         </div>
-                    </div>
-                </div>
-                <div class="form-row collapse" role="tabpanel"
-                     [ngClass]="getDetailsCollapseClass()">
-                    <div class="form-group col-md-6">
-                        <label class="form-control-label" jhiTranslate="sfWebClientApp.financeAccount.description"
-                               for="field_description">Description</label>
-                        <input type="text" class="form-control" name="description" id="field_description"
-                               [(ngModel)]="financeAccount.description" maxlength="256"/>
-                        <div
-                            [hidden]="!(editForm.controls.description?.dirty && editForm.controls.description?.invalid)">
-                            <small class="form-text text-danger"
-                                   [hidden]="!editForm.controls.description?.errors?.maxlength"
-                                   jhiTranslate="entity.validation.maxlength" translateValues="{ max: 256 }">
-                                This field cannot be longer than 256 characters.
-                            </small>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label class="form-control-label" jhiTranslate="sfWebClientApp.financeAccount.balance"
-                               for="field_balance">Balance</label>
-                        <input type="number" class="form-control" name="balance" id="field_balance"
-                               [(ngModel)]="financeAccount.balance"/>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {AccountTransaction} from '../../account-transaction/account-transaction.model';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {AccountTransaction, TranType} from '../../account-transaction/account-transaction.model';
 import {Subscription} from 'rxjs/Subscription';
 import {JhiAlertService, JhiEventManager, JhiPaginationUtil, JhiParseLinks} from 'ng-jhipster';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -19,6 +19,9 @@ import {ENTER_LEAVE_ANIMATION} from '../../../shared/animation/enter-leave-anima
 export class TransactionComponent implements OnInit, OnDestroy {
 
     accountId: number;
+    @Output()
+    onRefreshBalance = new EventEmitter<any>();
+
     @Input()
     currentAccount: FinanceAccount;
     transactions: AccountTransaction[];
@@ -130,16 +133,41 @@ export class TransactionComponent implements OnInit, OnDestroy {
 
     registerChangeInAccountTransactions() {
         this.eventSubscriber = this.eventManager.subscribe('transactionListModification', (response) => {
-
-            if (!response.data)
+            console.log('****** transactionListModification *******');
+            console.log(response);
+            if (!response.data) {
                 this.loadAll();
-
-            if (response.data.action === "transactionDeleted") {
-                this.transactions = this.transactions.filter(value => {
-                    return value.id != response.data.item.id;
-                });
+                return;
             }
+
+            switch (response.data.action) {
+                case 'transactionDeleted':
+                    this.transactions = this.transactions.filter((value) => {
+                        return value.id !== response.data.item.id;
+                    });
+                    break;
+                case 'transactionCreated':
+                    this.transactions.push(response.data.item);
+                    break;
+                case 'transactionSaved':
+                    const idx = this.transactions.findIndex((item) => {
+                        return item.id === response.data.item.id;
+                    });
+                    if (idx > -1)
+                        this.transactions[idx] = response.data.item;
+                    break;
+            }
+            this.onRefreshBalance.next(this.calcBalance());
         });
+    }
+
+    private calcBalance(): number {
+        return this.transactions.map((value: AccountTransaction) => {
+            if (value.tranType === <TranType><any>'EXPENSE')
+                return -Math.abs(value.amount);
+            else
+                return value.amount;
+        }).reduce((accumulator, currentValue) => accumulator + currentValue);
     }
 
     sort() {
@@ -163,7 +191,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
     }
 
     onFilterClick() {
-        this.logger.info("****** On Filter click *****");
+        this.logger.info('****** On Filter click *****');
         this.accountService.queryTransactionsBy(this.accountId, {
             page: this.page - 1,
             size: this.itemsPerPage,
@@ -175,21 +203,21 @@ export class TransactionComponent implements OnInit, OnDestroy {
     }
 
     mapToTranCriteria(filterObj: any): any {
-        let tranCriteria = {};
-        this.filterObj["dateRange"] = this.dateRange;
+        const tranCriteria = {};
+        this.filterObj['dateRange'] = this.dateRange;
         if (filterObj.dateRange && filterObj.dateRange.length > 0) {
-            tranCriteria["startDate"] = filterObj.dateRange[0];
-            tranCriteria["endDate"] = filterObj.dateRange[1];
+            tranCriteria['startDate'] = filterObj.dateRange[0];
+            tranCriteria['endDate'] = filterObj.dateRange[1];
         }
         if (filterObj.description.length > 0) {
-            tranCriteria["desc"] = filterObj.description;
+            tranCriteria['desc'] = filterObj.description;
         }
         if (filterObj.amount != null) {
             if (filterObj.operator > 0) {
-                tranCriteria["startAmount"] = filterObj.amount;
+                tranCriteria['startAmount'] = filterObj.amount;
             }
             else {
-                tranCriteria["endAmount"] = filterObj.amount;
+                tranCriteria['endAmount'] = filterObj.amount;
             }
         }
         return tranCriteria;

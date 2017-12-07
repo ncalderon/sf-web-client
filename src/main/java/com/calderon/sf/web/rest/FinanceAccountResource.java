@@ -27,6 +27,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * REST controller for managing FinanceAccount.
@@ -59,7 +60,7 @@ public class FinanceAccountResource {
         if (financeAccount.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new financeAccount cannot already have an ID")).body(null);
         }
-        FinanceAccount result = financeService.saveAccount(financeAccount);
+        FinanceAccount result = financeService.saveAccount(financeAccount, true);
         return ResponseEntity.created(new URI("/api/finance-accounts/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);

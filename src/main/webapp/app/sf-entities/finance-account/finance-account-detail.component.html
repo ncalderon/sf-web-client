@@ -80,5 +80,5 @@
     </dl>
 </div>
 <hr>
-<jhi-transaction *ngIf="financeAccount" [currentAccount]="financeAccount"></jhi-transaction>
+<jhi-transaction *ngIf="financeAccount" [currentAccount]="financeAccount" (onRefreshBalance)="refreshBalance($event)"></jhi-transaction>
 <router-outlet name="popup_child"></router-outlet>
