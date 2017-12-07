@@ -4,6 +4,7 @@ import com.calderon.sf.domain.AccountTransaction;
 import com.calderon.sf.domain.FinanceAccount;
 import com.calderon.sf.domain.enumeration.PaymentMethod;
 import com.calderon.sf.domain.enumeration.TranType;
+import com.calderon.sf.domain.projections.Transaction;
 import com.calderon.sf.repository.AccountTransactionRepository;
 import com.calderon.sf.repository.FinanceAccountRepository;
 import com.querydsl.core.types.Predicate;
@@ -15,7 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 public class FinanceService {
@@ -39,10 +42,6 @@ public class FinanceService {
         return tranRepository.findAll(predicate, page);
     }
 
-    /*public Page<AccountTransaction> findTransactionBy(Long accountId, Pageable page, Predicate predicate){
-        return tranRepository.findByUserIsCurrentUserAndFinanceAccount_Id(accountId, page, predicate);
-    }*/
-
     public Page<AccountTransaction> findTransactionBy(FinanceAccount account, Pageable pageable){
         return tranRepository.findByUserIsCurrentUserAndFinanceAccount_Id(account.getId(), pageable);
     }
@@ -62,52 +61,64 @@ public class FinanceService {
     @Transactional
     public AccountTransaction saveTransaction(AccountTransaction tran){
         FinanceAccount account = tran.getFinanceAccount();
-        account.setBalance(calcNewBalance(account.getBalance(), tran.getAmount(), tran.getTranType()== TranType.INCOME));
+        if(tran.getId() != null) {
+            BigDecimal oldAmount = new BigDecimal(0);
+            AccountTransaction currentTran = this.tranRepository.findOne(tran.getId());
+            if(currentTran.getTranType() == TranType.INCOME)
+                oldAmount = currentTran.getAmount().negate();
+            else
+                oldAmount = currentTran.getAmount();
+            account.setBalance(account.getBalance().add(oldAmount));
+        }
         AccountTransaction transaction = tranRepository.save(tran);
-        accountRepository.save(account);
+        updateBalanceAccount(account, Stream.of(transaction));
         return transaction;
     }
 
-    private BigDecimal calcNewBalance(BigDecimal currentBalance, BigDecimal tranValue, boolean isIncomeType){
-        if (isIncomeType)
-            return currentBalance.add(tranValue);
-        else
-            return currentBalance.subtract(tranValue);
+    private void updateBalanceAccount(FinanceAccount account, AccountTransaction transaction){
+        updateBalanceAccount(account, Stream.of(transaction));
+    }
+
+    private void updateBalanceAccount(FinanceAccount account, List<AccountTransaction> transactions){
+        updateBalanceAccount(account, transactions.stream());
+    }
+
+    private void updateBalanceAccount(FinanceAccount account, Stream<AccountTransaction> transactions){
+        BigDecimal currentBalance = account.getBalance();
+        account.setBalance(transactions.map((t) -> {
+            if(t.getTranType()== TranType.INCOME)
+                return t.getAmount();
+            else
+                return t.getAmount().negate();
+        }).reduce(currentBalance, BigDecimal::add));
+        saveAccount(account);
     }
 
     @Transactional
     public List<AccountTransaction> saveTransactions(List<AccountTransaction> transactions) {
-        FinanceAccount account = transactions.get(0).getFinanceAccount();
-        transactions.stream().forEach(tran -> {
-            account.setBalance(calcNewBalance(account.getBalance(), tran.getAmount(), tran.getTranType()== TranType.INCOME));
-        });
-        List<AccountTransaction> transactionPersited = tranRepository.save(transactions);
-        accountRepository.save(account);
-        return transactionPersited;
+        List<AccountTransaction> transactionSaved = tranRepository.save(transactions);
+        updateBalanceAccount(transactions.get(0).getFinanceAccount(), transactions);
+        return transactionSaved;
     }
 
     @Transactional
     public void deleteTransaction(Long id) {
         AccountTransaction tran = tranRepository.getOne(id);
-        FinanceAccount account = tran.getFinanceAccount();
-        account.setBalance(calcNewBalance(account.getBalance(), tran.getAmount(), tran.getTranType()== TranType.INCOME));
         tranRepository.delete(id);
-        accountRepository.save(account);
+        tran.setAmount(tran.getAmount().negate());
+        updateBalanceAccount(tran.getFinanceAccount(), tran);
     }
 
     public FinanceAccount saveAccount(FinanceAccount account) {
-        return saveAccount(account, true);
+        return saveAccount(account, false);
     }
 
     public FinanceAccount saveAccount(FinanceAccount account, boolean createDefaultTrans){
-        FinanceAccount persistedAccount = accountRepository.save(account);
-        if(createDefaultTrans)
-            saveTransactions(createDefaultTransactions(persistedAccount));
-        return persistedAccount;
+        return saveAccounts(Arrays.asList(account), createDefaultTrans).get(0);
     }
 
     public List<FinanceAccount> saveAccounts(List<FinanceAccount> accounts){
-        return saveAccounts(accounts, true);
+        return saveAccounts(accounts);
     }
 
     public List<FinanceAccount> saveAccounts(List<FinanceAccount> accounts, boolean createDefaultTrans){
@@ -121,7 +132,16 @@ public class FinanceService {
 
     private List<AccountTransaction> createDefaultTransactions(FinanceAccount account){
         List<AccountTransaction> transactions = new ArrayList<>();
-        transactions.add(new AccountTransaction().amount(new BigDecimal(0)).description("Initial Balance").paymentMethod(PaymentMethod.UNSPECIFIED).postDate(LocalDate.now()).tranType(TranType.INCOME).user(account.getUser()).financeAccount(account));
+        transactions.add(
+            new AccountTransaction()
+                .amount(account.getBalance())
+                .description("Initial Balance")
+                .paymentMethod(PaymentMethod.UNSPECIFIED)
+                .postDate(LocalDate.now())
+                .tranType(TranType.INCOME)
+                .user(account.getUser())
+                .financeAccount(account));
+        account.setBalance(new BigDecimal(0));
         return transactions;
     }
 
