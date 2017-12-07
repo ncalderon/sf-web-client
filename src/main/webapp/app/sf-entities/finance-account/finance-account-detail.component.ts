@@ -6,7 +6,6 @@ import {JhiEventManager} from 'ng-jhipster';
 
 import {FinanceAccount} from './finance-account.model';
 import {FinanceAccountService} from './finance-account.service';
-import {AccountTransaction, TranType} from '../account-transaction/account-transaction.model';
 
 @Component({
     selector: 'jhi-finance-account-detail',
@@ -34,8 +33,11 @@ export class FinanceAccountDetailComponent implements OnInit, OnDestroy {
     }
 
     load(id) {
+
         this.financeAccountService.find(id).subscribe((financeAccount) => {
             this.financeAccount = financeAccount;
+        }, error => {
+            this.router.navigate(['finance-account']);
         });
     }
 
@@ -52,8 +54,16 @@ export class FinanceAccountDetailComponent implements OnInit, OnDestroy {
         this.eventSubscriber = this.eventManager.subscribe(
             'financeAccountListModification',
             (response) => {
-                if (!response.data)
-                    this.load(this.financeAccount.id)
+                if (!response.data) {
+                    this.load(this.financeAccount.id);
+                    return;
+                }
+
+                switch (response.data.action) {
+                    case 'transactionDeleted':
+                        if (this.financeAccount.id === response.data.item.id)
+                            this.router.navigate(['/', 'finance-account'], {relativeTo: this.route.parent});
+                }
 
             }
         );

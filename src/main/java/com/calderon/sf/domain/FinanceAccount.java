@@ -60,7 +60,7 @@ public class FinanceAccount extends AbstractAuditingEntity implements Serializab
     @Column(name = "closing_date")
     private LocalDate closingDate;
 
-    @OneToMany(mappedBy = "financeAccount")
+    @OneToMany(mappedBy = "financeAccount", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<AccountTransaction> accountTransactions = new HashSet<>();
