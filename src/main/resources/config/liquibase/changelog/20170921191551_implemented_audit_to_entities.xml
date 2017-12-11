@@ -6,6 +6,9 @@
     <!--
         Added audit columns to entities.
     -->
+    <property name="now" value="now()" dbms="h2"/>
+    <property name="now" value="now()" dbms="mysql"/>
+
     <changeSet id="20170921190851-1" author="nathaniel">
         <addColumn tableName="bank">
             <column name="created_by" type="varchar(50)">
