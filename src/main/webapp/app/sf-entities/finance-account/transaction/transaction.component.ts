@@ -167,7 +167,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
                 return -Math.abs(value.amount);
             else
                 return value.amount;
-        }).reduce((accumulator, currentValue) => accumulator + currentValue);
+        }).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
     }
 
     sort() {
