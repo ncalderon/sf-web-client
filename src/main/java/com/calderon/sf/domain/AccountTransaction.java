@@ -64,6 +64,10 @@ public class AccountTransaction extends AbstractAuditingEntity implements Serial
     @ManyToOne
     private TranCategory tranCategory;
 
+    @NotNull
+    @Column(name = "currency_value", precision=10, scale=2, nullable = false)
+    private BigDecimal currencyValue;
+
     // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -204,6 +208,20 @@ public class AccountTransaction extends AbstractAuditingEntity implements Serial
     }
     // jhipster-needle-entity-add-getters-setters - Jhipster will add getters and setters here, do not remove
 
+
+    public BigDecimal getCurrencyValue() {
+        return currencyValue;
+    }
+
+    public AccountTransaction currencyValue(BigDecimal currencyValue) {
+        this.currencyValue = currencyValue;
+        return this;
+    }
+
+    public void setCurrencyValue(BigDecimal currencyValue) {
+        this.currencyValue = currencyValue;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -235,6 +253,7 @@ public class AccountTransaction extends AbstractAuditingEntity implements Serial
             ", description='" + getDescription() + "'" +
             ", amount='" + getAmount() + "'" +
             ", paymentMethod='" + getPaymentMethod() + "'" +
+            ", currencyValue='" + getCurrencyValue() + "'" +
             "}";
     }
 }

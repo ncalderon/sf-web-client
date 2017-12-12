@@ -3,7 +3,9 @@ package com.calderon.sf.service;
 import com.calderon.sf.config.Constants;
 import com.calderon.sf.domain.Authority;
 import com.calderon.sf.domain.User;
+import com.calderon.sf.domain.UserDetail;
 import com.calderon.sf.repository.AuthorityRepository;
+import com.calderon.sf.repository.CurrencyRepository;
 import com.calderon.sf.repository.UserRepository;
 import com.calderon.sf.security.AuthoritiesConstants;
 import com.calderon.sf.security.SecurityUtils;
@@ -46,12 +48,15 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, SocialService socialService, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    private final CurrencyRepository currencyRepository;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, SocialService socialService, AuthorityRepository authorityRepository, CacheManager cacheManager, CurrencyRepository currencyRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.socialService = socialService;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
+        this.currencyRepository = currencyRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -113,6 +118,9 @@ public class UserService {
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         authorities.add(authority);
         newUser.setAuthorities(authorities);
+        UserDetail userDetail = new UserDetail();
+        userDetail.setCurrency(currencyRepository.findOneByIsDefaultIsTrue());
+        newUser.setUserDetail(userDetail);
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;
@@ -142,6 +150,9 @@ public class UserService {
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
         user.setActivated(true);
+        UserDetail userDetail = new UserDetail();
+        userDetail.setCurrency(currencyRepository.findOneByIsDefaultIsTrue());
+        user.setUserDetail(userDetail);
         userRepository.save(user);
         log.debug("Created Information for User: {}", user);
         return user;

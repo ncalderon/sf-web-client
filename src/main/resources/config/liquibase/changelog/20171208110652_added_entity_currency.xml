@@ -11,7 +11,7 @@
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <property name="jsonType" value="CLOB" dbms="h2"/>
-    <property name="jsonType" value="json" dbms="mysql"/>
+    <property name="jsonType" value="TEXT" dbms="mysql"/>
     <!--
         Added the entity Currency.
     -->
@@ -43,14 +43,11 @@
             <column name="last_modified_date" type="timestamp"/>
         </createTable>
 
-        <createTable tableName="user_details">
+        <createTable tableName="user_detail">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="user_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-            <column name="base_currency" type="bigint">
+            <column name="base_currency_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="created_by" type="varchar(50)">
@@ -62,6 +59,12 @@
             <column name="last_modified_by" type="varchar(50)"/>
             <column name="last_modified_date" type="timestamp"/>
         </createTable>
+
+        <addColumn tableName="jhi_user">
+            <column name="user_detail_id" type="bigint">
+                <constraints nullable="true"></constraints>
+            </column>
+        </addColumn>
 
         <addColumn tableName="finance_account">
             <column name="currency_code" type="varchar(64)" defaultValue="DOP">
@@ -75,15 +78,15 @@
             </column>
         </addColumn>
 
-        <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="user_details"
-                                 constraintName="fk_user_details_user_id"
+        <addForeignKeyConstraint baseColumnNames="user_detail_id"
+                                 baseTableName="jhi_user"
+                                 constraintName="fk_jhi_user_detail_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
+                                 referencedTableName="user_detail"/>
 
-        <addForeignKeyConstraint baseColumnNames="base_currency"
-                                 baseTableName="user_details"
-                                 constraintName="fk_user_details_base_currency"
+        <addForeignKeyConstraint baseColumnNames="base_currency_id"
+                                 baseTableName="user_detail"
+                                 constraintName="fk_user_detail_base_currency_id"
                                  referencedColumnNames="id"
                                  referencedTableName="currency"/>
 

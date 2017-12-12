@@ -14,10 +14,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A user.
@@ -92,6 +89,13 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
+
+    @OneToOne(optional = false, cascade = {CascadeType.ALL}, orphanRemoval = true)
+    private UserDetail userDetail;
+
+    @OneToMany(cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    @JsonIgnore
+    private List<FinanceAccount> accounts = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -197,6 +201,28 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.authorities = authorities;
     }
 
+    public UserDetail getUserDetail() {
+        return userDetail;
+    }
+
+    public void setUserDetail(UserDetail userDetail) {
+        this.userDetail = userDetail;
+    }
+
+    public List<FinanceAccount> getAccounts() {
+        return accounts;
+    }
+
+    public User accounts(List<FinanceAccount> accounts) {
+        this.accounts = accounts;
+        return this;
+    }
+
+    public void setAccounts(List<FinanceAccount> accounts) {
+        this.accounts = accounts;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -226,6 +252,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
             ", activated='" + activated + '\'' +
             ", langKey='" + langKey + '\'' +
             ", activationKey='" + activationKey + '\'' +
+            ", userDetail='" + userDetail + '\'' +
             "}";
     }
 }

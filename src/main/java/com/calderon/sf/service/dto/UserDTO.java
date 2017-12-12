@@ -52,6 +52,8 @@ public class UserDTO {
 
     private Set<String> authorities;
 
+    private UserDetailDTO userDetail;
+
     public UserDTO() {
         // Empty constructor needed for Jackson.
     }
@@ -61,13 +63,13 @@ public class UserDTO {
             user.getEmail(), user.getActivated(), user.getImageUrl(), user.getLangKey(),
             user.getCreatedBy(), user.getCreatedDate(), user.getLastModifiedBy(), user.getLastModifiedDate(),
             user.getAuthorities().stream().map(Authority::getName)
-                .collect(Collectors.toSet()));
+                .collect(Collectors.toSet()), user.);
     }
 
     public UserDTO(Long id, String login, String firstName, String lastName,
         String email, boolean activated, String imageUrl, String langKey,
         String createdBy, Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
-        Set<String> authorities) {
+        Set<String> authorities, UserDetailDTO userDetail) {
 
         this.id = id;
         this.login = login;
@@ -148,6 +150,14 @@ public class UserDTO {
         return authorities;
     }
 
+    public UserDetailDTO getUserDetail() {
+        return userDetail;
+    }
+
+    public void setUserDetail(UserDetailDTO userDetail) {
+        this.userDetail = userDetail;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
@@ -163,6 +173,7 @@ public class UserDTO {
             ", lastModifiedBy='" + lastModifiedBy + '\'' +
             ", lastModifiedDate=" + lastModifiedDate +
             ", authorities=" + authorities +
+            ", userDetail=" + userDetail +
             "}";
     }
 }
