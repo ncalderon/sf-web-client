@@ -47,6 +47,7 @@ public class UserMapper {
             if(authorities != null) {
                 user.setAuthorities(authorities);
             }
+            user.setUserDetail(userDTO.getUserDetail());
             return user;
         }
     }

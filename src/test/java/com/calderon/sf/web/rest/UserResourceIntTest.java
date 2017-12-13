@@ -2,7 +2,10 @@ package com.calderon.sf.web.rest;
 
 import com.calderon.sf.SfWebClientApp;
 import com.calderon.sf.domain.Authority;
+import com.calderon.sf.domain.Currency;
 import com.calderon.sf.domain.User;
+import com.calderon.sf.domain.UserDetail;
+import com.calderon.sf.repository.CurrencyRepository;
 import com.calderon.sf.repository.UserRepository;
 import com.calderon.sf.security.AuthoritiesConstants;
 import com.calderon.sf.service.MailService;
@@ -76,6 +79,8 @@ public class UserResourceIntTest {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CurrencyRepository currencyRepository;
 
     @Autowired
     private MailService mailService;
@@ -145,6 +150,9 @@ public class UserResourceIntTest {
         // Create the User
         Set<String> authorities = new HashSet<>();
         authorities.add("ROLE_USER");
+        Currency currency = currencyRepository.findOneByIsDefaultIsTrue();
+        UserDetail userDetail = new UserDetail();
+        userDetail.setCurrency(currency);
         ManagedUserVM managedUserVM = new ManagedUserVM(
             null,
             DEFAULT_LOGIN,

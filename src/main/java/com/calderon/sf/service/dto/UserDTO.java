@@ -3,6 +3,7 @@ package com.calderon.sf.service.dto;
 import com.calderon.sf.config.Constants;
 import com.calderon.sf.domain.Authority;
 import com.calderon.sf.domain.User;
+import com.calderon.sf.domain.UserDetail;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -52,7 +53,7 @@ public class UserDTO {
 
     private Set<String> authorities;
 
-    private UserDetailDTO userDetail;
+    private UserDetail userDetail;
 
     public UserDTO() {
         // Empty constructor needed for Jackson.
@@ -63,13 +64,13 @@ public class UserDTO {
             user.getEmail(), user.getActivated(), user.getImageUrl(), user.getLangKey(),
             user.getCreatedBy(), user.getCreatedDate(), user.getLastModifiedBy(), user.getLastModifiedDate(),
             user.getAuthorities().stream().map(Authority::getName)
-                .collect(Collectors.toSet()), user.);
+                .collect(Collectors.toSet()), user.getUserDetail());
     }
 
     public UserDTO(Long id, String login, String firstName, String lastName,
         String email, boolean activated, String imageUrl, String langKey,
         String createdBy, Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
-        Set<String> authorities, UserDetailDTO userDetail) {
+        Set<String> authorities, UserDetail userDetail) {
 
         this.id = id;
         this.login = login;
@@ -84,6 +85,7 @@ public class UserDTO {
         this.lastModifiedBy = lastModifiedBy;
         this.lastModifiedDate = lastModifiedDate;
         this.authorities = authorities;
+        this.userDetail = userDetail;
     }
 
     public Long getId() {
@@ -150,11 +152,11 @@ public class UserDTO {
         return authorities;
     }
 
-    public UserDetailDTO getUserDetail() {
+    public UserDetail getUserDetail() {
         return userDetail;
     }
 
-    public void setUserDetail(UserDetailDTO userDetail) {
+    public void setUserDetail(UserDetail userDetail) {
         this.userDetail = userDetail;
     }
 
