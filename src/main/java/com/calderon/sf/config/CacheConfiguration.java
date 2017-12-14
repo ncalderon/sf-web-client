@@ -39,8 +39,10 @@ public class CacheConfiguration {
         return cm -> {
             cm.createCache("users", jcacheConfiguration);
             cm.createCache(com.calderon.sf.domain.User.class.getName(), jcacheConfiguration);
+            cm.createCache(com.calderon.sf.domain.UserDetail.class.getName(), jcacheConfiguration);
             cm.createCache(com.calderon.sf.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(com.calderon.sf.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            cm.createCache(com.calderon.sf.domain.UserDetail.class.getName() + ".userDetail", jcacheConfiguration);
             cm.createCache(com.calderon.sf.domain.SocialUserConnection.class.getName(), jcacheConfiguration);
             cm.createCache(com.calderon.sf.domain.Bank.class.getName(), jcacheConfiguration);
             cm.createCache(com.calderon.sf.domain.TranCategory.class.getName(), jcacheConfiguration);
@@ -50,6 +52,8 @@ public class CacheConfiguration {
             cm.createCache(com.calderon.sf.domain.AccountTransaction.class.getName(), jcacheConfiguration);
             cm.createCache(com.calderon.sf.domain.FinanceAccount.class.getName(), jcacheConfiguration);
             cm.createCache(com.calderon.sf.domain.FinanceAccount.class.getName() + ".accountTransactions", jcacheConfiguration);
+            cm.createCache(com.calderon.sf.domain.Currency.class.getName(), jcacheConfiguration);
+
             // jhipster-needle-ehcache-add-entry
         };
     }

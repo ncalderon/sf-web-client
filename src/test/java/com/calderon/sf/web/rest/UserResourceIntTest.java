@@ -31,7 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -77,6 +76,8 @@ public class UserResourceIntTest {
     private static final String DEFAULT_LANGKEY = "en";
     private static final String UPDATED_LANGKEY = "fr";
 
+    private static final UserDetail DEFAULT_USER_DETAIL = new UserDetail();
+
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -116,6 +117,8 @@ public class UserResourceIntTest {
             .setControllerAdvice(exceptionTranslator)
             .setMessageConverters(jacksonMessageConverter)
             .build();
+        Currency currency = currencyRepository.findOneByIsDefaultIsTrue();
+        DEFAULT_USER_DETAIL.setCurrency(currency);
     }
 
     /**
@@ -134,6 +137,7 @@ public class UserResourceIntTest {
         user.setLastName(DEFAULT_LASTNAME);
         user.setImageUrl(DEFAULT_IMAGEURL);
         user.setLangKey(DEFAULT_LANGKEY);
+        user.setUserDetail(DEFAULT_USER_DETAIL);
         return user;
     }
 
@@ -150,9 +154,6 @@ public class UserResourceIntTest {
         // Create the User
         Set<String> authorities = new HashSet<>();
         authorities.add("ROLE_USER");
-        Currency currency = currencyRepository.findOneByIsDefaultIsTrue();
-        UserDetail userDetail = new UserDetail();
-        userDetail.setCurrency(currency);
         ManagedUserVM managedUserVM = new ManagedUserVM(
             null,
             DEFAULT_LOGIN,
@@ -167,7 +168,7 @@ public class UserResourceIntTest {
             null,
             null,
             null,
-            authorities);
+            authorities, DEFAULT_USER_DETAIL);
 
         restUserMockMvc.perform(post("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -207,7 +208,7 @@ public class UserResourceIntTest {
             null,
             null,
             null,
-            authorities);
+            authorities, DEFAULT_USER_DETAIL);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restUserMockMvc.perform(post("/api/users")
@@ -243,7 +244,7 @@ public class UserResourceIntTest {
             null,
             null,
             null,
-            authorities);
+            authorities, DEFAULT_USER_DETAIL);
 
         // Create the User
         restUserMockMvc.perform(post("/api/users")
@@ -279,7 +280,7 @@ public class UserResourceIntTest {
             null,
             null,
             null,
-            authorities);
+            authorities, DEFAULT_USER_DETAIL);
 
         // Create the User
         restUserMockMvc.perform(post("/api/users")
@@ -362,7 +363,7 @@ public class UserResourceIntTest {
             updatedUser.getCreatedDate(),
             updatedUser.getLastModifiedBy(),
             updatedUser.getLastModifiedDate(),
-            authorities);
+            authorities, updatedUser.getUserDetail());
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -406,7 +407,7 @@ public class UserResourceIntTest {
             updatedUser.getCreatedDate(),
             updatedUser.getLastModifiedBy(),
             updatedUser.getLastModifiedDate(),
-            authorities);
+            authorities, updatedUser.getUserDetail());
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -461,7 +462,8 @@ public class UserResourceIntTest {
             updatedUser.getCreatedDate(),
             updatedUser.getLastModifiedBy(),
             updatedUser.getLastModifiedDate(),
-            authorities);
+            authorities
+            ,updatedUser.getUserDetail());
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -505,7 +507,8 @@ public class UserResourceIntTest {
             updatedUser.getCreatedDate(),
             updatedUser.getLastModifiedBy(),
             updatedUser.getLastModifiedDate(),
-            authorities);
+            authorities
+            ,updatedUser.getUserDetail());
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -578,7 +581,9 @@ public class UserResourceIntTest {
             null,
             DEFAULT_LOGIN,
             null,
-            Stream.of(AuthoritiesConstants.USER).collect(Collectors.toSet()));
+            Stream.of(AuthoritiesConstants.USER).collect(Collectors.toSet()),
+            DEFAULT_USER_DETAIL
+        );
         User user = userMapper.userDTOToUser(userDTO);
         assertThat(user.getId()).isEqualTo(DEFAULT_ID);
         assertThat(user.getLogin()).isEqualTo(DEFAULT_LOGIN);
