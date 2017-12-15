@@ -2,8 +2,9 @@ package com.calderon.sf.service.dto;
 
 import com.calderon.sf.config.Constants;
 import com.calderon.sf.domain.Authority;
+import com.calderon.sf.domain.Currency;
 import com.calderon.sf.domain.User;
-import com.calderon.sf.domain.UserDetail;
+import com.calderon.sf.domain.Currency;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -53,7 +54,7 @@ public class UserDTO {
 
     private Set<String> authorities;
 
-    private UserDetail userDetail;
+    private Currency currency;
 
     public UserDTO() {
         // Empty constructor needed for Jackson.
@@ -64,13 +65,13 @@ public class UserDTO {
             user.getEmail(), user.getActivated(), user.getImageUrl(), user.getLangKey(),
             user.getCreatedBy(), user.getCreatedDate(), user.getLastModifiedBy(), user.getLastModifiedDate(),
             user.getAuthorities().stream().map(Authority::getName)
-                .collect(Collectors.toSet()), user.getUserDetail());
+                .collect(Collectors.toSet()), user.getCurrency());
     }
 
     public UserDTO(Long id, String login, String firstName, String lastName,
         String email, boolean activated, String imageUrl, String langKey,
         String createdBy, Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
-        Set<String> authorities, UserDetail userDetail) {
+        Set<String> authorities, Currency currency) {
 
         this.id = id;
         this.login = login;
@@ -85,7 +86,7 @@ public class UserDTO {
         this.lastModifiedBy = lastModifiedBy;
         this.lastModifiedDate = lastModifiedDate;
         this.authorities = authorities;
-        this.userDetail = userDetail;
+        this.currency = currency;
     }
 
     public Long getId() {
@@ -152,12 +153,12 @@ public class UserDTO {
         return authorities;
     }
 
-    public UserDetail getUserDetail() {
-        return userDetail;
+    public Currency getCurrency() {
+        return currency;
     }
 
-    public void setUserDetail(UserDetail userDetail) {
-        this.userDetail = userDetail;
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 
     @Override
@@ -175,7 +176,7 @@ public class UserDTO {
             ", lastModifiedBy='" + lastModifiedBy + '\'' +
             ", lastModifiedDate=" + lastModifiedDate +
             ", authorities=" + authorities +
-            ", userDetail=" + userDetail +
+            ", currency=" + currency +
             "}";
     }
 }

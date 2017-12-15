@@ -68,6 +68,11 @@ public class FinanceAccount extends AbstractAuditingEntity implements Serializab
     @ManyToOne
     private User user;
 
+    @NotNull
+    @Size(min = 4, max = 64)
+    @Column(name = "currency_code", length = 64, nullable = false)
+    private String currencyCode;
+
     // jhipster-needle-entity-add-field - Jhipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -114,6 +119,19 @@ public class FinanceAccount extends AbstractAuditingEntity implements Serializab
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
+    }
+
+    public FinanceAccount currencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
+        return this;
     }
 
     public String getDescription() {

@@ -1,6 +1,7 @@
 package com.calderon.sf.web.rest.vm;
 
-import com.calderon.sf.domain.UserDetail;
+import com.calderon.sf.domain.Currency;
+import com.calderon.sf.domain.Currency;
 import com.calderon.sf.service.dto.UserDTO;
 
 import javax.validation.constraints.Size;
@@ -26,10 +27,10 @@ public class ManagedUserVM extends UserDTO {
     public ManagedUserVM(Long id, String login, String password, String firstName, String lastName,
                          String email, boolean activated, String imageUrl, String langKey,
                          String createdBy, Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
-                         Set<String> authorities, UserDetail userDetail) {
+                         Set<String> authorities, Currency currency) {
 
         super(id, login, firstName, lastName, email, activated, imageUrl, langKey,
-            createdBy, createdDate, lastModifiedBy, lastModifiedDate,  authorities, userDetail);
+            createdBy, createdDate, lastModifiedBy, lastModifiedDate,  authorities, currency);
 
         this.password = password;
     }

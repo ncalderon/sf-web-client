@@ -4,7 +4,6 @@ import com.calderon.sf.SfWebClientApp;
 import com.calderon.sf.domain.Authority;
 import com.calderon.sf.domain.Currency;
 import com.calderon.sf.domain.User;
-import com.calderon.sf.domain.UserDetail;
 import com.calderon.sf.repository.CurrencyRepository;
 import com.calderon.sf.repository.UserRepository;
 import com.calderon.sf.security.AuthoritiesConstants;
@@ -76,7 +75,7 @@ public class UserResourceIntTest {
     private static final String DEFAULT_LANGKEY = "en";
     private static final String UPDATED_LANGKEY = "fr";
 
-    private static final UserDetail DEFAULT_USER_DETAIL = new UserDetail();
+    private static Currency DEFAULT_CURRENCY;
 
     @Autowired
     private UserRepository userRepository;
@@ -117,8 +116,7 @@ public class UserResourceIntTest {
             .setControllerAdvice(exceptionTranslator)
             .setMessageConverters(jacksonMessageConverter)
             .build();
-        Currency currency = currencyRepository.findOneByIsDefaultIsTrue();
-        DEFAULT_USER_DETAIL.setCurrency(currency);
+        DEFAULT_CURRENCY = currencyRepository.findOneByIsDefaultIsTrue();
     }
 
     /**
@@ -137,7 +135,7 @@ public class UserResourceIntTest {
         user.setLastName(DEFAULT_LASTNAME);
         user.setImageUrl(DEFAULT_IMAGEURL);
         user.setLangKey(DEFAULT_LANGKEY);
-        user.setUserDetail(DEFAULT_USER_DETAIL);
+        user.setCurrency(DEFAULT_CURRENCY);
         return user;
     }
 
@@ -168,7 +166,7 @@ public class UserResourceIntTest {
             null,
             null,
             null,
-            authorities, DEFAULT_USER_DETAIL);
+            authorities, DEFAULT_CURRENCY);
 
         restUserMockMvc.perform(post("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -208,7 +206,7 @@ public class UserResourceIntTest {
             null,
             null,
             null,
-            authorities, DEFAULT_USER_DETAIL);
+            authorities, DEFAULT_CURRENCY);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restUserMockMvc.perform(post("/api/users")
@@ -244,7 +242,7 @@ public class UserResourceIntTest {
             null,
             null,
             null,
-            authorities, DEFAULT_USER_DETAIL);
+            authorities, DEFAULT_CURRENCY);
 
         // Create the User
         restUserMockMvc.perform(post("/api/users")
@@ -280,7 +278,7 @@ public class UserResourceIntTest {
             null,
             null,
             null,
-            authorities, DEFAULT_USER_DETAIL);
+            authorities, DEFAULT_CURRENCY);
 
         // Create the User
         restUserMockMvc.perform(post("/api/users")
@@ -363,7 +361,7 @@ public class UserResourceIntTest {
             updatedUser.getCreatedDate(),
             updatedUser.getLastModifiedBy(),
             updatedUser.getLastModifiedDate(),
-            authorities, updatedUser.getUserDetail());
+            authorities, updatedUser.getCurrency());
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -407,7 +405,7 @@ public class UserResourceIntTest {
             updatedUser.getCreatedDate(),
             updatedUser.getLastModifiedBy(),
             updatedUser.getLastModifiedDate(),
-            authorities, updatedUser.getUserDetail());
+            authorities, updatedUser.getCurrency());
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -463,7 +461,7 @@ public class UserResourceIntTest {
             updatedUser.getLastModifiedBy(),
             updatedUser.getLastModifiedDate(),
             authorities
-            ,updatedUser.getUserDetail());
+            ,updatedUser.getCurrency());
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -508,7 +506,7 @@ public class UserResourceIntTest {
             updatedUser.getLastModifiedBy(),
             updatedUser.getLastModifiedDate(),
             authorities
-            ,updatedUser.getUserDetail());
+            ,updatedUser.getCurrency());
 
         restUserMockMvc.perform(put("/api/users")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -582,7 +580,7 @@ public class UserResourceIntTest {
             DEFAULT_LOGIN,
             null,
             Stream.of(AuthoritiesConstants.USER).collect(Collectors.toSet()),
-            DEFAULT_USER_DETAIL
+            DEFAULT_CURRENCY
         );
         User user = userMapper.userDTOToUser(userDTO);
         assertThat(user.getId()).isEqualTo(DEFAULT_ID);

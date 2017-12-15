@@ -47,7 +47,7 @@ public class UserMapper {
             if(authorities != null) {
                 user.setAuthorities(authorities);
             }
-            user.setUserDetail(userDTO.getUserDetail());
+            user.setCurrency(userDTO.getCurrency());
             return user;
         }
     }

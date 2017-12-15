@@ -4,7 +4,6 @@ import com.calderon.sf.SfWebClientApp;
 import com.calderon.sf.domain.Authority;
 import com.calderon.sf.domain.Currency;
 import com.calderon.sf.domain.User;
-import com.calderon.sf.domain.UserDetail;
 import com.calderon.sf.repository.AuthorityRepository;
 import com.calderon.sf.repository.CurrencyRepository;
 import com.calderon.sf.repository.UserRepository;
@@ -54,7 +53,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = SfWebClientApp.class)
 public class AccountResourceIntTest {
 
-    private static final UserDetail DEFAULT_USER_DETAIL = new UserDetail();
+    private static Currency DEFAULT_CURRENCY;
 
     @Autowired
     private UserRepository userRepository;
@@ -99,8 +98,7 @@ public class AccountResourceIntTest {
             .setMessageConverters(httpMessageConverters)
             .build();
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(accountUserMockResource).build();
-        Currency currency = currencyRepository.findOneByIsDefaultIsTrue();
-        DEFAULT_USER_DETAIL.setCurrency(currency);
+        DEFAULT_CURRENCY = currencyRepository.findOneByIsDefaultIsTrue();
     }
 
     @Test
@@ -180,7 +178,7 @@ public class AccountResourceIntTest {
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER))
-            ,DEFAULT_USER_DETAIL);
+            ,DEFAULT_CURRENCY);
 
         restMvc.perform(
             post("/api/register")
@@ -210,7 +208,7 @@ public class AccountResourceIntTest {
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER))
-            ,DEFAULT_USER_DETAIL);
+            ,DEFAULT_CURRENCY);
 
         restUserMockMvc.perform(
             post("/api/register")
@@ -240,7 +238,7 @@ public class AccountResourceIntTest {
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER))
-            ,DEFAULT_USER_DETAIL
+            ,DEFAULT_CURRENCY
             );
 
         restUserMockMvc.perform(
@@ -271,7 +269,7 @@ public class AccountResourceIntTest {
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER))
-            ,DEFAULT_USER_DETAIL);
+            ,DEFAULT_CURRENCY);
 
         restUserMockMvc.perform(
             post("/api/register")
@@ -301,7 +299,7 @@ public class AccountResourceIntTest {
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER))
-            ,DEFAULT_USER_DETAIL);
+            ,DEFAULT_CURRENCY);
 
         restUserMockMvc.perform(
             post("/api/register")
@@ -332,11 +330,11 @@ public class AccountResourceIntTest {
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER))
-            ,DEFAULT_USER_DETAIL);
+            ,DEFAULT_CURRENCY);
 
         // Duplicate login, different email
         ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(), validUser.getLogin(), validUser.getPassword(), validUser.getFirstName(), validUser.getLastName(),
-            "alicejr@example.com", true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate(), validUser.getAuthorities(),DEFAULT_USER_DETAIL);
+            "alicejr@example.com", true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate(), validUser.getAuthorities(),DEFAULT_CURRENCY);
 
         // Good user
         restMvc.perform(
@@ -374,11 +372,11 @@ public class AccountResourceIntTest {
             null,                   // createdDate
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
-            new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),DEFAULT_USER_DETAIL);
+            new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),DEFAULT_CURRENCY);
 
         // Duplicate email, different login
         ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(), "johnjr", validUser.getPassword(), validUser.getLogin(), validUser.getLastName(),
-            validUser.getEmail(), true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate(), validUser.getAuthorities(),DEFAULT_USER_DETAIL);
+            validUser.getEmail(), true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), validUser.getLastModifiedDate(), validUser.getAuthorities(),DEFAULT_CURRENCY);
 
         // Good user
         restMvc.perform(
@@ -416,7 +414,7 @@ public class AccountResourceIntTest {
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN))
-            ,DEFAULT_USER_DETAIL);
+            ,DEFAULT_CURRENCY);
 
         restMvc.perform(
             post("/api/register")
@@ -483,7 +481,7 @@ public class AccountResourceIntTest {
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN))
-            ,DEFAULT_USER_DETAIL
+            ,DEFAULT_CURRENCY
         );
 
         restMvc.perform(
@@ -529,7 +527,7 @@ public class AccountResourceIntTest {
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN))
-            ,DEFAULT_USER_DETAIL
+            ,DEFAULT_CURRENCY
         );
 
         restMvc.perform(
@@ -575,7 +573,7 @@ public class AccountResourceIntTest {
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN))
-            ,DEFAULT_USER_DETAIL
+            ,DEFAULT_CURRENCY
         );
 
         restMvc.perform(
@@ -614,7 +612,7 @@ public class AccountResourceIntTest {
             null,                   // lastModifiedBy
             null,                   // lastModifiedDate
             new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN))
-            ,DEFAULT_USER_DETAIL
+            ,DEFAULT_CURRENCY
         );
 
         restMvc.perform(

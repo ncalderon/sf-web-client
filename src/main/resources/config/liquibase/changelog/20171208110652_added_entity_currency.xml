@@ -43,7 +43,7 @@
             <column name="last_modified_date" type="timestamp"/>
         </createTable>
 
-        <createTable tableName="user_detail">
+        <!--<createTable tableName="user_detail">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -58,10 +58,10 @@
             </column>
             <column name="last_modified_by" type="varchar(50)"/>
             <column name="last_modified_date" type="timestamp"/>
-        </createTable>
+        </createTable>-->
 
         <addColumn tableName="jhi_user">
-            <column name="user_detail_id" type="bigint">
+            <column name="currency_id" type="bigint">
                 <constraints nullable="true"></constraints>
             </column>
         </addColumn>
@@ -78,15 +78,9 @@
             </column>
         </addColumn>
 
-        <addForeignKeyConstraint baseColumnNames="user_detail_id"
+        <addForeignKeyConstraint baseColumnNames="currency_id"
                                  baseTableName="jhi_user"
-                                 constraintName="fk_jhi_user_detail_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="user_detail"/>
-
-        <addForeignKeyConstraint baseColumnNames="base_currency_id"
-                                 baseTableName="user_detail"
-                                 constraintName="fk_user_detail_base_currency_id"
+                                 constraintName="fk_jhi_user_currency_id"
                                  referencedColumnNames="id"
                                  referencedTableName="currency"/>
 
@@ -99,8 +93,20 @@
         </loadData>
 
         <update tableName="currency">
-            <column name="is_default" type="bit" value="1"></column>
+            <column name="is_default" type="bit" valueNumeric="1"></column>
             <where>name = 'DOP'</where>
         </update>
+
+        <!--<update tableName="finance_account">
+            <column name="currency_code" value="DOP"></column>
+        </update>-->
+
+        <sql
+             endDelimiter="\nGO"
+             splitStatements="true"
+             stripComments="true">update JHI_USER set CURRENCY_ID = (select ID from CURRENCY where IS_DEFAULT = 1)
+            <comment>Set default currency to all accounts</comment>
+        </sql>
+
     </changeSet>
 </databaseChangeLog>

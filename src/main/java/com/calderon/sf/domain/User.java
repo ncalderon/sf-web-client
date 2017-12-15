@@ -90,8 +90,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
 
-    @OneToOne(optional = false, cascade = {CascadeType.ALL}, orphanRemoval = true)
-    private UserDetail userDetail;
+    @ManyToOne(optional = false)
+    private Currency currency;
 
     @OneToMany(cascade = {CascadeType.REMOVE}, orphanRemoval = true)
     @JsonIgnore
@@ -201,12 +201,12 @@ public class User extends AbstractAuditingEntity implements Serializable {
         this.authorities = authorities;
     }
 
-    public UserDetail getUserDetail() {
-        return userDetail;
+    public Currency getCurrency() {
+        return currency;
     }
 
-    public void setUserDetail(UserDetail userDetail) {
-        this.userDetail = userDetail;
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 
     public List<FinanceAccount> getAccounts() {
@@ -252,7 +252,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
             ", activated='" + activated + '\'' +
             ", langKey='" + langKey + '\'' +
             ", activationKey='" + activationKey + '\'' +
-            ", userDetail='" + userDetail + '\'' +
+            ", currency='" + currency + '\'' +
             "}";
     }
 }
