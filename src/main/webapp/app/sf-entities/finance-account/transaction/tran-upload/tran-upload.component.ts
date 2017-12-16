@@ -79,7 +79,7 @@ export class TranUploadComponent implements OnInit, OnDestroy {
         this.searcher = new Searcher();
         this.searcher.onSearch = (term: string) => {
             return this.OnSearch(term.toLocaleLowerCase());
-        }
+        };
         this.uploader = new FileUploader(
             {
                 url: 'api/account-transactions/upload',
@@ -93,7 +93,12 @@ export class TranUploadComponent implements OnInit, OnDestroy {
         this.uploader.onBuildItemForm = (fileItem: FileItem, form: any) => {
             this.onBuildItemForm(fileItem, form);
         };
+        this.uploader.onAfterAddingFile = (fileItem: FileItem) => {
+            setTimeout(() => {
+                this.upload();
+            }, 1);
 
+        };
         this.principal.identity().then((user) => {
             this.currentUser = user;
         });
@@ -202,6 +207,7 @@ export class TranUploadComponent implements OnInit, OnDestroy {
 
     clear() {
         this.logger.log('***Clear***');
+        this.transactionsObservables = Observable.of([]);
         this.transactions = [];
         this.account = null;
         this.uploader.clearQueue();

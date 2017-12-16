@@ -25,6 +25,7 @@
         <div class="col-sm-3">
             <div class="form-group">
                 <input name="descriptionFilter" class="form-control" placeholder="Description"
+                       (keyup.enter)="onFilterClick()"
                        [(ngModel)]="filterObj.description"
                 />
             </div>
@@ -35,6 +36,7 @@
                        type="text"
                        placeholder="MM/dd/yyyy"
                        bsDaterangepicker #dpr="bsDaterangepicker"
+                       (keyup.enter)="onFilterClick()"
                        (onShown)="onDateRangeShown()"
                        (onHidden)="onDateRangeHidden()"
                        [(ngModel)]="dateRange"
@@ -58,6 +60,7 @@
                     name="amount"
                    class="form-control"
                    placeholder="amount"
+                    (keyup.enter)="onFilterClick()"
                    [(ngModel)]="filterObj.amount"
                     #amount="ngModel"
             />
