@@ -38,6 +38,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
     predicate: any;
     previousPage: any;
     reverse: any;
+    loading = false;
     private subscription: Subscription;
 
     hidePagingDiv = false;
@@ -65,10 +66,16 @@ export class TransactionComponent implements OnInit, OnDestroy {
             this.previousPage = data['pagingParams'].page;
             this.reverse = data['pagingParams'].ascending;
             this.predicate = data['pagingParams'].predicate;
+            this.predicate = 'createdDate';
+            this.reverse = false;
         });
     }
 
     loadAll() {
+        if (this.loading)
+            return;
+
+        this.loading = true;
         if (!this.currentAccount) {
             this.accountService.find(this.accountId)
                 .subscribe((account) => {
@@ -117,8 +124,6 @@ export class TransactionComponent implements OnInit, OnDestroy {
         this.subscription = this.activatedRoute.params.subscribe((params) => {
             this.accountId = params['id'];
         });
-        this.predicate = 'createdDate';
-        this.reverse = false;
         this.loadAll();
         this.registerChangeInAccountTransactions();
     }
@@ -172,13 +177,14 @@ export class TransactionComponent implements OnInit, OnDestroy {
 
     sort() {
         const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
-        if (this.predicate !== 'id') {
+        /*if (this.predicate !== 'id') {
             result.push('id');
-        }
+        }*/
         return result;
     }
 
     private onSuccess(data, headers) {
+        this.loading = false;
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         this.queryCount = this.totalItems;
@@ -187,10 +193,14 @@ export class TransactionComponent implements OnInit, OnDestroy {
     }
 
     private onError(error) {
+        this.loading = false;
         this.alertService.error(error.message, null, null);
     }
 
     onFilterClick() {
+        if(this.loading)
+            return;
+        this.loading = true;
         this.logger.info('****** On Filter click *****');
         this.accountService.queryTransactionsBy(this.accountId, {
             page: this.page - 1,

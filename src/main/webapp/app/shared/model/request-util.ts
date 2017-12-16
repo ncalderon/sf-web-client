@@ -21,18 +21,21 @@ export const createQueryRequestOption = (req?: any, criteria?: any): BaseRequest
     if (req) {
         const urlParams: URLSearchParams = new URLSearchParams();
         const params = {};
-        params['page'] = req.page;
-        params['size'] = req.size;
+        urlParams.set('page', req.page);
+        urlParams.set('size', req.size);
+        /*params['page'] = req.page;
+        params['size'] = req.size;*/
         if (req.sort) {
-            params['sort'] = req.sort;
+            /*params['sort'] = req.sort;*/
+            urlParams.paramsMap.set('sort', req.sort);
         }
-        params['query'] = req.query;
+        /*params['query'] = req.query;*/
+        urlParams.set('query', req.query);
 
-
-        urlParams.set("pageable", JSON.stringify(params));
+        //urlParams.set("pageable", JSON.stringify(params));
         if(criteria){
             criteria["active"]=true;
-            urlParams.set("criteria", JSON.stringify(criteria));
+            urlParams.set("criteria", JSON.stringify(criteria) + "");
         }
         else
             //urlParams.set("criteria", JSON.stringify({"active": false, "startDate":"", "endDate":"","desc":"","startAmount":"","endAmount":""}));

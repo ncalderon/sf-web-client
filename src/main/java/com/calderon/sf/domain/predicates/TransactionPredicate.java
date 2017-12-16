@@ -15,7 +15,7 @@ public class TransactionPredicate {
         expression = AndOf(expression, qTransaction.user.login.eq(SecurityUtils.getCurrentUserLogin()));
         expression = AndOf(expression, qTransaction.financeAccount.id.eq(accountId));
         if(!Objects.isNull(tranCriteria.getDesc()) && !tranCriteria.getDesc().isEmpty())
-            expression = AndOf(expression, qTransaction.description.likeIgnoreCase(tranCriteria.getDesc()));
+            expression = AndOf(expression, qTransaction.description.startsWithIgnoreCase(tranCriteria.getDesc()));
 
         if(!Objects.isNull(tranCriteria.getStartDate()) && !Objects.isNull(tranCriteria.getStartDate()))
             expression = AndOf(expression, qTransaction.postDate.goe(tranCriteria.getStartDate()).and(qTransaction.postDate.loe(tranCriteria.getStartDate())));

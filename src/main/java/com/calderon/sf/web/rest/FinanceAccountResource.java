@@ -8,13 +8,18 @@ import com.calderon.sf.service.FinanceService;
 import com.calderon.sf.web.rest.util.HeaderUtil;
 import com.calderon.sf.web.rest.util.PaginationUtil;
 import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.core.JsonParser;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
+import jdk.nashorn.internal.parser.JSONParser;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -120,9 +125,16 @@ public class FinanceAccountResource {
     @GetMapping("/finance-accounts/{id}/transactions")
     @Timed
     /*@ApiParam(name = "criteria")*/
-    public ResponseEntity<List<AccountTransaction>> getTransactionsByAccountId(@PathVariable Long id, @ApiParam(name = "pageable") Pageable pageable, @RequestParam(name = "criteria", required = false) JSONObject criteriaJson) {
+    public ResponseEntity<List<AccountTransaction>> getTransactionsByAccountId(@PathVariable Long id, @RequestParam("criteria") String criteriaStr, Pageable pageable) {
         log.debug("REST request to get Transactions by Account : {}", id);
         Page<AccountTransaction> page;
+        JSONObject criteriaJson;
+        try {
+            criteriaJson = new JSONObject(criteriaStr);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            criteriaJson = new JSONObject();
+        }
         TransactionCriteria criteria = new TransactionCriteria(criteriaJson);
         if(criteria.isActive())
             page = financeService.findTransactionBy(TransactionPredicate.of(id, criteria), pageable);
