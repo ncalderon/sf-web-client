@@ -11,6 +11,7 @@ import com.querydsl.core.types.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @Service
+@Transactional(readOnly = true)
 public class FinanceService {
     private AccountTransactionRepository tranRepository;
     private FinanceAccountRepository accountRepository;
@@ -28,6 +30,18 @@ public class FinanceService {
     public FinanceService(AccountTransactionRepository tranRepository, FinanceAccountRepository accountRepository) {
         this.tranRepository = tranRepository;
         this.accountRepository = accountRepository;
+    }
+
+    public Page<FinanceAccount> findAccounts(Pageable pageable) {
+        return accountRepository.findAll(pageable);
+    }
+
+    public FinanceAccount findAccount(Long id) {
+        return accountRepository.findOne(id);
+    }
+
+    public Page<FinanceAccount> findAccountsByCurrentUserAndActive(Pageable pageable) {
+        return accountRepository.findByUserIsCurrentUserAndAccountStatusIsActive(pageable);
     }
 
     public List<AccountTransaction> findTransactionBy(Long accountId){
@@ -58,11 +72,11 @@ public class FinanceService {
         return tranRepository.findByUserIsCurrentUserAndFinanceAccount_IdIsInAndPostDateGreaterThanEqualAndPostDateLessThanEqual(accountId, start, end);
     }
 
-    @Transactional
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public AccountTransaction saveTransaction(AccountTransaction tran){
         FinanceAccount account = tran.getFinanceAccount();
         if(tran.getId() != null) {
-            BigDecimal oldAmount = new BigDecimal(0);
+            BigDecimal oldAmount;
             AccountTransaction currentTran = this.tranRepository.findOne(tran.getId());
             if(currentTran.getTranType() == TranType.INCOME)
                 oldAmount = currentTran.getAmount().negate();
@@ -94,19 +108,19 @@ public class FinanceService {
         saveAccount(account);
     }
 
-    @Transactional
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public List<AccountTransaction> saveTransactions(List<AccountTransaction> transactions) {
         List<AccountTransaction> transactionSaved = tranRepository.save(transactions);
-        updateBalanceAccount(transactions.get(0).getFinanceAccount(), transactions);
+        updateBalanceAccount(transactionSaved.get(0).getFinanceAccount(), transactionSaved);
         return transactionSaved;
     }
 
-    @Transactional
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void deleteTransaction(Long id) {
         AccountTransaction tran = tranRepository.getOne(id);
-        tranRepository.delete(id);
         tran.setAmount(tran.getAmount().negate());
         updateBalanceAccount(tran.getFinanceAccount(), tran);
+        tranRepository.delete(id);
     }
 
     public FinanceAccount saveAccount(FinanceAccount account) {
@@ -121,6 +135,7 @@ public class FinanceService {
         return saveAccounts(accounts);
     }
 
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public List<FinanceAccount> saveAccounts(List<FinanceAccount> accounts, boolean createDefaultTrans){
         List<FinanceAccount> persistedAccounts = accountRepository.save(accounts);
         persistedAccounts.forEach(account -> {
@@ -145,20 +160,8 @@ public class FinanceService {
         return transactions;
     }
 
-    public Page<FinanceAccount> findAccounts(Pageable pageable) {
-        return accountRepository.findAll(pageable);
-    }
-
-    public FinanceAccount findAccount(Long id) {
-        return accountRepository.findOne(id);
-    }
-
-
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void deleteAccount(Long id) {
         accountRepository.delete(id);
-    }
-
-    public Page<FinanceAccount> findAccountsByCurrentUserAndActive(Pageable pageable) {
-        return accountRepository.findByUserIsCurrentUserAndAccountStatusIsActive(pageable);
     }
 }
