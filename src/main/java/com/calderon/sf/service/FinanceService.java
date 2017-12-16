@@ -123,14 +123,17 @@ public class FinanceService {
         tranRepository.delete(id);
     }
 
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public FinanceAccount saveAccount(FinanceAccount account) {
         return saveAccount(account, false);
     }
 
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public FinanceAccount saveAccount(FinanceAccount account, boolean createDefaultTrans){
         return saveAccounts(Arrays.asList(account), createDefaultTrans).get(0);
     }
 
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public List<FinanceAccount> saveAccounts(List<FinanceAccount> accounts){
         return saveAccounts(accounts);
     }
