@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { JhiLanguageService } from 'ng-jhipster';
+import {JhiAlertService, JhiLanguageService} from 'ng-jhipster';
 
-import { Principal, AccountService, JhiLanguageHelper } from '../../shared';
+import {Principal, AccountService, JhiLanguageHelper, ResponseWrapper} from '../../shared';
+import {Currency, CurrencyService} from '../../sf-entities/currency';
 
 @Component({
     selector: 'jhi-settings',
@@ -12,11 +13,14 @@ export class SettingsComponent implements OnInit {
     success: string;
     settingsAccount: any;
     languages: any[];
+    currencies: Currency[];
 
     constructor(
         private account: AccountService,
+        private currencyService: CurrencyService,
         private principal: Principal,
         private languageService: JhiLanguageService,
+        private alertService: JhiAlertService,
         private languageHelper: JhiLanguageHelper
     ) {
     }
@@ -28,6 +32,7 @@ export class SettingsComponent implements OnInit {
         this.languageHelper.getAll().then((languages) => {
             this.languages = languages;
         });
+        this.currencyService.query().subscribe((res: ResponseWrapper) => { this.currencies = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     save() {
@@ -58,5 +63,9 @@ export class SettingsComponent implements OnInit {
             login: account.login,
             imageUrl: account.imageUrl
         };
+    }
+
+    private onError(error: any) {
+        this.alertService.error(error.message, null, null);
     }
 }
