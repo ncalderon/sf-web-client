@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AccountTransaction} from '../../../account-transaction/account-transaction.model';
-import {AccountTransactionService} from '../../../account-transaction/account-transaction.service';
+import {AccountTransaction} from '../../../../shared/sf-model/account-transaction.model';
+import {AccountTransactionService} from '../../../../shared/sf-services/account-transaction/account-transaction.service';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {JhiEventManager} from 'ng-jhipster';
 import {ActivatedRoute} from '@angular/router';

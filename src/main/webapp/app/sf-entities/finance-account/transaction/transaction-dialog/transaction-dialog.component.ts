@@ -1,19 +1,19 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TransactionPopupService} from '../transaction-popup.service';
-import {AccountTransaction} from '../../../account-transaction/account-transaction.model';
+import {AccountTransaction} from '../../../../shared/sf-model/account-transaction.model';
 import {User} from '../../../../shared/user/user.model';
-import {TranCategory} from '../../../tran-category/tran-category.model';
+import {TranCategory} from '../../../../shared/sf-model/tran-category.model';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {JhiAlertService, JhiEventManager} from 'ng-jhipster';
-import {AccountTransactionService} from '../../../account-transaction/account-transaction.service';
-import {FinanceAccountService} from '../../finance-account.service';
-import {TranCategoryService} from '../../../tran-category/tran-category.service';
+import {AccountTransactionService} from '../../../../shared/sf-services/account-transaction/account-transaction.service';
+import {FinanceAccountService} from '../../../../shared/sf-services/finance-account/finance-account.service';
+import {TranCategoryService} from '../../../../shared/sf-services/tran-category/tran-category.service';
 import {LoggerService} from '../../../../shared/logger/logger.service';
 import {ResponseWrapper} from '../../../../shared/model/response-wrapper.model';
 import {Observable} from 'rxjs/Observable';
-import {TranType} from '../../../../sf-entities/account-transaction/account-transaction.model';
-import {FinanceAccount} from '../../finance-account.model';
+import {TranType} from '../../../../shared/sf-model/account-transaction.model';
+import {FinanceAccount} from '../../../../shared/sf-model/finance-account.model';
 
 @Component({
     selector: 'jhi-transaction-dialog',

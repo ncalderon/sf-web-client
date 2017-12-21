@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { SfWebClientSharedModule } from '../../shared';
 import { SfWebClientAdminModule } from '../../admin/admin.module';
 import {
-    TranCategoryService,
     TranCategoryPopupService,
     TranCategoryComponent,
     TranCategoryDetailComponent,
@@ -46,7 +45,6 @@ const ENTITY_STATES = [
         TranCategoryDeletePopupComponent,
     ],
     providers: [
-        TranCategoryService,
         TranCategoryPopupService,
         TranCategoryResolvePagingParams,
     ],

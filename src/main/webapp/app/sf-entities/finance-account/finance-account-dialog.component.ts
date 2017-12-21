@@ -1,16 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Response } from '@angular/http';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Response} from '@angular/http';
 
-import { Observable } from 'rxjs/Rx';
-import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import {Observable} from 'rxjs/Rx';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {JhiAlertService, JhiEventManager} from 'ng-jhipster';
 
-import {AccountStatus, FinanceAccount} from './finance-account.model';
-import { FinanceAccountPopupService } from './finance-account-popup.service';
-import { FinanceAccountService } from './finance-account.service';
-import { User, UserService } from '../../shared';
-import { ResponseWrapper } from '../../shared';
+import {AccountStatus, FinanceAccount} from '../../shared/sf-model/finance-account.model';
+import {FinanceAccountPopupService} from './finance-account-popup.service';
+import {Principal, ResponseWrapper, User, UserService} from '../../shared';
+import {FinanceAccountService} from '../../shared/sf-services/finance-account';
 
 @Component({
     selector: 'jhi-finance-account-dialog',
@@ -26,19 +25,26 @@ export class FinanceAccountDialogComponent implements OnInit {
     closingDateDp: any;
     isDetailsCollapsed: boolean = true;
 
-    constructor(
-        public activeModal: NgbActiveModal,
-        private alertService: JhiAlertService,
-        private financeAccountService: FinanceAccountService,
-        private userService: UserService,
-        private eventManager: JhiEventManager
-    ) {
+    rate: any;
+    rates: any;
+
+    constructor(public activeModal: NgbActiveModal,
+                private alertService: JhiAlertService,
+                private financeAccountService: FinanceAccountService,
+                private userService: UserService,
+                private eventManager: JhiEventManager,
+                private principal: Principal) {
     }
 
     ngOnInit() {
         this.isSaving = false;
-        this.userService.query()
-            .subscribe((res: ResponseWrapper) => { this.users = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
+        if (this.principal.hasAuthority('ADMIN')) {
+            this.userService.query().subscribe((res: ResponseWrapper) => {
+                this.users = res.json;
+            }, (res: ResponseWrapper) => this.onError(res.json));
+        }
+
+
     }
 
     clear() {
@@ -62,7 +68,7 @@ export class FinanceAccountDialogComponent implements OnInit {
     }
 
     private onSaveSuccess(result: FinanceAccount) {
-        this.eventManager.broadcast({ name: 'financeAccountListModification', content: 'OK'});
+        this.eventManager.broadcast({name: 'financeAccountListModification', content: 'OK'});
         this.isSaving = false;
         this.activeModal.dismiss(result);
     }
@@ -111,14 +117,13 @@ export class FinanceAccountPopupComponent implements OnInit, OnDestroy {
 
     routeSub: any;
 
-    constructor(
-        private route: ActivatedRoute,
-        private financeAccountPopupService: FinanceAccountPopupService
-    ) {}
+    constructor(private route: ActivatedRoute,
+                private financeAccountPopupService: FinanceAccountPopupService) {
+    }
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
-            if ( params['id'] ) {
+            if (params['id']) {
                 this.financeAccountPopupService
                     .open(FinanceAccountDialogComponent as Component, params['id']);
             } else {

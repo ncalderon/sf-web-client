@@ -6,9 +6,9 @@ import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { TranCategoryRegex } from './tran-category-regex.model';
+import { TranCategoryRegex } from '../../shared/sf-model/tran-category-regex.model';
 import { TranCategoryRegexPopupService } from './tran-category-regex-popup.service';
-import { TranCategoryRegexService } from './tran-category-regex.service';
+import { TranCategoryRegexService } from '../../shared/sf-services/tran-category-regex/tran-category-regex.service';
 import { User, UserService } from '../../shared';
 import { ResponseWrapper } from '../../shared';
 

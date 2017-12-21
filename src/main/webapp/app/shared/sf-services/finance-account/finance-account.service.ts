@@ -1,17 +1,17 @@
 import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
-import {SERVER_API_URL} from '../../app.constants';
+import {SERVER_API_URL} from '../../../app.constants';
 
 import {JhiDateUtils} from 'ng-jhipster';
 
-import {FinanceAccount} from './finance-account.model';
-import {createRequestOption, ResponseWrapper} from '../../shared';
-import {AccountTransaction} from '../account-transaction/account-transaction.model';
+import {FinanceAccount} from '../../sf-model/finance-account.model';
+import {createRequestOption, ResponseWrapper} from '../../index';
+import {AccountTransaction} from '../../sf-model/account-transaction.model';
 import {HttpObserve} from '@angular/common/http/src/client';
 import {HttpParams} from '@angular/common/http';
-import {createQueryRequestOption} from "../../shared/model/request-util";
-import {DatetimeService} from "../../shared/datetime/datetime.service";
+import {createQueryRequestOption} from '../../model/request-util';
+import {DatetimeService} from '../../datetime/datetime.service';
 
 @Injectable()
 export class FinanceAccountService {

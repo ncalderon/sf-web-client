@@ -1,33 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { SERVER_API_URL } from '../../app.constants';
+import { SERVER_API_URL } from '../../../app.constants';
 
-import { Currency } from './currency.model';
-import { ResponseWrapper, createRequestOption } from '../../shared';
+import { TranCategoryRegex } from '../../sf-model/tran-category-regex.model';
+import { ResponseWrapper, createRequestOption } from '../../index';
 
 @Injectable()
-export class CurrencyService {
+export class TranCategoryRegexService {
 
-    private resourceUrl = SERVER_API_URL + 'api/currencies';
+    private resourceUrl = SERVER_API_URL + 'api/tran-category-regexes';
 
     constructor(private http: Http) { }
 
-    create(currency: Currency): Observable<Currency> {
-        const copy = this.convert(currency);
+    create(tranCategoryRegex: TranCategoryRegex): Observable<TranCategoryRegex> {
+        const copy = this.convert(tranCategoryRegex);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             return res.json();
         });
     }
 
-    update(currency: Currency): Observable<Currency> {
-        const copy = this.convert(currency);
+    update(tranCategoryRegex: TranCategoryRegex): Observable<TranCategoryRegex> {
+        const copy = this.convert(tranCategoryRegex);
         return this.http.put(this.resourceUrl, copy).map((res: Response) => {
             return res.json();
         });
     }
 
-    find(id: number): Observable<Currency> {
+    find(id: number): Observable<TranCategoryRegex> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
             return res.json();
         });
@@ -48,10 +48,8 @@ export class CurrencyService {
         return new ResponseWrapper(res.headers, jsonResponse, res.status);
     }
 
-    private convert(currency: Currency): any {
-        const copy: any = Object.assign({}, currency);
-        copy['default'] = JSON.stringify(copy.isDefault);
-        delete copy.isDefault;
+    private convert(tranCategoryRegex: TranCategoryRegex): TranCategoryRegex {
+        const copy: TranCategoryRegex = Object.assign({}, tranCategoryRegex);
         return copy;
     }
 }

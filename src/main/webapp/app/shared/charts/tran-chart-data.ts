@@ -1,4 +1,4 @@
-import {AccountTransaction, TranType} from '../../sf-entities/account-transaction/account-transaction.model';
+import {AccountTransaction, TranType} from '../sf-model/account-transaction.model';
 
 export class TranChartData {
 

@@ -1,8 +1,8 @@
 import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import {AccountStatus, FinanceAccount} from './finance-account.model';
-import { FinanceAccountService } from './finance-account.service';
+import {AccountStatus, FinanceAccount} from '../../shared/sf-model/finance-account.model';
+import { FinanceAccountService } from '../../shared/sf-services/finance-account/finance-account.service';
 import {LoggerService} from "../../shared/logger/logger.service";
 import {DatetimeService} from "../../shared/datetime/datetime.service";
 import {User} from "../../shared/user/user.model";

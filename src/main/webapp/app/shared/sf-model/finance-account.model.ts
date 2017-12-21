@@ -1,4 +1,5 @@
-import { BaseEntity, User } from './../../shared';
+import { BaseEntity, User } from '../index';
+import {Currency} from '../../sf-entities/currency/index';
 
 export const enum AccountStatus {
     'INACTIVE',
@@ -17,7 +18,8 @@ export class FinanceAccount implements BaseEntity {
         public dueDate?: any,
         public closingDate?: any,
         public accountTransactions?: BaseEntity[],
-        public user?: User,
+        public currencyCode?: string,
+        public user?: User
     ) {
         this.isCreditCard = false;
     }

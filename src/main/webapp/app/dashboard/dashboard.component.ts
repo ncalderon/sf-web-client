@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {FinanceAccount} from '../sf-entities/finance-account/finance-account.model';
+import {FinanceAccount} from '../shared/sf-model/finance-account.model';
 import {TranChartData} from '../shared/charts/tran-chart-data';
-import {AccountTransactionService} from '../sf-entities/account-transaction/account-transaction.service';
-import {FinanceAccountService} from '../sf-entities/finance-account/finance-account.service';
+import {AccountTransactionService} from '../shared/sf-services/account-transaction/account-transaction.service';
+import {FinanceAccountService} from '../shared/sf-services/finance-account/finance-account.service';
 import {LoggerService} from '../shared/logger/logger.service';
 import {Principal} from '../shared/auth/principal.service';
 import {JhiAlertService} from 'ng-jhipster';
-import {AccountTransaction} from '../sf-entities/account-transaction/account-transaction.model';
+import {AccountTransaction} from '../shared/sf-model/account-transaction.model';
 import {ResponseWrapper} from '../shared/model/response-wrapper.model';
 import {ENTER_LEAVE_ANIMATION} from '../shared/animation/enter-leave-animation';
 

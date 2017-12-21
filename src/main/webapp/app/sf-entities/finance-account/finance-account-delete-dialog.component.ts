@@ -4,9 +4,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { FinanceAccount } from './finance-account.model';
+import { FinanceAccount } from '../../shared/sf-model/finance-account.model';
 import { FinanceAccountPopupService } from './finance-account-popup.service';
-import { FinanceAccountService } from './finance-account.service';
+import { FinanceAccountService } from '../../shared/sf-services/finance-account/finance-account.service';
 
 @Component({
     selector: 'jhi-finance-account-delete-dialog',

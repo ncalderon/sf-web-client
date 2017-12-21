@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {JhiAlertService, JhiLanguageService} from 'ng-jhipster';
 
 import {Principal, AccountService, JhiLanguageHelper, ResponseWrapper} from '../../shared';
-import {Currency, CurrencyService} from '../../sf-entities/currency';
+import {Currency} from '../../sf-entities/currency';
+import {CurrencyService} from '../../shared/sf-services/currency';
 
 @Component({
     selector: 'jhi-settings',
@@ -31,6 +32,7 @@ export class SettingsComponent implements OnInit {
         });
         this.languageHelper.getAll().then((languages) => {
             this.languages = languages;
+            console.log(this.languages);
         });
         this.currencyService.query().subscribe((res: ResponseWrapper) => { this.currencies = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
@@ -61,7 +63,8 @@ export class SettingsComponent implements OnInit {
             langKey: account.langKey,
             lastName: account.lastName,
             login: account.login,
-            imageUrl: account.imageUrl
+            imageUrl: account.imageUrl,
+            currency: account.currency
         };
     }
 

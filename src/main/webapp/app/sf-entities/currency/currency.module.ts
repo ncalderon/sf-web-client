@@ -4,7 +4,6 @@ import { SfWebClientSharedModule } from '../../shared';
 import { SfWebClientAdminModule } from '../../admin/admin.module';
 import {
     Currency,
-    CurrencyService
 } from './';
 
 @NgModule({
@@ -18,7 +17,6 @@ import {
 
     ],
     providers: [
-        CurrencyService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

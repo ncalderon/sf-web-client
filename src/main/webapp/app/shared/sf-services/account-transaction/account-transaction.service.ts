@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Http, Response,  URLSearchParams} from '@angular/http';
 import {Observable} from 'rxjs/Rx';
-import {SERVER_API_URL} from '../../app.constants';
-import {AccountTransaction} from './account-transaction.model';
-import {createRequestOption, ResponseWrapper} from '../../shared';
+import {SERVER_API_URL} from '../../../app.constants';
+import {AccountTransaction} from '../../sf-model/account-transaction.model';
+import {createRequestOption, ResponseWrapper} from '../../index';
 import {JhiDateUtils} from 'ng-jhipster';
 
 @Injectable()

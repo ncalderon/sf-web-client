@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { SERVER_API_URL } from '../../app.constants';
+import { SERVER_API_URL } from '../../../app.constants';
 
-import { Bank } from './bank.model';
-import { ResponseWrapper, createRequestOption } from '../../shared';
+import { Bank } from '../../sf-model/bank.model';
+import { ResponseWrapper, createRequestOption } from '../../index';
 
 @Injectable()
 export class BankService {

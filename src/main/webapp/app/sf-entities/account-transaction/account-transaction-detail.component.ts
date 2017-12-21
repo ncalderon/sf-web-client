@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { AccountTransaction } from './account-transaction.model';
-import { AccountTransactionService } from './account-transaction.service';
+import { AccountTransaction } from '../../shared/sf-model/account-transaction.model';
+import {AccountTransactionService} from '../../shared/sf-services/account-transaction';
 
 @Component({
     selector: 'jhi-account-transaction-detail',

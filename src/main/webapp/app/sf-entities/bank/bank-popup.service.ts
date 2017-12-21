@@ -1,8 +1,8 @@
 import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Bank } from './bank.model';
-import { BankService } from './bank.service';
+import { Bank } from '../../shared/sf-model/bank.model';
+import { BankService } from '../../shared/sf-services/bank/bank.service';
 
 @Injectable()
 export class BankPopupService {

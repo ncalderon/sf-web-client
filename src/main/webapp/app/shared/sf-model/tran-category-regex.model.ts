@@ -1,4 +1,4 @@
-import { BaseEntity, User } from './../../shared';
+import { BaseEntity, User } from '../index';
 
 export class TranCategoryRegex implements BaseEntity {
     constructor(

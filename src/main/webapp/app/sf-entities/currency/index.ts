@@ -1,2 +1,1 @@
-export * from './currency.model';
-export * from './currency.service';
+export * from '../../shared/sf-model/currency.model';

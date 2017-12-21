@@ -6,15 +6,17 @@ import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import {AccountTransaction, TranType} from './account-transaction.model';
+import {AccountTransaction, TranType} from '../../shared/sf-model/account-transaction.model';
 import { AccountTransactionPopupService } from './account-transaction-popup.service';
-import { AccountTransactionService } from './account-transaction.service';
 import { User, UserService } from '../../shared';
-import { FinanceAccount, FinanceAccountService } from '../finance-account';
-import { TranCategory, TranCategoryService } from '../tran-category';
+import { FinanceAccount } from '../finance-account';
+import { TranCategory } from '../tran-category';
 import { ResponseWrapper } from '../../shared';
 import {Principal} from '../../shared/auth/principal.service';
 import {LoggerService} from '../../shared/logger/logger.service';
+import {AccountTransactionService} from '../../shared/sf-services/account-transaction';
+import {FinanceAccountService} from '../../shared/sf-services/finance-account/index';
+import {TranCategoryService} from '../../shared/sf-services/tran-category/index';
 
 @Component({
     selector: 'jhi-account-transaction-dialog',
@@ -33,7 +35,7 @@ export class AccountTransactionDialogComponent implements OnInit {
     trancategories: TranCategory[] = [];
     postDateDp: any;
 
-    isDetailsCollapsed: boolean = true;
+    isDetailsCollapsed = true;
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -61,15 +63,15 @@ export class AccountTransactionDialogComponent implements OnInit {
         this.financeAccountService.query()
             .subscribe((res: ResponseWrapper) => {
                 this.financeaccounts = res.json;
-                if(!this.accountTransaction.id)
-                    this.accountTransaction.financeAccount = this.financeaccounts.length > 0? this.financeaccounts[0]:this.accountTransaction.financeAccount;
+                if (!this.accountTransaction.id)
+                    this.accountTransaction.financeAccount = this.financeaccounts.length > 0 ? this.financeaccounts[0] : this.accountTransaction.financeAccount;
             }, (res: ResponseWrapper) => this.onError(res.json));
         this.tranCategoryService.query()
             .subscribe((res: ResponseWrapper) =>
             {
                 this.trancategories = res.json;
-                if(!this.accountTransaction.id)
-                    this.accountTransaction.tranCategory = this.trancategories.length > 0? this.trancategories[0]:this.accountTransaction.tranCategory;
+                if (!this.accountTransaction.id)
+                    this.accountTransaction.tranCategory = this.trancategories.length > 0 ? this.trancategories[0] : this.accountTransaction.tranCategory;
             }, (res: ResponseWrapper) => this.onError(res.json));
 
         this.loadDefaults();

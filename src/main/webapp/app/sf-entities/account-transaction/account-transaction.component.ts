@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 
-import { AccountTransaction } from './account-transaction.model';
-import { AccountTransactionService } from './account-transaction.service';
+import { AccountTransaction } from '../../shared/sf-model/account-transaction.model';
+import { AccountTransactionService } from '../../shared/sf-services/account-transaction/account-transaction.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 

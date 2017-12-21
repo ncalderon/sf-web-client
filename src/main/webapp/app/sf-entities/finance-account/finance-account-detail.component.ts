@@ -4,8 +4,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Rx';
 import {JhiEventManager} from 'ng-jhipster';
 
-import {FinanceAccount} from './finance-account.model';
-import {FinanceAccountService} from './finance-account.service';
+import {FinanceAccount} from '../../shared/sf-model/finance-account.model';
+import {FinanceAccountService} from '../../shared/sf-services/finance-account/finance-account.service';
 
 @Component({
     selector: 'jhi-finance-account-detail',

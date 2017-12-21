@@ -1,8 +1,8 @@
 import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { TranCategory } from './tran-category.model';
-import { TranCategoryService } from './tran-category.service';
+import { TranCategory } from '../../shared/sf-model/tran-category.model';
+import { TranCategoryService } from '../../shared/sf-services/tran-category/tran-category.service';
 import {Principal} from '../../shared/auth/principal.service';
 import {DatetimeService} from '../../shared/datetime/datetime.service';
 import {LoggerService} from '../../shared/logger/logger.service';

@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 
 import { SfWebClientSharedModule } from '../../shared';
 import {
-    BankService,
     BankPopupService,
     BankComponent,
     BankDetailComponent,
@@ -42,7 +41,6 @@ const ENTITY_STATES = [
         BankDeletePopupComponent,
     ],
     providers: [
-        BankService,
         BankPopupService,
         BankResolvePagingParams,
     ],

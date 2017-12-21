@@ -15,7 +15,7 @@ import {SfWebClientAdminModule} from '../../../admin/admin.module';
 import {RouterModule} from '@angular/router';
 import {FileUploadModule} from 'ng2-file-upload';
 import {SearchModule} from '../../../shared/search/search.module';
-import {AccountTransactionService} from '../../account-transaction/account-transaction.service';
+import {AccountTransactionService} from '../../../shared/sf-services/account-transaction/account-transaction.service';
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {TypeaheadModule} from 'ngx-bootstrap/typeahead';
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";

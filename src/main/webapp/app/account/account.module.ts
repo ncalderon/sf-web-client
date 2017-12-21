@@ -20,11 +20,13 @@ import {
     SocialAuthComponent,
     accountState
 } from './';
+import {SfWebClientCurrencyModule} from '../sf-entities/currency/currency.module';
 
 @NgModule({
     imports: [
         SfWebClientSharedModule,
-        RouterModule.forRoot(accountState, { useHash: true })
+        RouterModule.forRoot(accountState, { useHash: true }),
+        SfWebClientCurrencyModule
     ],
     declarations: [
         SocialRegisterComponent,

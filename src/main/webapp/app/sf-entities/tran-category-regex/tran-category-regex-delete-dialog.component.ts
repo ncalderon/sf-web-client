@@ -4,9 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { TranCategoryRegex } from './tran-category-regex.model';
+import { TranCategoryRegex } from '../../shared/sf-model/tran-category-regex.model';
 import { TranCategoryRegexPopupService } from './tran-category-regex-popup.service';
-import { TranCategoryRegexService } from './tran-category-regex.service';
+import { TranCategoryRegexService } from '../../shared/sf-services/tran-category-regex/tran-category-regex.service';
 
 @Component({
     selector: 'jhi-tran-category-regex-delete-dialog',

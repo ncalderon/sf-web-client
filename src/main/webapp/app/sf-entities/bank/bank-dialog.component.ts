@@ -6,9 +6,9 @@ import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { Bank } from './bank.model';
+import { Bank } from '../../shared/sf-model/bank.model';
 import { BankPopupService } from './bank-popup.service';
-import { BankService } from './bank.service';
+import { BankService } from '../../shared/sf-services/bank/bank.service';
 
 @Component({
     selector: 'jhi-bank-dialog',

@@ -1,8 +1,8 @@
 import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { TranCategoryRegex } from './tran-category-regex.model';
-import { TranCategoryRegexService } from './tran-category-regex.service';
+import { TranCategoryRegex } from '../../shared/sf-model/tran-category-regex.model';
+import { TranCategoryRegexService } from '../../shared/sf-services/tran-category-regex/tran-category-regex.service';
 
 @Injectable()
 export class TranCategoryRegexPopupService {

@@ -1,13 +1,13 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {AccountTransaction, TranType} from '../../account-transaction/account-transaction.model';
+import {AccountTransaction, TranType} from '../../../shared/sf-model/account-transaction.model';
 import {Subscription} from 'rxjs/Subscription';
 import {JhiAlertService, JhiEventManager, JhiPaginationUtil, JhiParseLinks} from 'ng-jhipster';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PaginationConfig} from '../../../blocks/config/uib-pagination.config';
 import {ITEMS_PER_PAGE} from '../../../shared/constants/pagination.constants';
 import {ResponseWrapper} from '../../../shared/model/response-wrapper.model';
-import {FinanceAccount} from '../finance-account.model';
-import {FinanceAccountService} from '../finance-account.service';
+import {FinanceAccount} from '../../../shared/sf-model/finance-account.model';
+import {FinanceAccountService} from '../../../shared/sf-services/finance-account/finance-account.service';
 import {LoggerService} from '../../../shared/logger/logger.service';
 import {ENTER_LEAVE_ANIMATION} from '../../../shared/animation/enter-leave-animation';
 

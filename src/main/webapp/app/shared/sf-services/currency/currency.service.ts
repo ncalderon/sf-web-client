@@ -1,33 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { SERVER_API_URL } from '../../app.constants';
+import { SERVER_API_URL } from '../../../app.constants';
 
-import { TranCategoryRegex } from './tran-category-regex.model';
-import { ResponseWrapper, createRequestOption } from '../../shared';
+import { Currency } from '../../sf-model/currency.model';
+import { ResponseWrapper, createRequestOption } from '../../index';
 
 @Injectable()
-export class TranCategoryRegexService {
+export class CurrencyService {
 
-    private resourceUrl = SERVER_API_URL + 'api/tran-category-regexes';
+    private resourceUrl = SERVER_API_URL + 'api/currencies';
 
     constructor(private http: Http) { }
 
-    create(tranCategoryRegex: TranCategoryRegex): Observable<TranCategoryRegex> {
-        const copy = this.convert(tranCategoryRegex);
+    create(currency: Currency): Observable<Currency> {
+        const copy = this.convert(currency);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             return res.json();
         });
     }
 
-    update(tranCategoryRegex: TranCategoryRegex): Observable<TranCategoryRegex> {
-        const copy = this.convert(tranCategoryRegex);
+    update(currency: Currency): Observable<Currency> {
+        const copy = this.convert(currency);
         return this.http.put(this.resourceUrl, copy).map((res: Response) => {
             return res.json();
         });
     }
 
-    find(id: number): Observable<TranCategoryRegex> {
+    find(id: number): Observable<Currency> {
         return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
             return res.json();
         });
@@ -48,8 +48,10 @@ export class TranCategoryRegexService {
         return new ResponseWrapper(res.headers, jsonResponse, res.status);
     }
 
-    private convert(tranCategoryRegex: TranCategoryRegex): TranCategoryRegex {
-        const copy: TranCategoryRegex = Object.assign({}, tranCategoryRegex);
+    private convert(currency: Currency): any {
+        const copy: any = Object.assign({}, currency);
+        copy['default'] = JSON.stringify(copy.isDefault);
+        delete copy.isDefault;
         return copy;
     }
 }

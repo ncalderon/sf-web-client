@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager, JhiParseLinks, JhiPaginationUtil, JhiLanguageService, JhiAlertService } from 'ng-jhipster';
 
-import { TranCategoryRegex } from './tran-category-regex.model';
-import { TranCategoryRegexService } from './tran-category-regex.service';
+import { TranCategoryRegex } from '../../shared/sf-model/tran-category-regex.model';
+import { TranCategoryRegexService } from '../../shared/sf-services/tran-category-regex/tran-category-regex.service';
 import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 

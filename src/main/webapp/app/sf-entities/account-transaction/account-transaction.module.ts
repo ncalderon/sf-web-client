@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { SfWebClientSharedModule } from '../../shared';
 import { SfWebClientAdminModule } from '../../admin/admin.module';
 import {
-    AccountTransactionService,
     AccountTransactionPopupService,
     AccountTransactionComponent,
     AccountTransactionDetailComponent,
@@ -51,7 +50,6 @@ const ENTITY_STATES = [
         TransactionUploadComponent
     ],
     providers: [
-        AccountTransactionService,
         AccountTransactionPopupService,
         AccountTransactionResolvePagingParams,
     ],

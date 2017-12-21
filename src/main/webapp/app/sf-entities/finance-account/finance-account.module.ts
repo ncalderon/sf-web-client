@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { SfWebClientSharedModule } from '../../shared';
 import { SfWebClientAdminModule } from '../../admin/admin.module';
 import {
-    FinanceAccountService,
     FinanceAccountPopupService,
     FinanceAccountComponent,
     FinanceAccountDetailComponent,
@@ -47,7 +46,6 @@ const ENTITY_STATES = [
         FinanceAccountDeletePopupComponent,
     ],
     providers: [
-        FinanceAccountService,
         FinanceAccountPopupService,
         FinanceAccountResolvePagingParams,
     ],

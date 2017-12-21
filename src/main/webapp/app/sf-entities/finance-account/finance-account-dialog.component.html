@@ -111,6 +111,17 @@
             </div>
         </div>
 
+        <div class="form-row">
+            <div class="form-group" *ngIf="currencies && currencies.length > 0">
+                <label for="currency">Base Currency</label>
+                <select class="form-control" id="currency" name="currency" [(ngModel)]="settingsAccount.currency">
+                    <option *ngFor="let currency of currencies"
+                            [ngValue]="currency.id === settingsAccount.currency?.id ? settingsAccount.currency : currency"
+                    >{{currency.name}}</option>
+                </select>
+            </div>
+        </div>
+
         <div id="detailAccordion" data-children=".item">
             <div class="item">
                 <a data-toggle="collapse" data-parent="#detailAccordion"

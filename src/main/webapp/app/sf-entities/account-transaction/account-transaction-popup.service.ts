@@ -1,8 +1,8 @@
 import { Injectable, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import {AccountTransaction, PaymentMethod, TranType} from './account-transaction.model';
-import { AccountTransactionService } from './account-transaction.service';
+import {AccountTransaction, PaymentMethod, TranType} from '../../shared/sf-model/account-transaction.model';
+import { AccountTransactionService } from '../../shared/sf-services/account-transaction/account-transaction.service';
 import {Principal} from '../../shared/auth/principal.service';
 import {User} from '../../shared/user/user.model';
 import {LoggerService} from '../../shared/logger/logger.service';

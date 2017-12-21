@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { TranCategoryRegex } from './tran-category-regex.model';
-import { TranCategoryRegexService } from './tran-category-regex.service';
+import { TranCategoryRegex } from '../../shared/sf-model/tran-category-regex.model';
+import { TranCategoryRegexService } from '../../shared/sf-services/tran-category-regex/tran-category-regex.service';
 
 @Component({
     selector: 'jhi-tran-category-regex-detail',

@@ -4,9 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { AccountTransaction } from './account-transaction.model';
+import { AccountTransaction } from '../../shared/sf-model/account-transaction.model';
 import { AccountTransactionPopupService } from './account-transaction-popup.service';
-import { AccountTransactionService } from './account-transaction.service';
+import { AccountTransactionService } from '../../shared/sf-services/account-transaction/account-transaction.service';
 
 @Component({
     selector: 'jhi-account-transaction-delete-dialog',

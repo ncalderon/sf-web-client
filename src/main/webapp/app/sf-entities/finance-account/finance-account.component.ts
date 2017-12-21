@@ -3,8 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Rx';
 import {JhiAlertService, JhiEventManager, JhiPaginationUtil, JhiParseLinks} from 'ng-jhipster';
 
-import {FinanceAccount} from './finance-account.model';
-import {FinanceAccountService} from './finance-account.service';
+import {FinanceAccount} from '../../shared/sf-model/finance-account.model';
+import {FinanceAccountService} from '../../shared/sf-services/finance-account/finance-account.service';
 import {ITEMS_PER_PAGE, Principal, ResponseWrapper} from '../../shared';
 import {PaginationConfig} from '../../blocks/config/uib-pagination.config';
 import {ENTER_LEAVE_ANIMATION} from '../../shared/animation/enter-leave-animation';

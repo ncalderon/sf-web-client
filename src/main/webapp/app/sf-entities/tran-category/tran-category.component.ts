@@ -3,8 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Rx';
 import {JhiAlertService, JhiEventManager, JhiPaginationUtil, JhiParseLinks} from 'ng-jhipster';
 
-import {TranCategory} from './tran-category.model';
-import {TranCategoryService} from './tran-category.service';
+import {TranCategory} from '../../shared/sf-model/tran-category.model';
+import {TranCategoryService} from '../../shared/sf-services/tran-category/tran-category.service';
 import {ITEMS_PER_PAGE, Principal, ResponseWrapper} from '../../shared';
 import {PaginationConfig} from '../../blocks/config/uib-pagination.config';
 import {Searcher} from '../../shared/search/searcher';
