@@ -23,7 +23,7 @@ export class FinanceAccountDialogComponent implements OnInit {
     users: User[];
     dueDateDp: any;
     closingDateDp: any;
-    isDetailsCollapsed: boolean = true;
+    isDetailsCollapsed = true;
 
     rate: any;
     rates: any;
@@ -43,8 +43,12 @@ export class FinanceAccountDialogComponent implements OnInit {
                 this.users = res.json;
             }, (res: ResponseWrapper) => this.onError(res.json));
         }
+        this.loadRates();
+    }
 
-
+    loadRates() {
+        this.rate = JSON.parse(this.financeAccount.user.currency.jsonVal);
+        this.rates = Object.keys(this.rate.rates);
     }
 
     clear() {

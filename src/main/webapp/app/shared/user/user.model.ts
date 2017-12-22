@@ -1,3 +1,5 @@
+import {Currency} from '../sf-model/currency.model';
+
 export class User {
     public id?: any;
     public login?: string;
@@ -12,6 +14,7 @@ export class User {
     public lastModifiedBy?: string;
     public lastModifiedDate?: Date;
     public password?: string;
+    public currency: Currency;
 
     constructor(
         id?: any,
@@ -26,7 +29,8 @@ export class User {
         createdDate?: Date,
         lastModifiedBy?: string,
         lastModifiedDate?: Date,
-        password?: string
+        password?: string,
+        currency?: Currency
     ) {
         this.id = id ? id : null;
         this.login = login ? login : null;
@@ -41,5 +45,6 @@ export class User {
         this.lastModifiedBy = lastModifiedBy ? lastModifiedBy : null;
         this.lastModifiedDate = lastModifiedDate ? lastModifiedDate : null;
         this.password = password ? password : null;
+        this.currency = currency ? currency : null;
     }
 }

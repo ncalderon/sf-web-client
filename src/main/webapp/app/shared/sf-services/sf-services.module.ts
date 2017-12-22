@@ -1,20 +1,10 @@
-import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {HttpModule} from '@angular/http';
-import {
-    TranCategoryService
-} from './';
+import {NgModule} from '@angular/core';
+import { SfBankModule, SfFinanceAccountModule, SfTranCategoryRegexModule, SfCurrencyModule, SfTranCategoryModule, SfAccountTransactionModule } from  './'
 
 @NgModule({
     imports: [
-        HttpModule,
-        CommonModule
+        SfBankModule, SfFinanceAccountModule, SfTranCategoryRegexModule, SfCurrencyModule, SfTranCategoryModule, SfAccountTransactionModule
     ],
-    declarations: [],
-    exports: [ ],
-    providers: [TranCategoryService],
-    entryComponents: [],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    exports: [SfBankModule, SfFinanceAccountModule, SfTranCategoryRegexModule, SfCurrencyModule, SfTranCategoryModule, SfAccountTransactionModule]
 })
-export class SfServicesModule {
-}
+export class SfServicesModule {}

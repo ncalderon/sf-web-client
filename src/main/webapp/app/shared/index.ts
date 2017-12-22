@@ -1,3 +1,5 @@
+export * from './sf-services/sf-services.module';
+
 export * from './constants/pagination.constants';
 export * from './alert/alert.component';
 export * from './alert/alert-error.component';
@@ -30,4 +32,3 @@ export * from './shared-common.module';
 export * from './shared.module';
 export * from './search/search.module';
 export * from './charts/sf-charts.module';
-export * from './sf-services/sf-services.module';

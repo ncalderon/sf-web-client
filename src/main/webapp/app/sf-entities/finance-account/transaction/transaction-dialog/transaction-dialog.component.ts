@@ -61,11 +61,7 @@ export class TransactionDialogComponent implements OnInit {
 
     load() {
         this.isSaving = false;
-        this.accountService.find(this.accountId)
-            .subscribe((account) => {
-                this.currentAccount = account;
-                this.transaction.financeAccount = account;
-            }, (res: ResponseWrapper) => this.onError(res.json));
+
         this.tranCategoryService.query()
             .subscribe((res: ResponseWrapper) => {
                 this.categories = res.json;
@@ -160,10 +156,10 @@ export class TransactionPopupComponent implements OnInit, OnDestroy {
         this.routeSub = this.route.params.subscribe((params) => {
             if (params['id']) {
                 this.accountTransactionPopupService
-                    .open(TransactionDialogComponent as Component, params['id']);
+                    .open(TransactionDialogComponent as Component, params['id'], params['id']);
             } else {
                 this.accountTransactionPopupService
-                    .open(TransactionDialogComponent as Component);
+                    .open(TransactionDialogComponent as Component, params['accountId']);
             }
         });
     }

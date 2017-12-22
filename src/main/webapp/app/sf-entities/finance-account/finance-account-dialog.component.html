@@ -112,12 +112,12 @@
         </div>
 
         <div class="form-row">
-            <div class="form-group" *ngIf="currencies && currencies.length > 0">
+            <div class="form-group col-md-6" *ngIf="rates && rates.length > 0">
                 <label for="currency">Base Currency</label>
-                <select class="form-control" id="currency" name="currency" [(ngModel)]="settingsAccount.currency">
-                    <option *ngFor="let currency of currencies"
-                            [ngValue]="currency.id === settingsAccount.currency?.id ? settingsAccount.currency : currency"
-                    >{{currency.name}}</option>
+                <select class="form-control" id="currency" name="currency" [(ngModel)]="financeAccount.currencyCode">
+                    <option *ngFor="let currency of rates"
+                            [value]="currency"
+                    >{{ currency + '$' + rate.rates[currency]}}</option>
                 </select>
             </div>
         </div>

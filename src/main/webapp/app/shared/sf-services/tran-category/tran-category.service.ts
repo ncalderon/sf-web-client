@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { SERVER_API_URL } from '../../../app.constants';
+import {createRequestOption, ResponseWrapper} from '../../';
+import {TranCategory} from '../../sf-model/tran-category.model';
 
-import { TranCategory } from '../../sf-model/tran-category.model';
-import { ResponseWrapper, createRequestOption } from '../../index';
 
 @Injectable()
 export class TranCategoryService {

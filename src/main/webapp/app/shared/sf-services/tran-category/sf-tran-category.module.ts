@@ -1,8 +1,7 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
-import {CurrencyService} from '.';
 import {HttpModule} from '@angular/http';
 import {CommonModule} from '@angular/common';
-import {CurrencyUtilService} from './currency-util.service';
+import {TranCategoryService} from './';
 
 @NgModule({
     imports: [
@@ -11,9 +10,9 @@ import {CurrencyUtilService} from './currency-util.service';
     ],
     declarations: [],
     exports: [],
-    providers: [CurrencyService, CurrencyUtilService],
+    providers: [TranCategoryService],
     entryComponents: [],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class SfCurrencyModule {
+export class SfTranCategoryModule {
 }

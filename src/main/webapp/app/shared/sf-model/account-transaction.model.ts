@@ -29,6 +29,7 @@ export class AccountTransaction implements BaseEntity {
         public user?: User,
         public financeAccount?: BaseEntity,
         public tranCategory?: BaseEntity,
+        public currencyValue?: number
     ) {
     }
 }

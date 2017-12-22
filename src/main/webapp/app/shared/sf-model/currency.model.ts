@@ -7,7 +7,7 @@ export class Currency implements BaseEntity {
         public code?: string,
         public createdDate?: string,
         public isDefault?: boolean,
-        public rates?: any
+        public jsonVal?: any
     ) {
     }
 }

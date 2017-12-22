@@ -69,7 +69,7 @@ public class FinanceAccount extends AbstractAuditingEntity implements Serializab
     private User user;
 
     @NotNull
-    @Size(min = 4, max = 64)
+    @Size(min = 2, max = 64)
     @Column(name = "currency_code", length = 64, nullable = false)
     private String currencyCode;
 

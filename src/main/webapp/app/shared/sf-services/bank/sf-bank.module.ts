@@ -13,5 +13,5 @@ import {CommonModule} from '@angular/common';
     entryComponents: [],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class SfServicesModule {
+export class SfBankModule {
 }

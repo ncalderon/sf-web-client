@@ -2,7 +2,6 @@ import {NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 import {
-    SfServicesModule,
     SfWebClientSharedLibsModule,
     SfWebClientSharedCommonModule,
     CSRFService,
@@ -18,14 +17,15 @@ import {
     SocialService,
     JhiLoginModalComponent,
     LoggerService,
-    DatetimeService
+    DatetimeService,
+    SfServicesModule
 } from './';
 
 @NgModule({
     imports: [
-        SfServicesModule,
         SfWebClientSharedLibsModule,
-        SfWebClientSharedCommonModule
+        SfWebClientSharedCommonModule,
+        SfServicesModule
     ],
     declarations: [
         JhiSocialComponent,
@@ -49,7 +49,6 @@ import {
     ],
     entryComponents: [JhiLoginModalComponent],
     exports: [
-        SfServicesModule,
         SfWebClientSharedCommonModule,
         JhiSocialComponent,
         JhiLoginModalComponent,
@@ -57,6 +56,5 @@ import {
         DatePipe
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
-
 })
 export class SfWebClientSharedModule {}
