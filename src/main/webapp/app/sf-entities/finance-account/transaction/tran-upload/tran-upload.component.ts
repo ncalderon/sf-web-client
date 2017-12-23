@@ -18,6 +18,7 @@ import {AuthServerProvider} from '../../../../shared/auth/auth-jwt.service';
 import {Principal} from '../../../../shared/auth/principal.service';
 import {ResponseWrapper} from '../../../../shared/model/response-wrapper.model';
 import {ENTER_LEAVE_ANIMATION} from '../../../../shared/animation/enter-leave-animation';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
     selector: 'jhi-tran-upload',
@@ -28,9 +29,9 @@ import {ENTER_LEAVE_ANIMATION} from '../../../../shared/animation/enter-leave-an
 export class TranUploadComponent implements OnInit, OnDestroy {
     searcher: Searcher;
     /*component property*/
-    hasBaseDropZoneOver = false;
+
     isSaving: boolean;
-    uploader: FileUploader;
+
 
     /*dropdown data*/
     categories: TranCategory[];
@@ -44,7 +45,9 @@ export class TranUploadComponent implements OnInit, OnDestroy {
     bank: Bank;
     banks: Bank[] = [];
     currentUser: User;
-    fileInput: any;
+
+
+    uploadTransactionsForm: FormGroup;
 
     constructor(private logger: LoggerService,
                 private alertService: JhiAlertService,
@@ -56,8 +59,19 @@ export class TranUploadComponent implements OnInit, OnDestroy {
                 private eventManager: JhiEventManager,
                 private authServerProvider: AuthServerProvider,
                 private principal: Principal,
-                private dateUtils: JhiDateUtils) {
+                private dateUtils: JhiDateUtils,
+                private fb: FormBuilder
+                ) {
 
+    }
+
+    private createForm() {
+        this.uploadTransactionsForm = this.fb.group({
+            tranFile: this.fb.group({
+                bank: [null, Validators.required]
+            }),
+            transactions: this.fb.array([])
+        });
     }
 
     // TODO: Remove this when we're done

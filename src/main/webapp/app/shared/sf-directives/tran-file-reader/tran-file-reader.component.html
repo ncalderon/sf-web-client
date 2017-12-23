@@ -1,0 +1,30 @@
+<div class="form-group">
+    <label class="form-control-label"
+           for="field_bank">Template</label>
+    <select class="form-control" id="field_bank" name="bank"
+            [(ngModel)]="bank" required>
+        <option *ngIf="!editForm.value.bank" [ngValue]="null"></option>
+        <option
+            [ngValue]="bankOption.id === bank?.id ? bank : bankOption"
+            *ngFor="let bankOption of banks; trackBy: trackBankById">{{bankOption.name}}
+        </option>
+    </select>
+    <div [hidden]="!(editForm.controls.bank?.dirty && editForm.controls.bank?.invalid)">
+        <small class="form-text text-danger"
+               [hidden]="!editForm.controls.bank?.errors?.required" jhiTranslate="entity.validation.required">
+            This field is required.
+        </small>
+    </div>
+</div>
+<div class="form-group">
+    <input type="file" name="fileInput" ng2FileSelect [uploader]="uploader" [(ngModel)]="fileInput"
+           [disabled]="!bank"/>
+    <button type="button" class="btn btn-success btn-s"
+            (click)="upload()" [disabled]="!uploader.getNotUploadedItems().length">
+        <span class="glyphicon glyphicon-upload"></span> Upload file
+    </button>
+    <button type="button" class="btn btn-warning btn-s"
+            (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+    </button>
+</div>
