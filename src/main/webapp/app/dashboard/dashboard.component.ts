@@ -54,10 +54,11 @@ export class DashboardComponent implements OnInit {
     }
 
     private load() {
-        this.year = new Date().getFullYear()-1;
+        this.year = new Date().getFullYear() - 1;
         this.tranYears.push(this.year);
-        this.tranYears.push(this.year+1);
-        this.tranYears.push(this.year+2)
+        this.tranYears.push(this.year +1);
+        this.tranYears.push(this.year + 2);
+        //this.getYears();
         this.accountService.query()
             .subscribe((res: ResponseWrapper) => {
                 this.accounts = res.json;
@@ -70,6 +71,12 @@ export class DashboardComponent implements OnInit {
                 }
                 this.loadTransactions()
             }, (res: ResponseWrapper) => this.onError(res.json));
+    }
+
+    private getYears() {
+        this.tranService.findTransactionYears().subscribe((years: ResponseWrapper) => {
+            this.tranYears = years.json;
+        }, (res: ResponseWrapper) => this.onError(res.json));
     }
 
     onRefresh() {

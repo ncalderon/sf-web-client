@@ -18,7 +18,7 @@ import {AuthServerProvider} from '../../../../shared/auth/auth-jwt.service';
 import {Principal} from '../../../../shared/auth/principal.service';
 import {ResponseWrapper} from '../../../../shared/model/response-wrapper.model';
 import {ENTER_LEAVE_ANIMATION} from '../../../../shared/animation/enter-leave-animation';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'jhi-tran-upload',

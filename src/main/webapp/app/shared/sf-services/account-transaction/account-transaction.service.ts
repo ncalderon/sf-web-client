@@ -109,6 +109,14 @@ export class AccountTransactionService {
         });
     }
 
+    findTransactionYears() {
+        return this.http.get(`${this.resourceUrl}/findByAccountsIdAndYear`).map((res: Response) => {
+            const jsonResponse = res.json();
+            this.convertItemFromServer(jsonResponse);
+            return jsonResponse;
+        });
+    }
+
     private convertTransactionsFromServer(accountTransactions: AccountTransaction[]) {
         for (let tran of accountTransactions) {
             this.convertTransactionFromServer(tran);
