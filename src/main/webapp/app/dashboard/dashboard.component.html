@@ -5,7 +5,7 @@
     <div class="form-inline">
         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
             <select class="form-control" id="field_year" name="year" [(ngModel)]="year" >
-                <option [value]="year" *ngFor="let yearOption of tranYears">{{yearOption}}</option>
+                <option [value]="yearOption" *ngFor="let yearOption of tranYears">{{yearOption}}</option>
             </select>
         </div>
         <button (click)="onRefresh()" class="btn btn-primary">
@@ -27,7 +27,8 @@
         </div>
     </div>
 
-    <div class="row" *ngIf="chartLabels.length > 0">
+    <!--*ngIf="chartLabels.length > 0"-->
+    <div class="row" >
         <div class="col-md-6">
             <jhi-line-chart *ngIf="isAuthenticated()" [chartLabels]="chartLabels" [chartData]="chartData"></jhi-line-chart>
         </div>
@@ -43,7 +44,8 @@
         </div>
     </div>
 
-    <div class="row justify-content-center" *ngIf="chartLabels.length > 0">
+    <!--*ngIf="chartLabels.length > 0"-->
+    <div class="row justify-content-center" >
         <div class="col-md-10">
             <jhi-bar-chart *ngIf="isAuthenticated()" [chartLabels]="chartLabels" [chartData]="chartData"></jhi-bar-chart>
         </div>
