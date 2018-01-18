@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
     currentUser: any;
     accounts: FinanceAccount[];
 
-    year: number = new Date().getFullYear();
+    year: number;
     tranYears: number[] = [];
     tranChartData: TranChartData = new TranChartData([]);
     transactions: AccountTransaction[];
@@ -54,7 +54,10 @@ export class DashboardComponent implements OnInit {
     }
 
     private load() {
+        this.year = new Date().getFullYear()-1;
         this.tranYears.push(this.year);
+        this.tranYears.push(this.year+1);
+        this.tranYears.push(this.year+2)
         this.accountService.query()
             .subscribe((res: ResponseWrapper) => {
                 this.accounts = res.json;
