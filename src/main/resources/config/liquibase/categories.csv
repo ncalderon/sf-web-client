@@ -1,5 +1,72 @@
-ID,NAME,DESCRIPTION,USER_ID,TRAN_CATEGORY_REGEX_ID,CREATED_BY,LAST_MODIFIED_BY
-1,Entertaiment,Entertaiment,4,1,system,system
-2,Payment,Payment,4,2,system,system
-3,Gasoline,Gasoline,4,3,system,system
-4,Others,Others,4,4,system,system
+ID,NAME,DESCRIPTION,USER_ID,CREATED_BY,LAST_MODIFIED_BY
+1,Entertaiment,Entertaiment,4,system,system
+2,Payment,Payment,4,system,system
+3,Gasoline,Gasoline,4,system,system
+4,Others,Others,4,system,system
+5,Others,Others,5,anonymousUser,anonymousUser
+6,Automobile,Automobile,5,anonymousUser,anonymousUser
+7,Fuel,Fuel,5,anonymousUser,anonymousUser
+8,Insurance,Insurance,5,anonymousUser,anonymousUser
+9,Maintenance,Maintenance,5,anonymousUser,anonymousUser
+10,Mileage,Mileage,5,anonymousUser,anonymousUser
+11,Registration,Registration,5,anonymousUser,anonymousUser
+12,AAA or Road Services,AAA or Road Services,5,anonymousUser,anonymousUser
+13,Entertainment,Entertainment,5,anonymousUser,anonymousUser
+14,Concert,Concert,5,anonymousUser,anonymousUser
+15,Movies,Movies,5,anonymousUser,anonymousUser
+16,Party,Party,5,anonymousUser,anonymousUser
+17,Sports,Sports,5,anonymousUser,anonymousUser
+18,Family,Family,5,anonymousUser,anonymousUser
+19,Child Care,Child Care,5,anonymousUser,anonymousUser
+20,Child Education,Child Education,5,anonymousUser,anonymousUser
+21,Food,Food,5,anonymousUser,anonymousUser
+22,Restaurant,Restaurant,5,anonymousUser,anonymousUser
+23,Groceries,Groceries,5,anonymousUser,anonymousUser
+24,Snack,Snack,5,anonymousUser,anonymousUser
+25,Health Care,Health Care,5,anonymousUser,anonymousUser
+26,Dental,Dental,5,anonymousUser,anonymousUser
+27,Eye Care,Eye Care,5,anonymousUser,anonymousUser
+28,Health Insurance,Health Insurance,5,anonymousUser,anonymousUser
+29,Medical Preescription,Medical Preescription,5,anonymousUser,anonymousUser
+30,Nutrition,Nutrition,5,anonymousUser,anonymousUser
+31,Home Office,Home Office,5,anonymousUser,anonymousUser
+32,Computer,Computer,5,anonymousUser,anonymousUser
+33,Electronics,Electronics,5,anonymousUser,anonymousUser
+34,Stationery,Stationery,5,anonymousUser,anonymousUser
+35,Office Furniture,Office Furniture,5,anonymousUser,anonymousUser
+36,Office Supply,Office Supply,5,anonymousUser,anonymousUser
+37,Household,Household,5,anonymousUser,anonymousUser
+38,Appliance,Appliance,5,anonymousUser,anonymousUser
+39,Consumables,Consumables,5,anonymousUser,anonymousUser
+40,Home Maintenance,Home Maintenance,5,anonymousUser,anonymousUser
+41,Homeowner Fees,Homeowner Fees,5,anonymousUser,anonymousUser
+42,Household Tools,Household Tools,5,anonymousUser,anonymousUser
+43,Postage,Postage,5,anonymousUser,anonymousUser
+44,Rent,Rent,5,anonymousUser,anonymousUser
+45,Miscellaneous Household Items,Miscellaneous Household Items,5,anonymousUser,anonymousUser
+46,Insurance Fees,Insurance Fees,5,anonymousUser,anonymousUser
+47,Auto,Auto,5,anonymousUser,anonymousUser
+48,Health,Health,5,anonymousUser,anonymousUser
+49,Home,Home,5,anonymousUser,anonymousUser
+50,Life,Life,5,anonymousUser,anonymousUser
+51,Loans,Loans,5,anonymousUser,anonymousUser
+52,Auto,Auto,5,anonymousUser,anonymousUser
+53,Home Equity,Home Equity,5,anonymousUser,anonymousUser
+54,Mortgage,Mortgage,5,anonymousUser,anonymousUser
+55,Student,Student,5,anonymousUser,anonymousUser
+56,Personal,Personal,5,anonymousUser,anonymousUser
+57,Clothing,Clothing,5,anonymousUser,anonymousUser
+58,Donation,Donation,5,anonymousUser,anonymousUser
+59,Gift,Gift,5,anonymousUser,anonymousUser
+60,Personal Care,Personal Care,5,anonymousUser,anonymousUser
+61,Others,Others,5,anonymousUser,anonymousUser
+62,Tax,Tax,5,anonymousUser,anonymousUser
+63,Property Tax,Property Tax,5,anonymousUser,anonymousUser
+64,Utilities,Utilities,5,anonymousUser,anonymousUser
+65,Cable TV,Cable TV,5,anonymousUser,anonymousUser
+66,Garbage,Garbage,5,anonymousUser,anonymousUser
+67,Electric,Electric,5,anonymousUser,anonymousUser
+68,Gas,Gas,5,anonymousUser,anonymousUser
+69,Internet,Internet,5,anonymousUser,anonymousUser
+70,Telephone,Telephone,5,anonymousUser,anonymousUser
+71,Water,Water,5,anonymousUser,anonymousUser

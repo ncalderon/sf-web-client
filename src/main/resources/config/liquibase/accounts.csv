@@ -1,5 +1,9 @@
 ID,ACCOUNT_STATUS,ACCOUNT_NUMBER,NAME,DESCRIPTION,BALANCE,IS_CREDIT_CARD,USER_ID,CREATED_BY,LAST_MODIFIED_BY
-1,ACTIVE,769202714,Ahorros o Corriente,Ahorros o Corriente,50000,0,4,system,system
-2,ACTIVE,************1928,GOLD PESOS $RD,GOLD PESOS $RD,17000,1,4,system,system
+1,ACTIVE,769202714,Ahorros o Corriente,Ahorros o Corriente,0,0,4,system,system
+2,ACTIVE,************1928,GOLD PESOS $RD,GOLD PESOS $RD,0,1,4,system,system
 3,ACTIVE,769202714,ADMIN Ahorros o Corriente,Ahorros o Corriente,0,0,3,system,system
 4,ACTIVE,************1928,ADMIN GOLD PESOS $RD,GOLD PESOS $RD,0,1,3,system,system
+46,ACTIVE,************1928,Gold RD,,-19918.99,true,5,nathaniel,nathaniel
+47,ACTIVE,************1928,Gold US,,-451.32,true,5,nathaniel,nathaniel
+48,ACTIVE,************4738,JetBlue RD,,-47048.05,true,5,nathaniel,nathaniel
+49,ACTIVE,************4738,JetBlue US,,-353.87,true,5,nathaniel,nathaniel
