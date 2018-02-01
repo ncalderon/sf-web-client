@@ -4,7 +4,7 @@
 
     <div class="form-inline">
         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-            <select class="form-control" id="field_year" name="year" [(ngModel)]="year" >
+            <select class="form-control" id="field_year" name="year" [(ngModel)]="year">
                 <option [value]="yearOption" *ngFor="let yearOption of tranYears">{{yearOption}}</option>
             </select>
         </div>
@@ -14,7 +14,7 @@
     </div>
     <!--*ngFor="let rowAcc of rowsAccount; let idx=index"-->
     <div class="form-group"
-         >
+    >
         <div class="form-check form-check-inline"
              *ngFor="let acc of accounts; let j=index">
             <label class="form-check-label">
@@ -28,26 +28,44 @@
     </div>
 
     <!--*ngIf="chartLabels.length > 0"-->
-    <div class="row" >
+    <!--<div class="row">
         <div class="col-md-6">
-            <jhi-line-chart *ngIf="isAuthenticated()" [chartLabels]="chartLabels" [chartData]="chartData"></jhi-line-chart>
+
         </div>
         <div class="col-md-6">
-            <table class="table table-responsive table-condensed table-sm">
-                <tr>
-                    <th *ngFor="let label of chartLabels">{{label}}</th>
-                </tr>
-                <tr *ngFor="let d of chartData" [@in-out]="'in'">
-                    <td *ngFor="let label of chartLabels; let j=index">{{d && d.data[j] | currency:'USD':true:'2.2-2'}}</td>
-                </tr>
-            </table>
+
+        </div>
+    </div>-->
+
+    <div class="row justify-content-center">
+        <table *ngIf="isAuthenticated() && chartLabels.length>0" class="table table-bordered table-sm">
+            <thead class="thead-default">
+            <tr>
+                <th scope="col" *ngFor="let label of chartLabels">{{label}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let d of chartData" [@in-out]="'in'">
+                <td *ngFor="let label of chartLabels; let j=index">{{d && d.data[j] |
+                    currency:'USD':true:'2.2-2'}}
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <jhi-line-chart *ngIf="isAuthenticated() && chartLabels.length>0" [chartLabels]="chartLabels"
+                            [chartData]="chartData"></jhi-line-chart>
         </div>
     </div>
 
     <!--*ngIf="chartLabels.length > 0"-->
-    <div class="row justify-content-center" >
+    <div class="row justify-content-center">
         <div class="col-md-10">
-            <jhi-bar-chart *ngIf="isAuthenticated()" [chartLabels]="chartLabels" [chartData]="chartData"></jhi-bar-chart>
+            <jhi-bar-chart *ngIf="isAuthenticated() && chartLabels.length>0" [chartLabels]="chartLabels"
+                           [chartData]="chartData"></jhi-bar-chart>
         </div>
     </div>
 </div>

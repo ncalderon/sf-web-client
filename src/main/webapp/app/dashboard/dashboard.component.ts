@@ -56,7 +56,7 @@ export class DashboardComponent implements OnInit {
     private load() {
         this.year = new Date().getFullYear() - 1;
         this.tranYears.push(this.year);
-        this.tranYears.push(this.year +1);
+        this.tranYears.push(this.year + 1);
         this.tranYears.push(this.year + 2);
         //this.getYears();
         this.accountService.query()
