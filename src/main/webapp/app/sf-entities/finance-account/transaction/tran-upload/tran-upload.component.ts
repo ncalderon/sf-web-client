@@ -27,6 +27,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
     animations: ENTER_LEAVE_ANIMATION
 })
 export class TranUploadComponent implements OnInit, OnDestroy {
+
+    uploader: FileUploader;
+    fileInput: FileItem;
     searcher: Searcher;
     /*component property*/
 
