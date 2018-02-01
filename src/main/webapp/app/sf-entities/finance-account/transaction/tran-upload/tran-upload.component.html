@@ -20,7 +20,13 @@
 </style>
 
 <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-    <h2><span>Upload File Transactions</span></h2>
+    <h2 *ngIf="currentAccount" [ngSwitch]="currentAccount.isCreditCard"><span jhiTranslate="sfWebClientApp.financeAccount.detail.title">Account</span> - {{currentAccount.name}}
+        <!--<span *ngSwitchCase="true" class="badge badge-secondary">Credit Card</span>
+        <span *ngSwitchCase="false" class="badge badge-secondary">Generic</span></h2>-->
+        <span *ngSwitchCase="true" class="fa fa-credit-card"></span>
+        <span *ngSwitchCase="false" class="fa fa-money"></span>
+        <span> - Upload File Transactions</span>
+    </h2>
     <hr>
     <button type="button"
             (click)="goBack()"
@@ -40,8 +46,36 @@
         </button>
     </div>
 
-    <div class="row"></div>
-    <br/>
+    <div class="form-group">
+        <label class="form-control-label"
+               for="field_bank">Template</label>
+        <select class="form-control" id="field_bank" name="bank"
+                [(ngModel)]="bank" required>
+            <option *ngIf="!editForm.value.bank" [ngValue]="null"></option>
+            <option
+                [ngValue]="bankOption.id === bank?.id ? bank : bankOption"
+                *ngFor="let bankOption of banks; trackBy: trackBankById">{{bankOption.name}}
+            </option>
+        </select>
+        <div [hidden]="!(editForm.controls.bank?.dirty && editForm.controls.bank?.invalid)">
+            <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.bank?.errors?.required" jhiTranslate="entity.validation.required">
+                This field is required.
+            </small>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="file" name="fileInput" ng2FileSelect [uploader]="uploader" [(ngModel)]="fileInput"
+               [disabled]="!bank"/>
+        <button type="button" class="btn btn-success btn-s"
+                (click)="upload()" [disabled]="!uploader.getNotUploadedItems().length">
+            <span class="glyphicon glyphicon-upload"></span> Upload file
+        </button>
+        <button type="button" class="btn btn-warning btn-s"
+                (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+            <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+        </button>
+    </div>
 
     <div class="card">
         <div class="card-body">
@@ -50,14 +84,14 @@
                 <div class="form-group col-md-3">
                     <label class="form-control-label" for="field_rate">Rate</label>
                     <input type="number" class="form-control" name="rate" id="field_rate" placeholder="$48"
-                           [(ngModel)]="transaction.currencyValue" />
+                           [(ngModel)]="currencyValue" />
                     <div [hidden]="!(editForm.controls.currencyValue?.dirty && editForm.controls.currencyValue?.invalid)">
                         <small class="form-text text-danger"
-                               [hidden]="!editForm.controls.amount?.errors?.required" jhiTranslate="entity.validation.required">
+                               [hidden]="!editForm.controls.currencyValue?.errors?.required" jhiTranslate="entity.validation.required">
                             This field is required.
                         </small>
                         <small class="form-text text-danger"
-                               [hidden]="!editForm.controls.amount?.errors?.number" jhiTranslate="entity.validation.number">
+                               [hidden]="!editForm.controls.currencyValue?.errors?.number" jhiTranslate="entity.validation.number">
                             This field should be a number.
                         </small>
                     </div>
@@ -86,11 +120,11 @@
                     <thead>
                     <tr>
                         <th>
-                            <input
+                            <!--<input
                                 name="rowSelected"
                                 type="checkbox"
                                 [(ngModel)]="transaction.selected"
-                            />
+                            />-->
                         </th>
                         <th><span>Post Date</span>
                         </th>
@@ -108,11 +142,11 @@
                     <tbody>
                     <tr [@in-out]="'in'" *ngFor="let transaction of transactionsObservables | async ;let i=index ; trackBy: trackId">
                         <td>
-                            <input
+                            <!--<input
                                 name="rowSelected"
                                 type="checkbox"
                                 [(ngModel)]="transaction.selected"
-                            />
+                            />-->
                         </td>
                         <td>{{transaction.postDate | date:'medium'}}</td>
                         <td>{{transaction.tranType}}</td>

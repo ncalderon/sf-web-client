@@ -19,6 +19,7 @@ import {Principal} from '../../../../shared/auth/principal.service';
 import {ResponseWrapper} from '../../../../shared/model/response-wrapper.model';
 import {ENTER_LEAVE_ANIMATION} from '../../../../shared/animation/enter-leave-animation';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {CurrencyUtilService} from '../../../../shared/sf-services/currency/currency-util.service';
 
 @Component({
     selector: 'jhi-tran-upload',
@@ -48,9 +49,8 @@ export class TranUploadComponent implements OnInit, OnDestroy {
     bank: Bank;
     banks: Bank[] = [];
     currentUser: User;
-
-
-    uploadTransactionsForm: FormGroup;
+    currencyValue: number;
+    currentAccount: FinanceAccount;
 
     constructor(private logger: LoggerService,
                 private alertService: JhiAlertService,
@@ -63,18 +63,9 @@ export class TranUploadComponent implements OnInit, OnDestroy {
                 private authServerProvider: AuthServerProvider,
                 private principal: Principal,
                 private dateUtils: JhiDateUtils,
-                private fb: FormBuilder
+                private currencyUtilService: CurrencyUtilService
                 ) {
 
-    }
-
-    private createForm() {
-        this.uploadTransactionsForm = this.fb.group({
-            tranFile: this.fb.group({
-                bank: [null, Validators.required]
-            }),
-            transactions: this.fb.array([])
-        });
     }
 
     // TODO: Remove this when we're done
@@ -92,6 +83,12 @@ export class TranUploadComponent implements OnInit, OnDestroy {
     load() {
         this.logger.log('***Loading***');
         this.isSaving = false;
+
+        this.accountService.find(this.accountId)
+            .subscribe((account) => {
+                this.currentAccount = account;
+                this.currencyValue = this.currencyUtilService.getCurrencyValue(this.currentAccount.currencyCode);
+            }, (res: ResponseWrapper) => this.onError(res.json));
 
         this.searcher = new Searcher();
         this.searcher.onSearch = (term: string) => {
@@ -255,6 +252,7 @@ export class TranUploadComponent implements OnInit, OnDestroy {
                 month: postDate.getMonth() + 1,
                 day: postDate.getDate()
             };
+            copy.currencyValue = this.currencyValue;
             copyTransactions.push(copy);
         }
         return copyTransactions;
