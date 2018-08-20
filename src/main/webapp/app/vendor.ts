@@ -79,3 +79,6 @@ library.add(faTrashAlt);
 library.add(faAsterisk);
 
 // jhipster-needle-add-element-to-vendor - JHipster will add new menu items here
+
+/* customs imports */
+import '~@angular/material/prebuilt-themes/indigo-pink.css';
