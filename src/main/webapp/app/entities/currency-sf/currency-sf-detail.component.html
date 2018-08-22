@@ -1,0 +1,39 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="currency">
+            <h2><span jhiTranslate="sfwebApp.currency.detail.title">Currency</span> {{currency.id}}</h2>
+            <hr>
+            <sf-alert-error></sf-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="sfwebApp.currency.code">Code</span></dt>
+                <dd>
+                    <span>{{currency.code}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.currency.name">Name</span></dt>
+                <dd>
+                    <span>{{currency.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.currency.isDefault">Is Default</span></dt>
+                <dd>
+                    <span>{{currency.isDefault}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.currency.jsonval">Jsonval</span></dt>
+                <dd>
+                    <span>{{currency.jsonval}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/currency-sf', currency.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

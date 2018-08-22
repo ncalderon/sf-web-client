@@ -1,0 +1,94 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="sfwebApp.tranEntry.home.title">Tran Entries</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-tran-entry-sf" [routerLink]="['/tran-entry-sf/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span  jhiTranslate="sfwebApp.tranEntry.home.createLabel">
+            Create new Tran Entry
+            </span>
+        </button>
+    </h2>
+    <sf-alert></sf-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="tranEntries">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="tranType"><span jhiTranslate="sfwebApp.tranEntry.tranType">Tran Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="tranNum"><span jhiTranslate="sfwebApp.tranEntry.tranNum">Tran Num</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="refNum"><span jhiTranslate="sfwebApp.tranEntry.refNum">Ref Num</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="postDate"><span jhiTranslate="sfwebApp.tranEntry.postDate">Post Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="description"><span jhiTranslate="sfwebApp.tranEntry.description">Description</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="amount"><span jhiTranslate="sfwebApp.tranEntry.amount">Amount</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="ccyVal"><span jhiTranslate="sfwebApp.tranEntry.ccyVal">Ccy Val</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="ccyCode"><span jhiTranslate="sfwebApp.tranEntry.ccyCode">Ccy Code</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="paymentMethod"><span jhiTranslate="sfwebApp.tranEntry.paymentMethod">Payment Method</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="user.login"><span jhiTranslate="sfwebApp.tranEntry.user">User</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="finAcc.name"><span jhiTranslate="sfwebApp.tranEntry.finAcc">Fin Acc</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="tranCategory.name"><span jhiTranslate="sfwebApp.tranEntry.tranCategory">Tran Category</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let tranEntry of tranEntries ;trackBy: trackId">
+                <td><a [routerLink]="['/tran-entry-sf', tranEntry.id, 'view' ]">{{tranEntry.id}}</a></td>
+                <td jhiTranslate="{{'sfwebApp.TranType.' + tranEntry.tranType}}">{{tranEntry.tranType}}</td>
+                <td>{{tranEntry.tranNum}}</td>
+                <td>{{tranEntry.refNum}}</td>
+                <td>{{tranEntry.postDate | date:'mediumDate'}}</td>
+                <td>{{tranEntry.description}}</td>
+                <td>{{tranEntry.amount}}</td>
+                <td>{{tranEntry.ccyVal}}</td>
+                <td>{{tranEntry.ccyCode}}</td>
+                <td jhiTranslate="{{'sfwebApp.PaymentMethod.' + tranEntry.paymentMethod}}">{{tranEntry.paymentMethod}}</td>
+                <td>
+                    {{tranEntry.user?.login}}
+                </td>
+                <td>
+                    <div *ngIf="tranEntry.finAcc">
+                        <a [routerLink]="['../fin-acc-sf', tranEntry.finAcc?.id, 'view' ]" >{{tranEntry.finAcc?.name}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="tranEntry.tranCategory">
+                        <a [routerLink]="['../tran-category-sf', tranEntry.tranCategory?.id, 'view' ]" >{{tranEntry.tranCategory?.name}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/tran-entry-sf', tranEntry.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/tran-entry-sf', tranEntry.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'tran-entry-sf/'+ tranEntry.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div *ngIf="tranEntries && tranEntries.length">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="queryCount" [maxSize]="5" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

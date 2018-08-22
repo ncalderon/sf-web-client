@@ -1,0 +1,35 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="tranCategory">
+            <h2><span jhiTranslate="sfwebApp.tranCategory.detail.title">Tran Category</span> {{tranCategory.id}}</h2>
+            <hr>
+            <sf-alert-error></sf-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="sfwebApp.tranCategory.name">Name</span></dt>
+                <dd>
+                    <span>{{tranCategory.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.tranCategory.description">Description</span></dt>
+                <dd>
+                    <span>{{tranCategory.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.tranCategory.user">User</span></dt>
+                <dd>
+                    {{tranCategory.user?.login}}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/tran-category-sf', tranCategory.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,92 @@
+
+
+
+DEFAULT_MIN_LENGTH = 4
+DEFAULT_MAX_LENGTH = 64
+
+DEFAULT_DESC_MAX_LENGTH = 256
+
+DEFAULT_MIN_BYTES = 20
+DEFAULT_MAX_BYTES = 40
+DEFAULT_MIN = 0
+DEFAULT_MAX = 41
+
+
+enum FinAccStatus {
+	INACTIVE, ACTIVE
+}
+
+enum TranType {
+	EXPENSE, INCOME
+}
+
+enum PaymentMethod {
+	UNSPECIFIED, CASH, CHECK, CREDIT_CARD, DEBIT, ELECTRONIC_TRANSFER, OTHER
+}
+
+entity Preference {
+    name String required minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH),
+    value String required
+}
+
+relationship OneToMany {
+	Preference{userPreference} to UserPreference{preference(name) required}
+}
+
+entity UserPreference {
+    value String required
+}
+
+entity Currency {
+    code String required minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH),
+    name String required minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH),
+    isDefault Boolean required,
+    jsonval String required
+}
+
+entity FinAcc {
+	status FinAccStatus required,
+    accNum String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH),
+    name String required minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH),
+    description String maxlength(DEFAULT_DESC_MAX_LENGTH),
+    balance BigDecimal required,
+    isCreditCard Boolean,
+    dueDate LocalDate,
+    closingDate LocalDate
+}
+
+relationship OneToMany {
+	FinAcc{tranEntry} to TranEntry{finAcc(name) required}
+}
+
+entity TranCategory {
+    name String required minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH),
+    description String maxlength(DEFAULT_DESC_MAX_LENGTH)
+}
+
+entity TranEntry {
+    tranType TranType required,
+   	tranNum String,
+    refNum String,
+    postDate LocalDate required,
+    description String maxlength(DEFAULT_DESC_MAX_LENGTH),
+    amount BigDecimal required,
+    ccyVal BigDecimal required
+    ccyCode String required minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH),
+    paymentMethod PaymentMethod
+}
+
+relationship OneToMany {
+	TranCategory{tranEntry} to TranEntry{tranCategory(name)}
+}
+
+relationship ManyToOne {
+	UserPreference{user(login) required} to User,
+	TranEntry{user(login) required} to User,
+    FinAcc{user(login) required} to User,
+    TranCategory{user(login) required} to User
+}
+
+paginate * with pagination
+
+angularSuffix * with sf

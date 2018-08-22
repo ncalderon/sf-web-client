@@ -1,0 +1,75 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="tranEntry">
+            <h2><span jhiTranslate="sfwebApp.tranEntry.detail.title">Tran Entry</span> {{tranEntry.id}}</h2>
+            <hr>
+            <sf-alert-error></sf-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="sfwebApp.tranEntry.tranType">Tran Type</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'sfwebApp.TranType.' + tranEntry.tranType}}">{{tranEntry.tranType}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.tranEntry.tranNum">Tran Num</span></dt>
+                <dd>
+                    <span>{{tranEntry.tranNum}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.tranEntry.refNum">Ref Num</span></dt>
+                <dd>
+                    <span>{{tranEntry.refNum}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.tranEntry.postDate">Post Date</span></dt>
+                <dd>
+                    <span>{{tranEntry.postDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.tranEntry.description">Description</span></dt>
+                <dd>
+                    <span>{{tranEntry.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.tranEntry.amount">Amount</span></dt>
+                <dd>
+                    <span>{{tranEntry.amount}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.tranEntry.ccyVal">Ccy Val</span></dt>
+                <dd>
+                    <span>{{tranEntry.ccyVal}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.tranEntry.ccyCode">Ccy Code</span></dt>
+                <dd>
+                    <span>{{tranEntry.ccyCode}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.tranEntry.paymentMethod">Payment Method</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'sfwebApp.PaymentMethod.' + tranEntry.paymentMethod}}">{{tranEntry.paymentMethod}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.tranEntry.user">User</span></dt>
+                <dd>
+                    {{tranEntry.user?.login}}
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.tranEntry.finAcc">Fin Acc</span></dt>
+                <dd>
+                    <div *ngIf="tranEntry.finAcc">
+                        <a [routerLink]="['/fin-acc-sf', tranEntry.finAcc?.id, 'view']">{{tranEntry.finAcc?.name}}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.tranEntry.tranCategory">Tran Category</span></dt>
+                <dd>
+                    <div *ngIf="tranEntry.tranCategory">
+                        <a [routerLink]="['/tran-category-sf', tranEntry.tranCategory?.id, 'view']">{{tranEntry.tranCategory?.name}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/tran-entry-sf', tranEntry.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+
+{
+    "sfwebApp": {
+        "userPreference" : {
+            "home": {
+                "title": "User Preferences",
+                "createLabel": "Crear nuevo User Preference",
+                "createOrEditLabel": "Crear o editar User Preference"
+            },
+            "created": "Un nuevo User Preference ha sido creado con el identificador {{ param }}",
+            "updated": "Un User Preference ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un User Preference ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar User Preference {{ id }}?"
+            },
+            "detail": {
+                "title": "User Preference"
+            },
+            "value": "Value",
+            "user": "User",
+            "preference": "Preference"
+        }
+    }
+}

@@ -38,6 +38,15 @@ public class CacheConfiguration {
             cm.createCache(com.calderon.sf.domain.User.class.getName(), jcacheConfiguration);
             cm.createCache(com.calderon.sf.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(com.calderon.sf.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            cm.createCache(com.calderon.sf.domain.Preference.class.getName(), jcacheConfiguration);
+            cm.createCache(com.calderon.sf.domain.Preference.class.getName() + ".userPreferences", jcacheConfiguration);
+            cm.createCache(com.calderon.sf.domain.UserPreference.class.getName(), jcacheConfiguration);
+            cm.createCache(com.calderon.sf.domain.Currency.class.getName(), jcacheConfiguration);
+            cm.createCache(com.calderon.sf.domain.FinAcc.class.getName(), jcacheConfiguration);
+            cm.createCache(com.calderon.sf.domain.FinAcc.class.getName() + ".tranEntries", jcacheConfiguration);
+            cm.createCache(com.calderon.sf.domain.TranCategory.class.getName(), jcacheConfiguration);
+            cm.createCache(com.calderon.sf.domain.TranCategory.class.getName() + ".tranEntries", jcacheConfiguration);
+            cm.createCache(com.calderon.sf.domain.TranEntry.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }
