@@ -17,4 +17,5 @@
     <include file="config/liquibase/changelog/20180822014540_added_entity_constraints_TranCategory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180822014541_added_entity_constraints_TranEntry.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
+    <include file="config/liquibase/changelog/20180822014542_added_audit_fields.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

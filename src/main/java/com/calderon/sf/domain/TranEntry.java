@@ -22,7 +22,7 @@ import com.calderon.sf.domain.enumeration.PaymentMethod;
 @Entity
 @Table(name = "tran_entry")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class TranEntry implements Serializable {
+public class TranEntry extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+
+    <!--
+       Added audit columns to entities.
+   -->
+    <changeSet id="20180822014542" author="jhipster">
+        <addColumn tableName="currency">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="fin_acc">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="preference">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="tran_category">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="tran_entry">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="user_preference">
+            <column name="created_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

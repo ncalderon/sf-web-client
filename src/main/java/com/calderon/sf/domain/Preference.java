@@ -18,7 +18,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "preference")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Preference implements Serializable {
+public class Preference extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
