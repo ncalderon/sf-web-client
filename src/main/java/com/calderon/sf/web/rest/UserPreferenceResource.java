@@ -1,11 +1,13 @@
 package com.calderon.sf.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
 import com.calderon.sf.domain.UserPreference;
 import com.calderon.sf.repository.UserPreferenceRepository;
+import com.calderon.sf.security.SecurityUtils;
 import com.calderon.sf.web.rest.errors.BadRequestAlertException;
+import com.calderon.sf.web.rest.errors.InternalServerErrorException;
 import com.calderon.sf.web.rest.util.HeaderUtil;
 import com.calderon.sf.web.rest.util.PaginationUtil;
+import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,12 +16,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -30,10 +32,8 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class UserPreferenceResource {
 
-    private final Logger log = LoggerFactory.getLogger(UserPreferenceResource.class);
-
     private static final String ENTITY_NAME = "userPreference";
-
+    private final Logger log = LoggerFactory.getLogger(UserPreferenceResource.class);
     private final UserPreferenceRepository userPreferenceRepository;
 
     public UserPreferenceResource(UserPreferenceRepository userPreferenceRepository) {
@@ -54,6 +54,11 @@ public class UserPreferenceResource {
         if (userPreference.getId() != null) {
             throw new BadRequestAlertException("A new userPreference cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        if (!SecurityUtils.canSave(userPreference)) {
+            throw new AccessDeniedException(String.format("Cannot create or update this entity of this user: %s", userPreference.getUser().getLogin()));
+        }
+
         UserPreference result = userPreferenceRepository.save(userPreference);
         return ResponseEntity.created(new URI("/api/user-preferences/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -76,10 +81,17 @@ public class UserPreferenceResource {
         if (userPreference.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+
+
+        if (!SecurityUtils.canSave(userPreference)) {
+            throw new InternalServerErrorException(String.format("Cannot create or update this entity of this user: %s", userPreference.getUser().getLogin()));
+        }
+
         UserPreference result = userPreferenceRepository.save(userPreference);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, userPreference.getId().toString()))
             .body(result);
+
     }
 
     /**
@@ -121,7 +133,9 @@ public class UserPreferenceResource {
     @Timed
     public ResponseEntity<Void> deleteUserPreference(@PathVariable Long id) {
         log.debug("REST request to delete UserPreference : {}", id);
-
+        if (!SecurityUtils.canSave(userPreferenceRepository.getOne(id))) {
+            throw new InternalServerErrorException(String.format("Cannot delete this entity of this user."));
+        }
         userPreferenceRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }

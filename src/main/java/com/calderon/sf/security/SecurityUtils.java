@@ -1,5 +1,6 @@
 package com.calderon.sf.security;
 
+import com.calderon.sf.domain.BaseUserEntity;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -72,5 +73,16 @@ public final class SecurityUtils {
             .map(authentication -> authentication.getAuthorities().stream()
                 .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(authority)))
             .orElse(false);
+    }
+
+    public static boolean canSave(BaseUserEntity entity){
+        String login = getCurrentUserLogin().orElseGet(String::new);
+        if (login.isEmpty())
+            return false;
+
+        if(isCurrentUserInRole(AuthoritiesConstants.ADMIN))
+            return true;
+
+        return entity.getUser().getLogin().equals(entity.getUser().getLogin());
     }
 }

@@ -23,7 +23,7 @@ import com.calderon.sf.domain.enumeration.FinAccStatus;
 @Entity
 @Table(name = "fin_acc")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class FinAcc extends AbstractAuditingEntity implements Serializable {
+public class FinAcc extends AbstractAuditingEntity implements BaseUserEntity, Serializable {
 
     private static final long serialVersionUID = 1L;
 

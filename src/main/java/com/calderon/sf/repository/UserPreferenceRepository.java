@@ -11,7 +11,7 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface UserPreferenceRepository extends JpaRepository<UserPreference, Long> {
+public interface UserPreferenceRepository extends SecuredJpaRepository<UserPreference> {
 
     @Query("select user_preference from UserPreference user_preference where user_preference.user.login = ?#{principal.username}")
     List<UserPreference> findByUserIsCurrentUser();

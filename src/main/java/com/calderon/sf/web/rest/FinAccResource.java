@@ -1,5 +1,7 @@
 package com.calderon.sf.web.rest;
 
+import com.calderon.sf.security.SecurityUtils;
+import com.calderon.sf.web.rest.errors.InternalServerErrorException;
 import com.codahale.metrics.annotation.Timed;
 import com.calderon.sf.domain.FinAcc;
 import com.calderon.sf.repository.FinAccRepository;
@@ -14,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -54,6 +57,11 @@ public class FinAccResource {
         if (finAcc.getId() != null) {
             throw new BadRequestAlertException("A new finAcc cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        if (!SecurityUtils.canSave(finAcc)) {
+            throw new AccessDeniedException(String.format("Cannot create or update this entity of this user: %s", finAcc.getUser().getLogin()));
+        }
+
         FinAcc result = finAccRepository.save(finAcc);
         return ResponseEntity.created(new URI("/api/fin-accs/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -76,6 +84,10 @@ public class FinAccResource {
         if (finAcc.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+        if (!SecurityUtils.canSave(finAcc)) {
+            throw new AccessDeniedException(String.format("Cannot create or update this entity of this user: %s", finAcc.getUser().getLogin()));
+        }
+
         FinAcc result = finAccRepository.save(finAcc);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, finAcc.getId().toString()))
@@ -121,7 +133,9 @@ public class FinAccResource {
     @Timed
     public ResponseEntity<Void> deleteFinAcc(@PathVariable Long id) {
         log.debug("REST request to delete FinAcc : {}", id);
-
+        if (!SecurityUtils.canSave(finAccRepository.getOne(id))) {
+            throw new InternalServerErrorException(String.format("Cannot delete this entity of this user."));
+        }
         finAccRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }

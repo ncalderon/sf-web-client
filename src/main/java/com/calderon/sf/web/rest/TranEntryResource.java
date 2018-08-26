@@ -1,5 +1,7 @@
 package com.calderon.sf.web.rest;
 
+import com.calderon.sf.security.SecurityUtils;
+import com.calderon.sf.web.rest.errors.InternalServerErrorException;
 import com.codahale.metrics.annotation.Timed;
 import com.calderon.sf.domain.TranEntry;
 import com.calderon.sf.repository.TranEntryRepository;
@@ -54,7 +56,13 @@ public class TranEntryResource {
         if (tranEntry.getId() != null) {
             throw new BadRequestAlertException("A new tranEntry cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        if (!SecurityUtils.canSave(tranEntry)) {
+            throw new InternalServerErrorException(String.format("Cannot create or update this entity of this user: %s", tranEntry.getUser().getLogin()));
+        }
+
         TranEntry result = tranEntryRepository.save(tranEntry);
+
         return ResponseEntity.created(new URI("/api/tran-entries/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -76,7 +84,13 @@ public class TranEntryResource {
         if (tranEntry.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+
+        if (!SecurityUtils.canSave(tranEntry)) {
+            throw new InternalServerErrorException(String.format("Cannot create or update this entity of this user: %s", tranEntry.getUser().getLogin()));
+        }
+
         TranEntry result = tranEntryRepository.save(tranEntry);
+
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, tranEntry.getId().toString()))
             .body(result);
@@ -121,7 +135,9 @@ public class TranEntryResource {
     @Timed
     public ResponseEntity<Void> deleteTranEntry(@PathVariable Long id) {
         log.debug("REST request to delete TranEntry : {}", id);
-
+        if (!SecurityUtils.canSave(tranEntryRepository.getOne(id))) {
+            throw new InternalServerErrorException(String.format("Cannot delete this entity of this user."));
+        }
         tranEntryRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }

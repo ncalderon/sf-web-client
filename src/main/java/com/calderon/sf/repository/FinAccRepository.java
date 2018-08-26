@@ -11,7 +11,7 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface FinAccRepository extends JpaRepository<FinAcc, Long> {
+public interface FinAccRepository extends SecuredJpaRepository<FinAcc> {
 
     @Query("select fin_acc from FinAcc fin_acc where fin_acc.user.login = ?#{principal.username}")
     List<FinAcc> findByUserIsCurrentUser();

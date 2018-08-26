@@ -1,5 +1,7 @@
 package com.calderon.sf.web.rest;
 
+import com.calderon.sf.security.SecurityUtils;
+import com.calderon.sf.web.rest.errors.InternalServerErrorException;
 import com.codahale.metrics.annotation.Timed;
 import com.calderon.sf.domain.TranCategory;
 import com.calderon.sf.repository.TranCategoryRepository;
@@ -14,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -54,6 +57,11 @@ public class TranCategoryResource {
         if (tranCategory.getId() != null) {
             throw new BadRequestAlertException("A new tranCategory cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        if (!SecurityUtils.canSave(tranCategory)) {
+            throw new AccessDeniedException(String.format("Cannot create or update this entity of this user: %s", tranCategory.getUser().getLogin()));
+        }
+
         TranCategory result = tranCategoryRepository.save(tranCategory);
         return ResponseEntity.created(new URI("/api/tran-categories/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -76,6 +84,10 @@ public class TranCategoryResource {
         if (tranCategory.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+        if (!SecurityUtils.canSave(tranCategory)) {
+            throw new AccessDeniedException(String.format("Cannot create or update this entity of this user: %s", tranCategory.getUser().getLogin()));
+        }
+
         TranCategory result = tranCategoryRepository.save(tranCategory);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, tranCategory.getId().toString()))
@@ -121,6 +133,10 @@ public class TranCategoryResource {
     @Timed
     public ResponseEntity<Void> deleteTranCategory(@PathVariable Long id) {
         log.debug("REST request to delete TranCategory : {}", id);
+
+        if (!SecurityUtils.canSave(tranCategoryRepository.getOne(id))) {
+            throw new InternalServerErrorException(String.format("Cannot delete this entity of this user."));
+        }
 
         tranCategoryRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

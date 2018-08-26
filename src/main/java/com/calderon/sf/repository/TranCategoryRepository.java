@@ -11,7 +11,7 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface TranCategoryRepository extends JpaRepository<TranCategory, Long> {
+public interface TranCategoryRepository extends SecuredJpaRepository<TranCategory> {
 
     @Query("select tran_category from TranCategory tran_category where tran_category.user.login = ?#{principal.username}")
     List<TranCategory> findByUserIsCurrentUser();
