@@ -1,0 +1,31 @@
+
+{
+    "sfwebApp": {
+        "finAcc" : {
+            "home": {
+                "title": "Fin Accs",
+                "createLabel": "Create a new Fin Acc",
+                "createOrEditLabel": "Create or edit a Fin Acc"
+            },
+            "created": "A new Fin Acc is created with identifier {{ param }}",
+            "updated": "A Fin Acc is updated with identifier {{ param }}",
+            "deleted": "A Fin Acc is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Fin Acc {{ id }}?"
+            },
+            "detail": {
+                "title": "Fin Acc"
+            },
+            "status": "Status",
+            "accNum": "Acc Num",
+            "name": "Name",
+            "description": "Description",
+            "balance": "Balance",
+            "isCreditCard": "Is Credit Card",
+            "dueDate": "Due Date",
+            "closingDate": "Closing Date",
+            "tranEntry": "Tran Entry",
+            "user": "User"
+        }
+    }
+}

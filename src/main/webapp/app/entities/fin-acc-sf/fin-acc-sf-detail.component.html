@@ -1,0 +1,59 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="finAcc">
+            <h2><span jhiTranslate="sfwebApp.finAcc.detail.title">Fin Acc</span> {{finAcc.id}}</h2>
+            <hr>
+            <sf-alert-error></sf-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="sfwebApp.finAcc.status">Status</span></dt>
+                <dd>
+                    <span jhiTranslate="{{'sfwebApp.FinAccStatus.' + finAcc.status}}">{{finAcc.status}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.finAcc.accNum">Acc Num</span></dt>
+                <dd>
+                    <span>{{finAcc.accNum}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.finAcc.name">Name</span></dt>
+                <dd>
+                    <span>{{finAcc.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.finAcc.description">Description</span></dt>
+                <dd>
+                    <span>{{finAcc.description}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.finAcc.balance">Balance</span></dt>
+                <dd>
+                    <span>{{finAcc.balance}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.finAcc.isCreditCard">Is Credit Card</span></dt>
+                <dd>
+                    <span>{{finAcc.isCreditCard}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.finAcc.dueDate">Due Date</span></dt>
+                <dd>
+                    <span>{{finAcc.dueDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.finAcc.closingDate">Closing Date</span></dt>
+                <dd>
+                    <span>{{finAcc.closingDate}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.finAcc.user">User</span></dt>
+                <dd>
+                    {{finAcc.user?.login}}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/fin-acc-sf', finAcc.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

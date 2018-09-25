@@ -1,0 +1,33 @@
+
+{
+    "sfwebApp": {
+        "tranEntry" : {
+            "home": {
+                "title": "Tran Entries",
+                "createLabel": "Create a new Tran Entry",
+                "createOrEditLabel": "Create or edit a Tran Entry"
+            },
+            "created": "A new Tran Entry is created with identifier {{ param }}",
+            "updated": "A Tran Entry is updated with identifier {{ param }}",
+            "deleted": "A Tran Entry is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Tran Entry {{ id }}?"
+            },
+            "detail": {
+                "title": "Tran Entry"
+            },
+            "tranType": "Tran Type",
+            "tranNum": "Tran Num",
+            "refNum": "Ref Num",
+            "postDate": "Post Date",
+            "description": "Description",
+            "amount": "Amount",
+            "ccyVal": "Ccy Val",
+            "ccyCode": "Ccy Code",
+            "paymentMethod": "Payment Method",
+            "user": "User",
+            "finAcc": "Fin Acc",
+            "tranCategory": "Tran Category"
+        }
+    }
+}

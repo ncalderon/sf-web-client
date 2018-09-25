@@ -1,0 +1,31 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="preference">
+            <h2><span jhiTranslate="sfwebApp.preference.detail.title">Preference</span> {{preference.id}}</h2>
+            <hr>
+            <sf-alert-error></sf-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="sfwebApp.preference.name">Name</span></dt>
+                <dd>
+                    <span>{{preference.name}}</span>
+                </dd>
+                <dt><span jhiTranslate="sfwebApp.preference.value">Value</span></dt>
+                <dd>
+                    <span>{{preference.value}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/preference-sf', preference.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

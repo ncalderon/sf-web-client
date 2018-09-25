@@ -1,0 +1,25 @@
+
+{
+    "sfwebApp": {
+        "tranCategory" : {
+            "home": {
+                "title": "Tran Categories",
+                "createLabel": "Crear nuevo Tran Category",
+                "createOrEditLabel": "Crear o editar Tran Category"
+            },
+            "created": "Un nuevo Tran Category ha sido creado con el identificador {{ param }}",
+            "updated": "Un Tran Category ha sido actualizado con el identificador {{ param }}",
+            "deleted": "Un Tran Category ha sido eliminado con el identificador {{ param }}",
+            "delete": {
+                "question": "¿Seguro que quiere eliminar Tran Category {{ id }}?"
+            },
+            "detail": {
+                "title": "Tran Category"
+            },
+            "name": "Name",
+            "description": "Description",
+            "tranEntry": "Tran Entry",
+            "user": "User"
+        }
+    }
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity TranEntry.
+    -->
+    <changeSet id="20180822014541-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="tran_entry"
+                                 constraintName="fk_tran_entry_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="sf_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="fin_acc_id"
+                                 baseTableName="tran_entry"
+                                 constraintName="fk_tran_entry_fin_acc_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="fin_acc"/>
+
+        <addForeignKeyConstraint baseColumnNames="tran_category_id"
+                                 baseTableName="tran_entry"
+                                 constraintName="fk_tran_entry_tran_category_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tran_category"/>
+
+    </changeSet>
+</databaseChangeLog>

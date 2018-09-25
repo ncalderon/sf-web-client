@@ -1,0 +1,9 @@
+{
+    "sfwebApp": {
+        "FinAccStatus" : {
+            "null": "",
+            "INACTIVE": "INACTIVE",
+            "ACTIVE": "ACTIVE"
+        }
+    }
+}

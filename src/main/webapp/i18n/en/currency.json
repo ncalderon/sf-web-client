@@ -1,0 +1,25 @@
+
+{
+    "sfwebApp": {
+        "currency" : {
+            "home": {
+                "title": "Currencies",
+                "createLabel": "Create a new Currency",
+                "createOrEditLabel": "Create or edit a Currency"
+            },
+            "created": "A new Currency is created with identifier {{ param }}",
+            "updated": "A Currency is updated with identifier {{ param }}",
+            "deleted": "A Currency is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Currency {{ id }}?"
+            },
+            "detail": {
+                "title": "Currency"
+            },
+            "code": "Code",
+            "name": "Name",
+            "isDefault": "Is Default",
+            "jsonval": "Jsonval"
+        }
+    }
+}
