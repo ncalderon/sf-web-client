@@ -4,7 +4,7 @@
       "packageName": "com.calderon.sf",
       "nativeLanguage": "en"
     },
-    "jhipsterVersion": "5.2.1",
+    "jhipsterVersion": "5.3.4",
     "applicationType": "monolith",
     "baseName": "sfweb",
     "packageName": "com.calderon.sf",

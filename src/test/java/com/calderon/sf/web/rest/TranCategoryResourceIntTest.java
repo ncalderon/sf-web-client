@@ -49,7 +49,6 @@ public class TranCategoryResourceIntTest {
     @Autowired
     private TranCategoryRepository tranCategoryRepository;
 
-
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
@@ -171,7 +170,6 @@ public class TranCategoryResourceIntTest {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
     }
     
-
     @Test
     @Transactional
     public void getTranCategory() throws Exception {
@@ -186,6 +184,7 @@ public class TranCategoryResourceIntTest {
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingTranCategory() throws Exception {
@@ -230,7 +229,7 @@ public class TranCategoryResourceIntTest {
 
         // Create the TranCategory
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restTranCategoryMockMvc.perform(put("/api/tran-categories")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(tranCategory)))

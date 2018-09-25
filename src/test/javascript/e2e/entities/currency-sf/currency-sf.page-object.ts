@@ -2,10 +2,19 @@ import { element, by, ElementFinder } from 'protractor';
 
 export class CurrencyComponentsPage {
     createButton = element(by.id('jh-create-entity'));
+    deleteButtons = element.all(by.css('sf-currency-sf div table .btn-danger'));
     title = element.all(by.css('sf-currency-sf div h2#page-heading span')).first();
 
     async clickOnCreateButton() {
         await this.createButton.click();
+    }
+
+    async clickOnLastDeleteButton() {
+        await this.deleteButtons.last().click();
+    }
+
+    async countDeleteButtons() {
+        return this.deleteButtons.count();
     }
 
     async getTitle() {
@@ -63,5 +72,18 @@ export class CurrencyUpdatePage {
 
     getSaveButton(): ElementFinder {
         return this.saveButton;
+    }
+}
+
+export class CurrencyDeleteDialog {
+    private dialogTitle = element(by.id('sf-delete-currency-heading'));
+    private confirmButton = element(by.id('sf-confirm-delete-currency'));
+
+    async getDialogTitle() {
+        return this.dialogTitle.getAttribute('jhiTranslate');
+    }
+
+    async clickOnConfirmButton() {
+        await this.confirmButton.click();
     }
 }

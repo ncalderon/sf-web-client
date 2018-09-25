@@ -76,7 +76,6 @@ public class TranEntryResourceIntTest {
     @Autowired
     private TranEntryRepository tranEntryRepository;
 
-
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
@@ -296,7 +295,6 @@ public class TranEntryResourceIntTest {
             .andExpect(jsonPath("$.[*].paymentMethod").value(hasItem(DEFAULT_PAYMENT_METHOD.toString())));
     }
     
-
     @Test
     @Transactional
     public void getTranEntry() throws Exception {
@@ -318,6 +316,7 @@ public class TranEntryResourceIntTest {
             .andExpect(jsonPath("$.ccyCode").value(DEFAULT_CCY_CODE.toString()))
             .andExpect(jsonPath("$.paymentMethod").value(DEFAULT_PAYMENT_METHOD.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingTranEntry() throws Exception {
@@ -376,7 +375,7 @@ public class TranEntryResourceIntTest {
 
         // Create the TranEntry
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restTranEntryMockMvc.perform(put("/api/tran-entries")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(tranEntry)))

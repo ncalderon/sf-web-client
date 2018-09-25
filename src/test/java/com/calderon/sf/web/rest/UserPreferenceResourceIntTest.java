@@ -47,7 +47,6 @@ public class UserPreferenceResourceIntTest {
     @Autowired
     private UserPreferenceRepository userPreferenceRepository;
 
-
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
@@ -171,7 +170,6 @@ public class UserPreferenceResourceIntTest {
             .andExpect(jsonPath("$.[*].value").value(hasItem(DEFAULT_VALUE.toString())));
     }
     
-
     @Test
     @Transactional
     public void getUserPreference() throws Exception {
@@ -185,6 +183,7 @@ public class UserPreferenceResourceIntTest {
             .andExpect(jsonPath("$.id").value(userPreference.getId().intValue()))
             .andExpect(jsonPath("$.value").value(DEFAULT_VALUE.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingUserPreference() throws Exception {
@@ -227,7 +226,7 @@ public class UserPreferenceResourceIntTest {
 
         // Create the UserPreference
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restUserPreferenceMockMvc.perform(put("/api/user-preferences")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(userPreference)))
