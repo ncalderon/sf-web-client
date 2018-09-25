@@ -2,10 +2,19 @@ import { element, by, ElementFinder } from 'protractor';
 
 export class TranEntryComponentsPage {
     createButton = element(by.id('jh-create-entity'));
+    deleteButtons = element.all(by.css('sf-tran-entry-sf div table .btn-danger'));
     title = element.all(by.css('sf-tran-entry-sf div h2#page-heading span')).first();
 
     async clickOnCreateButton() {
         await this.createButton.click();
+    }
+
+    async clickOnLastDeleteButton() {
+        await this.deleteButtons.last().click();
+    }
+
+    async countDeleteButtons() {
+        return this.deleteButtons.count();
     }
 
     async getTitle() {
@@ -187,5 +196,18 @@ export class TranEntryUpdatePage {
 
     getSaveButton(): ElementFinder {
         return this.saveButton;
+    }
+}
+
+export class TranEntryDeleteDialog {
+    private dialogTitle = element(by.id('sf-delete-tranEntry-heading'));
+    private confirmButton = element(by.id('sf-confirm-delete-tranEntry'));
+
+    async getDialogTitle() {
+        return this.dialogTitle.getAttribute('jhiTranslate');
+    }
+
+    async clickOnConfirmButton() {
+        await this.confirmButton.click();
     }
 }

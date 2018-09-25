@@ -7,6 +7,7 @@ const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin');
 const WebpackNotifierPlugin = require('webpack-notifier');
 const path = require('path');
+const sass = require('sass');
 
 const utils = require('./utils.js');
 const commonConfig = require('./webpack.common.js');
@@ -27,8 +28,9 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
                 '/h2-console',
                 '/auth'
             ],
-            target: 'http://127.0.0.1:8080',
+            target: `http${options.tls ? 's' : ''}://127.0.0.1:8080`,
             secure: false,
+            changeOrigin: options.tls,
             headers: { host: 'localhost:9000' }
         }],
         stats: options.stats,
@@ -50,13 +52,13 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
         rules: [{
             test: /\.ts$/,
             enforce: 'pre',
-            loaders: 'tslint-loader',
+            loader: 'tslint-loader',
             exclude: ['node_modules', new RegExp('reflect-metadata\\' + path.sep + 'Reflect\\.ts')]
         },
         {
             test: /\.ts$/,
             use: [
-                { loader: 'angular2-template-loader' },
+                'angular2-template-loader',
                 {
                     loader: 'cache-loader',
                     options: {
@@ -77,34 +79,42 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
                         happyPackMode: true
                     }
                 },
-                { loader: 'angular-router-loader' }
+                'angular-router-loader'
             ],
             exclude: ['node_modules']
         },
         {
             test: /\.scss$/,
-            loaders: ['to-string-loader', 'css-loader', 'sass-loader'],
+            use: ['to-string-loader', 'css-loader', {
+                loader: 'sass-loader',
+                options: { implementation: sass }
+            }],
             exclude: /(vendor\.scss|global\.scss)/
         },
         {
             test: /(vendor\.scss|global\.scss)/,
-            loaders: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+            use: ['style-loader', 'css-loader', 'postcss-loader', {
+                loader: 'sass-loader',
+                options: { implementation: sass }
+            }]
         },
         {
             test: /\.css$/,
-            loaders: ['to-string-loader', 'css-loader'],
+            use: ['to-string-loader', 'css-loader'],
             exclude: /(vendor\.css|global\.css)/
         },
         {
             test: /(vendor\.css|global\.css)/,
-            loaders: ['style-loader', 'css-loader']
+            use: ['style-loader', 'css-loader']
         }]
     },
-    stats: options.stats,
+    stats: process.env.DISABLE_WEBPACK_LOGS ? 'none' : options.stats,
     plugins: [
-        new SimpleProgressWebpackPlugin({
-            format: options.stats === 'minimal' ? 'compact' : 'expanded'
-        }),
+        process.env.DISABLE_WEBPACK_LOGS
+            ? null
+            : new SimpleProgressWebpackPlugin({
+                format: options.stats === 'minimal' ? 'compact' : 'expanded'
+              }),
         new FriendlyErrorsWebpackPlugin(),
         new ForkTsCheckerWebpackPlugin(),
         new BrowserSyncPlugin({
@@ -112,6 +122,11 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
             port: 9000,
             proxy: {
                 target: 'http://localhost:9060'
+            },
+            socket: {
+                clients: {
+                    heartbeatTimeout: 60000
+                }
             }
         }, {
             reload: false
@@ -128,6 +143,6 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
             title: 'JHipster',
             contentImage: path.join(__dirname, 'logo-jhipster.png')
         })
-    ],
+    ].filter(Boolean),
     mode: 'development'
 });

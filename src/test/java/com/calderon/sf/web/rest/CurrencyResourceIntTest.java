@@ -54,7 +54,6 @@ public class CurrencyResourceIntTest {
     @Autowired
     private CurrencyRepository currencyRepository;
 
-
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
@@ -231,7 +230,6 @@ public class CurrencyResourceIntTest {
             .andExpect(jsonPath("$.[*].jsonval").value(hasItem(DEFAULT_JSONVAL.toString())));
     }
     
-
     @Test
     @Transactional
     public void getCurrency() throws Exception {
@@ -248,6 +246,7 @@ public class CurrencyResourceIntTest {
             .andExpect(jsonPath("$.isDefault").value(DEFAULT_IS_DEFAULT.booleanValue()))
             .andExpect(jsonPath("$.jsonval").value(DEFAULT_JSONVAL.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingCurrency() throws Exception {
@@ -296,7 +295,7 @@ public class CurrencyResourceIntTest {
 
         // Create the Currency
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restCurrencyMockMvc.perform(put("/api/currencies")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(currency)))

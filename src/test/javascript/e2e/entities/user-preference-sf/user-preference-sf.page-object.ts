@@ -2,10 +2,19 @@ import { element, by, ElementFinder } from 'protractor';
 
 export class UserPreferenceComponentsPage {
     createButton = element(by.id('jh-create-entity'));
+    deleteButtons = element.all(by.css('sf-user-preference-sf div table .btn-danger'));
     title = element.all(by.css('sf-user-preference-sf div h2#page-heading span')).first();
 
     async clickOnCreateButton() {
         await this.createButton.click();
+    }
+
+    async clickOnLastDeleteButton() {
+        await this.deleteButtons.last().click();
+    }
+
+    async countDeleteButtons() {
+        return this.deleteButtons.count();
     }
 
     async getTitle() {
@@ -81,5 +90,18 @@ export class UserPreferenceUpdatePage {
 
     getSaveButton(): ElementFinder {
         return this.saveButton;
+    }
+}
+
+export class UserPreferenceDeleteDialog {
+    private dialogTitle = element(by.id('sf-delete-userPreference-heading'));
+    private confirmButton = element(by.id('sf-confirm-delete-userPreference'));
+
+    async getDialogTitle() {
+        return this.dialogTitle.getAttribute('jhiTranslate');
+    }
+
+    async clickOnConfirmButton() {
+        await this.confirmButton.click();
     }
 }

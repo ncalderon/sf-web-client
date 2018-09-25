@@ -71,7 +71,6 @@ public class FinAccResourceIntTest {
     @Autowired
     private FinAccRepository finAccRepository;
 
-
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
@@ -247,7 +246,6 @@ public class FinAccResourceIntTest {
             .andExpect(jsonPath("$.[*].closingDate").value(hasItem(DEFAULT_CLOSING_DATE.toString())));
     }
     
-
     @Test
     @Transactional
     public void getFinAcc() throws Exception {
@@ -268,6 +266,7 @@ public class FinAccResourceIntTest {
             .andExpect(jsonPath("$.dueDate").value(DEFAULT_DUE_DATE.toString()))
             .andExpect(jsonPath("$.closingDate").value(DEFAULT_CLOSING_DATE.toString()));
     }
+
     @Test
     @Transactional
     public void getNonExistingFinAcc() throws Exception {
@@ -324,7 +323,7 @@ public class FinAccResourceIntTest {
 
         // Create the FinAcc
 
-        // If the entity doesn't have an ID, it will throw BadRequestAlertException 
+        // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restFinAccMockMvc.perform(put("/api/fin-accs")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(finAcc)))
