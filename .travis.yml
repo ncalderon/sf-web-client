@@ -22,8 +22,8 @@ before_install:
     - chmod +x ./scripts/install.sh
     - chmod +x ./scripts/before_deploy.sh
     - chmod +x ./scripts/deploy.sh
-#install: true
-install: ./mvnw clean package -B -q -Pprod -DskipTests=true
+install: true
+#install: ./mvnw clean package -B -q -Pprod -DskipTests=true
 script:
    - chmod +x ./scripts/deploy.sh
 before_deploy: ./scripts/before_deploy.sh
