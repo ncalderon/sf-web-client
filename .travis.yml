@@ -19,6 +19,7 @@ addons:
 before_install:
     - chmod +x mvnw
     - printenv
+    - echo $encrypted_a08d1d0bac4b_key
     - chmod +x ./scripts/install.sh
     - chmod +x ./scripts/before_deploy.sh
     - chmod +x ./scripts/deploy.sh
