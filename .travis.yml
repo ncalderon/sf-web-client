@@ -18,6 +18,7 @@ addons:
   - 45.77.160.68
 before_install:
     - chmod +x mvnw
+    - printenv
     - chmod +x ./scripts/install.sh
     - chmod +x ./scripts/before_deploy.sh
     - chmod +x ./scripts/deploy.sh
